@@ -4,10 +4,10 @@
     <title>Kristopher Micinski</title>
     <description>Kris Micinski&#39;s personal website. Visiting CS Prof at Haverford.
 </description>
-    <link>/</link>
-    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 03 Jun 2017 15:42:30 -0400</pubDate>
-    <lastBuildDate>Sat, 03 Jun 2017 15:42:30 -0400</lastBuildDate>
+    <link>https://kmicinski.github.iohttps://kmicinski.github.io/</link>
+    <atom:link href="https://kmicinski.github.iohttps://kmicinski.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 03 Jun 2017 15:46:30 -0400</pubDate>
+    <lastBuildDate>Sat, 03 Jun 2017 15:46:30 -0400</lastBuildDate>
     <generator>Jekyll v3.1.2</generator>
     
       <item>
@@ -71,8 +71,8 @@ group dynamic to name a few.&lt;/p&gt;
 &lt;p&gt;Maybe you could try suggesting this to your advisor&lt;/p&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 -0400</pubDate>
-        <link>/research/2016/10/23/here-have-some-plum-scrum/</link>
-        <guid isPermaLink="true">/research/2016/10/23/here-have-some-plum-scrum/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/research/2016/10/23/here-have-some-plum-scrum/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/research/2016/10/23/here-have-some-plum-scrum/</guid>
         
         
         <category>research</category>
@@ -156,8 +156,8 @@ the set of problems I care about.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 15 Oct 2016 00:00:00 -0400</pubDate>
-        <link>/research/2016/10/15/appreciating-research/</link>
-        <guid isPermaLink="true">/research/2016/10/15/appreciating-research/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/research/2016/10/15/appreciating-research/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/research/2016/10/15/appreciating-research/</guid>
         
         
         <category>research</category>
@@ -207,8 +207,8 @@ was heard.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 11 Sep 2016 00:00:00 -0400</pubDate>
-        <link>/teaching/2016/09/11/teaching-observations/</link>
-        <guid isPermaLink="true">/teaching/2016/09/11/teaching-observations/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/teaching/2016/09/11/teaching-observations/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/teaching/2016/09/11/teaching-observations/</guid>
         
         
         <category>teaching</category>
@@ -271,7 +271,7 @@ click on a node and disambiguate that node based on its context.&lt;/p&gt;
 &lt;p&gt;For example, here’s a mockup of what this might look like after we’re
 done:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-1.png&quot; alt=&quot;Shot 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://kmicinski.github.io/assets/viz-abs-1.png&quot; alt=&quot;Shot 1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;On the left are two runs of the program. In the first, we start with
 &lt;code class=&quot;highlighter-rouge&quot;&gt;y = 1&lt;/code&gt;, we then call (the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; designate entries) &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;, which
@@ -299,14 +299,14 @@ know all of he possible places that &lt;code class=&quot;highlighter-rouge&quot;
 it, and then our visualizer will tell you which lines in the program
 actually corresponded to that invocation. Like so:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-2.png&quot; alt=&quot;Shot 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://kmicinski.github.io/assets/viz-abs-2.png&quot; alt=&quot;Shot 2&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Let’s say that you want to introspect here, you might want to just
 “focus in” on the bad log. To do that, you’ll just project out the
 operation of building the graph. You can even build a more finely
 grained graph which shows precise call / return structure:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-3.png&quot; alt=&quot;Shot 3&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://kmicinski.github.io/assets/viz-abs-3.png&quot; alt=&quot;Shot 3&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The last execution graph is obviously the most precise. It shows exact
 call/return sequences in a finely grained way. If we were to formalize
@@ -456,7 +456,7 @@ step (_,i,k) (entry) = (entry,i+1,k)
 
 &lt;p&gt;Here’s what it looks like for our two logs shown here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-4.png&quot; alt=&quot;Shot 5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://kmicinski.github.io/assets/viz-abs-4.png&quot; alt=&quot;Shot 5&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;a-control-flow-analogue&quot;&gt;A control flow analogue&lt;/h3&gt;
 
@@ -518,7 +518,7 @@ both of our logs. This graph has as its nodes sequences of call frames
 (without their arguments / returns), and is isomorphic to the graph in
 the first example:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-5.png&quot; alt=&quot;Abs screenshot one&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://kmicinski.github.io/assets/viz-abs-5.png&quot; alt=&quot;Abs screenshot one&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Unfortunately, because this style of analysis allows an arbitrarily
 large permutations of method calling sequences, it allows the graph’s
@@ -725,8 +725,8 @@ out in the future.&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 11 May 2016 00:00:00 -0400</pubDate>
-        <link>/program-analysis/2016/05/11/program-viz-galois/</link>
-        <guid isPermaLink="true">/program-analysis/2016/05/11/program-viz-galois/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/program-analysis/2016/05/11/program-viz-galois/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/program-analysis/2016/05/11/program-viz-galois/</guid>
         
         
         <category>program-analysis</category>
@@ -919,8 +919,8 @@ we should continue to push on.&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 10 Mar 2016 00:00:00 -0500</pubDate>
-        <link>/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</link>
-        <guid isPermaLink="true">/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</guid>
         
         
         <category>security</category>
@@ -1067,8 +1067,8 @@ to designing analyses in the AAM style.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 06 Mar 2016 00:00:00 -0500</pubDate>
-        <link>/program-analysis/2016/03/06/the-environment-problem/</link>
-        <guid isPermaLink="true">/program-analysis/2016/03/06/the-environment-problem/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/program-analysis/2016/03/06/the-environment-problem/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/program-analysis/2016/03/06/the-environment-problem/</guid>
         
         
         <category>program-analysis</category>
@@ -1208,8 +1208,8 @@ to designing analyses in the AAM style.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 22 Sep 2012 00:00:00 -0400</pubDate>
-        <link>/algorithms/sat/2012/09/22/efficient-sat-solving/</link>
-        <guid isPermaLink="true">/algorithms/sat/2012/09/22/efficient-sat-solving/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/algorithms/sat/2012/09/22/efficient-sat-solving/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/algorithms/sat/2012/09/22/efficient-sat-solving/</guid>
         
         
         <category>algorithms</category>
@@ -1448,8 +1448,8 @@ with this infinitely sized thing, it’s going to be all right.”&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 04 Sep 2012 00:00:00 -0400</pubDate>
-        <link>/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</link>
-        <guid isPermaLink="true">/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</guid>
+        <link>https://kmicinski.github.iohttps://kmicinski.github.io/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</link>
+        <guid isPermaLink="true">https://kmicinski.github.iohttps://kmicinski.github.io/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</guid>
         
         
         <category>coinduction</category>
