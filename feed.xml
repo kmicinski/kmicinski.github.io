@@ -1,0 +1,1462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kristopher Micinski</title>
+    <description>Kris Micinski&#39;s personal website. Visiting CS Prof at Haverford.
+</description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 03 Jun 2017 15:42:30 -0400</pubDate>
+    <lastBuildDate>Sat, 03 Jun 2017 15:42:30 -0400</lastBuildDate>
+    <generator>Jekyll v3.1.2</generator>
+    
+      <item>
+        <title>Here: Have Some PLUM Scrum</title>
+        <description>&lt;p&gt;This post is about transparency with your advisor. It seems like most
+problems that PhD students face boil down to communication and
+transparency: students work on something the advisor doesn’t expect,
+the advisor has different expectations for number of papers required
+to graduate, student collaborates with someone when the advisor
+doesn’t expect them to, etc…&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://www.cs.umd.edu/projects/PL/&quot;&gt;PLUM group&lt;/a&gt; at UMD uses a
+scrum-style approach to managing research called “PL status.” There’s
+a &lt;a href=&quot;http://www.cs.umd.edu/~mwh/papers/score.pdf&quot;&gt;nice paper&lt;/a&gt; my advisor
+and Mike Hicks wrote up about this approach that details it, but I can
+tell you what it is right now:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Have everyone meet for 15 minutes three times each week&lt;/li&gt;
+  &lt;li&gt;Stand up and talk about what you did, what you’re doing, and what you’re going to do&lt;/li&gt;
+  &lt;li&gt;Highlight problems you’re having and arrange to meet offline if necessary&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I view the PLUM-scrum as one way to address the issue of transparency
+between advisors and advisees. It’s not a silver bullet: there have
+been times when I skipped status for a while, or would kind of
+reiterate the same vague and high level thing for a few days. But when
+applied correctly and honestly, I think it helps students and advisors
+feel on the same page. Obviously for long term disagreements on
+vision, something longer than a 15 minute meeting will be
+required. But I think even here the scrum approach pays off, since it
+helps break down the barriers that eventually fester and cause
+advisors and advisees to feel like they don’t communicate correctly.&lt;/p&gt;
+
+&lt;p&gt;One problem I see among my peer grad students (outside of PL) is that
+they gradually grow a little distant. This is natural: advisors get
+overwhelmed with responsibilities and it’s easy to simply assume your
+(probably very bright) PhD student is doing the right thing and making
+progress. After all, PhD school is about learning how to do research,
+and some of that has to be about independent thought and
+development. The scrum approach helps correct this by requiring
+students and advisors to maintain some consistent level of
+plugged-in-ness.&lt;/p&gt;
+
+&lt;p&gt;I continually see grad students who say something along the lines of
+“well, my advisor doesn’t really know what I’m doing right now.” This
+is fine, if it works, but what happens when the grad student has
+problems? What if they end up working on an area that doesn’t pan out?
+Or write a paper that ends up being scooped? My theory is that if
+there’s transparency between the student and advisor, at least they’ll
+be able to understand what went wrong, and how to improve it in the
+future.&lt;/p&gt;
+
+&lt;p&gt;I’m sure there are tons of ways to maintain transparency between
+advisors and advisees, but the PLUM-scrum seems to be a fairly
+lightweight (45 minutes a week for all students) way to do this that
+offers high potential rewards: catch problems early, mutual assurance
+that advisors and students are working together, and a more cohesive
+group dynamic to name a few.&lt;/p&gt;
+
+&lt;p&gt;Maybe you could try suggesting this to your advisor&lt;/p&gt;
+</description>
+        <pubDate>Sun, 23 Oct 2016 00:00:00 -0400</pubDate>
+        <link>/research/2016/10/23/here-have-some-plum-scrum/</link>
+        <guid isPermaLink="true">/research/2016/10/23/here-have-some-plum-scrum/</guid>
+        
+        
+        <category>research</category>
+        
+      </item>
+    
+      <item>
+        <title>Appreciating Research as Problems</title>
+        <description>&lt;p&gt;Recently I reflected on the kinds of problems I’ve worked on during my
+PhD, and in doing so realized that I likely did not fully appreciate
+what research was until rather recently.&lt;/p&gt;
+
+&lt;p&gt;Research is about identifying and solving novel, important, and
+generalizable problems inherent in nature. Looking back on the
+problems I’ve solved for my PhD, I realize that I might have (at the
+time) confused the &lt;em&gt;methods&lt;/em&gt; used to tackle the research with the
+research itself.&lt;/p&gt;
+
+&lt;p&gt;I think this conflation is easy for any student to make, because it is
+the natural conclusion of the path you take before you start your
+PhD. In undergrad, you struggle (and succeed!) to understand complex
+technical devices used to solve problems. For example, a CS major may
+learn proof mechanisms such as the pumping lemma, diagonalization, or
+proof by structural induction. It feels natural upon starting your PhD
+to assume that research will be challenging in a similar way. For me,
+this was exacerbated by the fact that I saw so many technical devices
+used in research that I hadn’t encountered in my undergrad: things
+like Coq, category theory, and abstract interpretation.&lt;/p&gt;
+
+&lt;p&gt;In light of seeing these things, it feels natural to assume that the
+road to doing good research is climbing the mountain of concepts until
+you get to the hardest one you can find, and to keep working on
+it. For example, I assumed that CS research entailed extending Coq,
+category theory, or abstract interpretation. This is partially true
+(in fact, these are areas of research), but taking this viewpoint
+leaves out a large amount of equally (or more) important vision of
+research that merely leverages those techniques to explore some other
+problem.&lt;/p&gt;
+
+&lt;p&gt;Throughout my PhD I was challenged by this misconception, and I think
+if I had identified it earlier on I could have done even more (and
+better) research. In particular, confusing the techniques used to
+accomplish research with problems proper leads to a very limited set
+of problems to solve. Worse: it leads to problems that have been well
+explored by many people.&lt;/p&gt;
+
+&lt;p&gt;Eventually I realized that the quality of research was not determined
+by the complexity of the mechanics, but instead the merit of the
+problem itself. Instead of judging problems by how much math (or code,
+or person-hours, etc..) would be required to accomplish them, I judge
+problems by how clearly they identify a disjoint area of study which
+may not have been obvious previously.&lt;/p&gt;
+
+&lt;p&gt;Taking this viewpoint has a large set of positive consequences:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can stop worrying that you aren’t smart enough to solve
+problems. Research is about identifying useful problems, but useful
+problems don’t have to be challenging per se. Of course, figuring
+out how to distill a complex problem into simple pieces is often
+exactly the challenging part of research.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;I can start with a question I care about and find interesting
+technical work by assessing the gap between the current technical
+solutions and my problem.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;My research interests branch out beyond a subfield of computer
+science to expand to all of science as a whole. Instead of viewing
+myself as someone who works on problems X, Y, and Z, I can view
+myself as someone who works on problems, and is influenced by (but
+does not exclusively use) X, Y, and Z.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Taking this viewpoint of research has also helped contextualize the
+research I have done into a broader narrative of what I think of as
+the set of problems I care about.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 15 Oct 2016 00:00:00 -0400</pubDate>
+        <link>/research/2016/10/15/appreciating-research/</link>
+        <guid isPermaLink="true">/research/2016/10/15/appreciating-research/</guid>
+        
+        
+        <category>research</category>
+        
+      </item>
+    
+      <item>
+        <title>The nonobvious -- but important -- aspects of teaching (for me)</title>
+        <description>&lt;p&gt;I recently got motivated to look up teaching reviews for members of our department (and myself) on various websites our students frequent. Something occurred to me that I had previously suspected but hadn’t clearly articulated in my head: the parts of teaching that I enjoyed most weren’t necessarily the most important to students.&lt;/p&gt;
+
+&lt;p&gt;These are just a few of the things I’ve seen so far. I might add some more as I continue to think about them.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-productive-learning-environment-for-all&quot;&gt;A productive learning environment for all&lt;/h2&gt;
+
+&lt;p&gt;It’s easy to orient my course material to the students I can connect with most easily: people who were like I was as a student. Unfortunately, this has the effect of potentially creating an insular environment that can make certain groups of students feeling left out.&lt;/p&gt;
+
+&lt;p&gt;This shows up in many forms: implicitly giving preference to the student who sits in the front row and answers all the questions, or making offhand remarks that promulgate gender norms, and more. Throughout teaching, I gradually learned to systematically examine and correct for all the biases I could measure that could potentially give students the impression that this class wasn’t meant for them. This is challenging, especially in a field like CS where there are such predefined societal biases about who should be a good student.&lt;/p&gt;
+
+&lt;p&gt;This idea isn’t new (for example, see &lt;a href=&quot;http://www.npr.org/sections/alltechconsidered/2013/05/01/178810710/How-One-College-Is-Closing-The-Tech-Gender-Gap&quot;&gt;Harvey Mudd’s move to get more women involved in CS&lt;/a&gt;), but thinking about it routinely throughout teaching my course made me realize that it was easy to alienate students if I didn’t think carefully about the fact that my experience was not generalizable to everyone. For example, it seemed reasonable to give students a few extra minutes on exam (that’s what &lt;em&gt;I&lt;/em&gt; would have wanted as a student, after all). But thinking about this more, I realized this negatively affected students that had to work directly after class. Indeed, one of my students later told me that they had to go to work directly after class, and giving extra time would have punished them.&lt;/p&gt;
+
+&lt;p&gt;One thing I’m not sure how to change is students interactions with each other.  For example, when I walk by the student offices, I see groups of boys talking to each other, studying together and forming a natural community. While it’s great to see students working together to learn and build community, I can’t help but feel like these groups can easily lead to a “no girls allowed” feeling between students. I’m not sure what the answer is here, but I assume the answer is multifaceted: attacking perceptions head on by further encouraging minority groups to have representation within the department.&lt;/p&gt;
+
+&lt;h2 id=&quot;engaging-classes-actively&quot;&gt;Engaging classes actively&lt;/h2&gt;
+
+&lt;p&gt;Breaking the ice with classes was huge. I universally found that when I had students participate at the beginning of class, the rest of the class was a lot more interactive. To this end, I would frequently ask questions at the beginning of the class to orient the rest of the discussion.&lt;/p&gt;
+
+&lt;p&gt;In doing so, I wanted to create an environment for students to feel like they could ask questions without facing retribution from myself or others in the class. This is challenging, and I’m not fully sure how to address it yet. One thing I’m convinced does &lt;em&gt;not&lt;/em&gt; work is merely pausing after speaking at students for ten to fiveteen minutes and saying “does all this make sense so far?”&lt;/p&gt;
+
+&lt;p&gt;Instead, something I tried doing a few times was to incorporate inter-student interaction throughout the class. For example, after we covered a new aspect of the material, I might modify a running example and ask students to come up with a simple solution based on what we had just learned. I frequently utilized techniques like think-pair-share to get students talking to each other so that they were forced to actively engage with the material rather than just sit and attempt to absorb it by osmosis. I wasn’t so concerned that students understood everything perfectly: but I wanted a simple social nudge that made them feel encouraged to pay attention.&lt;/p&gt;
+
+&lt;h2 id=&quot;dedicating-time-to-student-interaction&quot;&gt;Dedicating time to student interaction&lt;/h2&gt;
+
+&lt;p&gt;This one was a big boon. Early in the semester I dedicated time to teaching material, but slowly shifted so that more of my time was spent giving detailed feedback to students. As academics, it feels natural to spend time on writing comprehensive lecture notes and pointing people at them. After all, learning how to do this kind of thing is basically what grad school is all about.&lt;/p&gt;
+
+&lt;p&gt;I noticed that a slight shift to paying more attention to being plugged into the student environment paid huge returns in class participation and morale. The best student reviews (in official and unofficial forums) about our classes talked not just about the content and comprehensibility of course material, but the perceived work put in by the instructor to connect with their classes.&lt;/p&gt;
+
+&lt;p&gt;Teaching can be stressful. It’s easy to be bombarded by questions and revert to treating students with a slight feeling of contempt when they haven’t read material or complain about things that I felt had been covered clearly. In times like these, I reminded myself that the way students perceive the material is vastly different than the way I see it. Instead of taking student complaints personally, I attempted to view them as feedback that I could have structured things better.&lt;/p&gt;
+
+&lt;h2 id=&quot;honest-assessment-of-my-performance&quot;&gt;Honest assessment of my performance&lt;/h2&gt;
+
+&lt;p&gt;I found that being honest and upfront with students about my performance helped make an environment where they felt their concerns were met. Throughout my time as both a student and instructor, I frequently witnessed frustration from both sides as students and faculty miscommunicated. From an instructor’s perspective this is easy to perceive as “why don’t they just get it?” And from a student’s, it frequently leaves them feeling like their frustration at not understanding the material isn’t taken seriously.&lt;/p&gt;
+
+&lt;p&gt;By contrast, I tried to be honest with students about places where I had explained something badly or had flat out made a mistake. For example, when I made a mistake outlining the requirements for an assignment, I would explain why I had done so, what needed to be fixed, and how the project grading would change to account for my error.&lt;/p&gt;
+
+&lt;p&gt;The potential downside to this approach is that students may lose their trust in me as an instructor if I made too many mistakes. But instead I found the opposite happened: by being honest about my shortcomings, I showed students that I cared about running a fair course, and they subsequently felt more secure knowing that I would not capriciously change my expectations to hide my mistakes. Overall, I believe this led to an environment where students felt their voice
+was heard.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 11 Sep 2016 00:00:00 -0400</pubDate>
+        <link>/teaching/2016/09/11/teaching-observations/</link>
+        <guid isPermaLink="true">/teaching/2016/09/11/teaching-observations/</guid>
+        
+        
+        <category>teaching</category>
+        
+      </item>
+    
+      <item>
+        <title>Program Visualization as Abstract Interpretation</title>
+        <description>&lt;p&gt;For this past semester, I’ve been thinking in a semi-principaled way
+about how we should visualize program executions. For example, how
+should we visualize this program:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let id x = x in
+let g x = id x
+let check_zero y = if y = 0 then bad () else 1
+if (y &amp;gt;= 0) check_zero (g y) else h y
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s say we want to check whether or not &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; is ever called: and if
+so under what circumstances The most intuitive way we could do this is
+obviously to just sit and think about the program: the program will
+call &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; exactly when &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is zero.&lt;/p&gt;
+
+&lt;p&gt;For small programs like these, checking things like this are easy
+enough, even if the control flow is a little convoluted. As programs
+get larger, it’s harder and harder to convince ourselves that these
+properties are correct: so we build tools to do it for us. One of the
+most basic tools we can use is a test-suite and a debugger. The
+programmer will provide a set of sample inputs to test these inputs
+on, and will visualize them as they go.&lt;/p&gt;
+
+&lt;p&gt;With a debugger, we can see exactly when the call to bad happens by
+“focusing” in on a single run of the program where &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is zero. But
+what if we have a &lt;em&gt;bunch&lt;/em&gt; of runs of the program and we want to see
+what sorts of functions are called by it, perhaps because we’d like to
+get some understanding of what the program does? For example, let’s
+say that we wanted to see what happens to the program when &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;
+and when &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We could use our debugger for each of those paths, but clearly as the
+programs get large, introspecting program behavior like is going to
+start to become very tedious. And this is the crux of my post:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We can use tools from abstract interpretation to guide us in
+constructing program visualizations.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Namely: we’re going to think about a debugger as something that
+produces “steps” of the program execution, and then we’re going to
+construct a graph of the program that will summarize what the program
+is doing to a viewer. Because we want this graph to summarize a bunch
+of executions, we’re going to collapose certain parts of the graph
+(perhaps each invocation of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; in this program, perhaps) so that they
+can be more easily viewable by a user. Then, we’re going to make it
+interactive, so that when the user wants more information they can
+click on a node and disambiguate that node based on its context.&lt;/p&gt;
+
+&lt;p&gt;For example, here’s a mockup of what this might look like after we’re
+done:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-1.png&quot; alt=&quot;Shot 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On the left are two runs of the program. In the first, we start with
+&lt;code class=&quot;highlighter-rouge&quot;&gt;y = 1&lt;/code&gt;, we then call (the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; designate entries) &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;, which
+subsequently calls &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;, returns to &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; (with &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; as the return
+value), and then calls &lt;code class=&quot;highlighter-rouge&quot;&gt;check_zero&lt;/code&gt;. In the other run, we see the same
+thing, except with the bad behavior.&lt;/p&gt;
+
+&lt;p&gt;In this case, the logs we see on the left represent a subset of the
+actual program behavior, so the facts we get to check are up to the
+granularity of the information given in these logs. What I want to do
+in this blog post is to convince you that visualizing dynamic runs in
+this way can be aided by coalescing this dynamic information into a
+graph-based representation, and then be disambiguated by interacting
+with that graph.&lt;/p&gt;
+
+&lt;p&gt;This summary seems like a nice idea, but it doesn’t actually allow us
+to see what really happened in the program: it just shows us a control
+flow graph. We know that &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; was called, but not under what
+condtiions. Similarly, we might like to find out under what conditions
+our various functions (like &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;) were called. To do this,
+we’re going to have this behavior: whenever you click on a various
+node, you’re going to be able to see (in another view) which points in
+each run correspond to that node. For example, let’s say you want to
+know all of he possible places that &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was called from. You click on
+it, and then our visualizer will tell you which lines in the program
+actually corresponded to that invocation. Like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-2.png&quot; alt=&quot;Shot 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s say that you want to introspect here, you might want to just
+“focus in” on the bad log. To do that, you’ll just project out the
+operation of building the graph. You can even build a more finely
+grained graph which shows precise call / return structure:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-3.png&quot; alt=&quot;Shot 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The last execution graph is obviously the most precise. It shows exact
+call/return sequences in a finely grained way. If we were to formalize
+it, the concrete states would differ: the first &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; represents the
+entry while the second represents something like the exit. But this
+precision comes at a cost: it shows us a lot of information that will
+probably be meaningless until we really know what we want to look for.&lt;/p&gt;
+
+&lt;p&gt;For example, here’s a program with an off by one error:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void traverseList(Link *list) {
+  Link *x = list;
+  Link *y;
+  do {
+    x = x-&amp;gt;next;                // Line 4
+    y = x-&amp;gt;next;                // Line 5
+  } while (x != null)           // Line 6
+  // ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As a high level view of the program, we might make our states function
+calls with line numbers into the function. A concrete execution would
+look like:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x = ptr;      // x -&amp;gt; &amp;lt;1,2&amp;gt;
+x = x-&amp;gt;next   // x -&amp;gt; &amp;lt;1&amp;gt;
+y = x-&amp;gt;next   // y -&amp;gt; null
+x != null
+x = x-&amp;gt;next   // x -&amp;gt; &amp;lt;null&amp;gt;
+y = x-&amp;gt;next   // BAD!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once we isolate the bad thing, we can traverse back to the bad
+configuration that caused it to happen, perhaps with the aid of
+(e.g.,) a time traveling debugger such as that in OCaml.&lt;/p&gt;
+
+&lt;p&gt;I haven’t yet said how we get these logs, or what the concrete
+structure of the logs looks like. In this case, we wanted to know
+about the program’s control flow behavior: when did bad states get
+reached, or which functions called which others. Because I only cared
+about the control flow behavior of the program under various
+circumstances, it was sufficient to include function entries and
+exits. If I had instead wanted to talk about something more general,
+I’d have to change what the log looks like. For example, say I wanted
+to talk about the structure of the heap. I’d have to instead include
+information in the log about how the heap evolves over time. I’m not
+particularly concerned with how we get the information here at a
+technical level, but I’m currently simply instrumenting the program to
+log method-call sequences. I’m sure you could get useful information
+via a similar program instrumentation framework like Valgrind or a
+debugger.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-more-formal-with-it&quot;&gt;Getting more formal with it&lt;/h2&gt;
+
+&lt;p&gt;So now that I’ve presented some of this, I’d like to make the case
+that we can use machinery from abstract interpretation to help us draw
+these cool graphs. To start off developing the machinery we’ll need
+for graph, and abstraction, let’s first develop the “most precise” one
+I discussed above.&lt;/p&gt;
+
+&lt;p&gt;First, we need to define a little bit formally what our log looks
+like. In this example, the method call sequnce gives us an idea about
+the evolution of the program’s control flow. We can think about this
+as having our semantics running in an abstract machine, and our log
+entries (each individual line of the logs) showing us deltas that
+generate new machine states. In other words, log entries represent
+transitions from machine states to new machine states. Now, if our log
+contains all of the possible information we could need to recover the
+concrete execution of the program, we’d end up being able to use our
+log entries to perfectly recover the concrete execution of the
+program. Let’s say that our log is a list of transitions:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;t₁,t₂,...,tᵢ&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s assume that we have some type &lt;code class=&quot;highlighter-rouge&quot;&gt;transition&lt;/code&gt; that stands for
+whatever transitions are. In this example, my type transition would
+look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition =
+  | Entry of name * value list
+  | Return of value
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then, formally, each transition would take us from some program state
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt;, to a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&#39;&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;step : Σ → transition → Σ&lt;/code&gt;. Typically, we
+designate some initial state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σι&lt;/code&gt; that acts as the initial state of
+the program. If this is the case, then for any sequence of transitions
+&lt;code class=&quot;highlighter-rouge&quot;&gt;t₁,...,tᵢ&lt;/code&gt;, we have that the transitive closure of the step relation
+with that set of transitions will reach some new program point:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, so far I haven’t put any meaningful stipulations on what the
+transition function must look like. I have merely asserted that for it
+to be meaningful, we have that there be some definition of program
+states &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt; and a step relation that operates on states and
+transitions. But how do we know that the transition function we have
+in mind is actually meaningful? I haven’t worked out all the details,
+but I think you basically want some correspondence between derivations
+of new states via the &lt;code class=&quot;highlighter-rouge&quot;&gt;step&lt;/code&gt; function and the actual semantics for
+your program. In other words, you want this to hold: “whenever I
+observe that &lt;code class=&quot;highlighter-rouge&quot;&gt;Σι →ᵗ¹⁻ᵗⁱ Σᵢ&lt;/code&gt;, I can come up with a derivation in the
+semantics that mirrors that set of transitions.”&lt;/p&gt;
+
+&lt;p&gt;Now, notice that my transitions here are only giving us &lt;em&gt;partial&lt;/em&gt;
+information about program states. In reality, this is fine, as long as
+they’re giving us enough information to ascertain what we care
+about. But formally, it means that our transition relation won’t talk
+about the concrete program semantics, it’ll actually be talking about
+an abstract semantics. To make this idea more concrete, in my example
+logs here, I’ve included the function parameters and return
+values. But let’s say I &lt;em&gt;didn’t&lt;/em&gt;. Then, when we looked at a line in
+the log, say &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;g&lt;/code&gt;, we wouldn’t know what actual parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was
+called with. Instead, we’d be forced to think that &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; could have been
+called with anything (that the program could have called it with, of
+course).&lt;/p&gt;
+
+&lt;h3 id=&quot;producing-the-most-precise-graph&quot;&gt;Producing the “most precise” graph&lt;/h3&gt;
+
+&lt;p&gt;Now that I’ve set up all this machinery, what is the version of this
+“most precise” graph for our semantics. Here we’ll assume that our
+transitions have a type like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition = entry × line number × log number
+and entry =
+  | Entry of name * value list
+  | Exit of value
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s first define our program states. Our states are literally just
+going to be mirrorings of the transitions, except for a special
+initial state I designate as &lt;code class=&quot;highlighter-rouge&quot;&gt;Root&lt;/code&gt; so that our step function will
+then just be the identity. This will give us a forest of possible
+configurations (one linear sequence of states for each log).&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = log entry × line number × log number + Root
+Σᵢ (log_number) = Root
+step (_,i,k) (entry) = (entry,i+1,k)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here’s what it looks like for our two logs shown here:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-4.png&quot; alt=&quot;Shot 5&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;a-control-flow-analogue&quot;&gt;A control flow analogue&lt;/h3&gt;
+
+&lt;p&gt;Let’s say that we want to make the first graph above: in that setting
+we wanted to give a high level view of the program’s control flow,
+while still allowing the user to disambiguate points in the chart. In
+other words, we’re trying to find a way to compress the most recent
+picture – where we show all of the possible “unrolled” behavior –
+into the first one (that coalesces that behavior).&lt;/p&gt;
+
+&lt;p&gt;Since we’re trying to think about control flow problems (“who called
+what”), it seems sensible to think about the control flow behavior of
+the runs.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;y = 0
+&amp;gt; g(0)
+  &amp;gt; id(0)
+  &amp;lt; id with 0
+&amp;lt; g with 0
+&amp;gt; check_zero 0
+  &amp;gt; bad()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To build up our graph, we’ll start in the “main” function, and then
+watch for transitions. For example, upon seeing the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;g(0)&lt;/code&gt;
+transition, we’ll draw a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;. And then, upon seeing the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;id(0)&lt;/code&gt; transition, we’ll draw another new state &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;. How do we know
+where to go when we see the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;id&lt;/code&gt; transition, however? We want to
+return to the caller, but don’t have the information to know where to
+return.&lt;/p&gt;
+
+&lt;p&gt;The semantics of the program handles this by maintaining a stack of
+functions. We can do that here:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = frame list
+frame = function name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here, we’re ignoring arguments to functions (our frames don’t maintain
+environments), but we do get arbitrary context sensitivity as long as
+we set things up correctly.&lt;/p&gt;
+
+&lt;p&gt;Now, we need to define the step function for a single log, and then
+lift that up to a set of logs. This is pretty simple: when we see an
+entry we add generate a new state that adds it to the stack, and when
+we see a return we pop a frame from the stack. We assume that calls
+and returns are balanced (which would be required by the semantic
+rules defining soundness I mentioned above).&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;step Σ (&amp;gt; method)             = method :: Σ
+step (method :: Σ) (&amp;lt; method) = Σ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We then take the reflexitive transitive closure of this relation over
+both of our logs. This graph has as its nodes sequences of call frames
+(without their arguments / returns), and is isomorphic to the graph in
+the first example:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/viz-abs-5.png&quot; alt=&quot;Abs screenshot one&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, because this style of analysis allows an arbitrarily
+large permutations of method calling sequences, it allows the graph’s
+behavior to degrade to a pathological case we want to avoid. For
+example, consider the factorial function:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fac n = 
+  if n = 0 then 1 else fac (n-1)*n
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In that graph, we’d see an arbitrarily long chain of &lt;code class=&quot;highlighter-rouge&quot;&gt;fac&lt;/code&gt; calls when
+our log called the program for some large value of &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt;. Instead of
+showing that, let’s say we wanted to only have one occurrence of each
+method in the program, and then show arrows between method calls when
+there could potentially be control flow between them.&lt;/p&gt;
+
+&lt;p&gt;To set this up, we’ll change our state space slightly to mirror a
+little bit more of a traditional abstract machine. We’ll get an
+isomorphic state space, but we’ll massage the machine a bit so that
+it’s easier to abstract things later. Just as before, our state space
+will keep track of the current function &lt;code class=&quot;highlighter-rouge&quot;&gt;fn&lt;/code&gt;, but now we’ll keep a
+&lt;em&gt;pointer&lt;/em&gt; to the continuation. That pointer is going to be an address
+into a store &lt;code class=&quot;highlighter-rouge&quot;&gt;σ&lt;/code&gt;, which has the type &lt;code class=&quot;highlighter-rouge&quot;&gt;Address → Continuation&lt;/code&gt;. The
+store is just a place through which we thread continuations (in a
+linked-list style structure). Continuations are either function names
+and addresses, or the special &lt;code class=&quot;highlighter-rouge&quot;&gt;Done&lt;/code&gt; continuation (which says there is
+nothing else to do). We also need an auxiliary function &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt;, which
+gives us a fresh address for the store. We will define the step
+function to put a new address in the store whenever we see a new stack
+frame. The notation &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ (fn,k) ]&lt;/code&gt; reads, “extend the store &lt;code class=&quot;highlighter-rouge&quot;&gt;σ&lt;/code&gt;
+with a binding that makes &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; point to the continuation &lt;code class=&quot;highlighter-rouge&quot;&gt;(fn,k)&lt;/code&gt;.”&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = ⟨ fn, σ, c ⟩
+σ : Address → Continuation
+Continution = fn , address | Done
+c : Address 
+Σι = ⟨ main, [a₀ ↦ Done], a₀ ⟩
+
+a = alloc (Σ)
+step ⟨ fn, σ, c ⟩ (&amp;gt; f) = ⟨ f, σ ⊔ [ a ↦ (fn, k) ], a ⟩
+step ⟨ fn, σ, c ⟩ (&amp;lt; f) =
+  let fn&#39;, c&#39; = σ(κ) in ⟨ fn&#39;, σ, c&#39; ⟩
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For our example program above, we’d get this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; g(0)
+⟨ g, [a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
+  &amp;gt; id(0)
+  ⟨ id, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₂ ⟩
+  &amp;lt; id with 0
+  ⟨ g, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
+&amp;lt; g with 0
+⟨ main, [a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
+&amp;gt; check_zero 0
+  ⟨ check_zero, [a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
+  &amp;gt; bad()
+  ⟨ bad, [a₄ ↦ (check_zero, a₁),
+          a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₄ ⟩
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you haven’t guessed yet, this machine is an instance of the
+&lt;a href=&quot;http://matt.might.net/papers/vanhorn2010abstract.pdf&quot;&gt;abstracting abstract machines&lt;/a&gt;
+formulation, and my approach follows theirs.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-last-step-abstraction&quot;&gt;The last step: abstraction&lt;/h3&gt;
+
+&lt;p&gt;Now that we’ve rearranged our visualization to use an abstract machine
+structure, we need to exploit it. Let’s think about what happens to
+our state space as we add the next log. First, we need to start with
+the last state from performing our last analysis, and we need to
+“reset” the analysis into the initial state. But it’s not quite the
+same initial state: we just want to reset to the start function:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;⟨ main, [a₄ ↦ (check_zero, a₁),
+         a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
+y = 1
+&amp;gt; g(1)
+  ⟨ g, [a₅, (main,a₀), a₄ ↦ (check_zero, a₁),
+        a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₅ ⟩
+  ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now here, our function &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt; returns a fresh address &lt;code class=&quot;highlighter-rouge&quot;&gt;a₅&lt;/code&gt;. To get
+the behavior, we actually want to &lt;em&gt;reallocate&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;a₁&lt;/code&gt;. This means that
+our continuations have to be able to store &lt;em&gt;sets&lt;/em&gt; of functions, and
+&lt;em&gt;sets&lt;/em&gt; of next continuations. So instead of our store having the
+structure:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;σ : Address → Continution
+Continution = fn , address | Done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We need to lift continuations to hold sets of functions and
+addresses. Because they actually represent &lt;em&gt;sets&lt;/em&gt; of continuations,
+we’ll call them abstract continuations (or flow sets, in control flow
+terminology):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Continution^ = ℘(fn) × ℘(address) | Done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, we’re going to have to modify our &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt; function to “smush
+together” things that come from the same function. We’re going to do
+that by changing the structure of addresses (which I’ve so far been
+leaving as opaque). Instead, we’re going to make addresss simply
+function names:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Address = fn | Done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, our allocator is going to be this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alloc (fn,σ,c) = fn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Last, we have an operation &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ (fn,k) ]&lt;/code&gt; which we have to make
+sense of with our modified notion of continuations. First, we need to
+note that it must really be &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ {(fn,k)} ]&lt;/code&gt;. Then, the join
+operator &lt;code class=&quot;highlighter-rouge&quot;&gt;⊔&lt;/code&gt; will be the natural elementwise distribution over the
+sets of functions and continuations.&lt;/p&gt;
+
+&lt;h2 id=&quot;mapping-between-different-analyses-insertions&quot;&gt;Mapping between different analyses: insertions&lt;/h2&gt;
+
+&lt;p&gt;(This is the most hand-wavy section because I haven’t really figured
+it out yet..)&lt;/p&gt;
+
+&lt;p&gt;Alright, so now we have a few different kind of analyses, and I’m
+convinced that we can generate many, many more. But when we’re
+visualizing programs, we don’t just want one analysis, we want to mix
+a few of them together and map between them.&lt;/p&gt;
+
+&lt;p&gt;Let’s say that you want to map this 0CFA-continuation-allocator
+semantics to the “fully unrolled” visualization, like I showed in the
+second picture. What you do is to run both step functions in sequence,
+and recognize when you’re coalescing the fine grained states into the
+abstract states. Doing that, you establish a mapping between the 0CFA
+thing and the fully precise thing. But in general, I imagine a big
+interactive tool that allows you to take a set of logs (equivalently:
+one really big log) and imbue any sort of visualization (or analysis)
+you want onto it. I think this trick of running the different analyses
+in parallel can be formalized as Galois insertions, but I haven’t
+fully worked out the details yet.&lt;/p&gt;
+
+&lt;p&gt;For measure, I’m doing this right now in ongoing research: where I map
+function entries down to the set of concrete points in a “fully
+precise” (linear) log. The visualizer allows the user to click on
+function entries and disambiguate based on the places in the log that
+are being coalesced into that high level node.&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-notes&quot;&gt;Closing notes&lt;/h2&gt;
+
+&lt;p&gt;The fact that we can use the machinery of abstract machines to think
+about visualizing program executions is probably unsurprising to many
+people: concrete executions are, of course, simply instances of
+abstract executions. However, I think there are a few powerful things
+that we can take away from this exercise.&lt;/p&gt;
+
+&lt;p&gt;First, there are situations in which building an abstract interpreter
+might be too difficult to do with sufficient precision. Perhaps it’s a
+new programming language, toolchain, etc.. In these cases, I would
+guess that it’s easier to dynamically instrument the program to
+capture the facts you want, and then write a visualization for it
+post-hoc.&lt;/p&gt;
+
+&lt;p&gt;Next, real program runs allow us to “focus in” on the interesting
+behavior in our program. Concrete executions allow infinite precision
+(at the cost of soundness). In this post, I’ve set things up so that
+we can use abstract interpretation machinery to view and understand
+concrete runs. But I think there’s also room to be able to use these
+insights to design patterns that allow mixing the concrete and
+abstract worlds, or even turning the knobs on various
+analyses. Specifically, I think these ideas could immediately be used
+to visualize runs of a symbolic executor. Expanding on that, I think a
+good way to interact with a program analysis is to gradually “peel
+away” and “focus in” on various parts of the exeuction, in the way
+that I’ve tried to do here.&lt;/p&gt;
+
+&lt;p&gt;Last, thinking about this was interesting for me in that it helped
+further connect abstract interpretation to something tangible that
+makes sense to me (debugging a program). When I first learned about
+abstract interpretation (and still), I was tempted to think about it
+as something separate from a metaphor that I can easily comprehend:
+tracking concrete executions.&lt;/p&gt;
+
+&lt;p&gt;The upshot of this post is this question: to what extent can we use
+the abstractions we design for program &lt;em&gt;analysis&lt;/em&gt; to also &lt;em&gt;visualize&lt;/em&gt;
+executions of those programs. This is one of the first posts I hope to
+make on this topic. It came out of wanting to generalize some of the
+work I’d been doing in visualizing security properties for
+programs. That being said, I think there’s still a long way to go:
+defining more concretely what an “instrumentation” is, trying it out
+for a lot more examples, and applying it to popular program
+visualization tools (like &lt;a href=&quot;http://pythontutor.com/&quot;&gt;Python Tutor&lt;/a&gt;!). I
+hope I get a chance to work on this more and flesh some of these ideas
+out in the future.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 11 May 2016 00:00:00 -0400</pubDate>
+        <link>/program-analysis/2016/05/11/program-viz-galois/</link>
+        <guid isPermaLink="true">/program-analysis/2016/05/11/program-viz-galois/</guid>
+        
+        
+        <category>program-analysis</category>
+        
+      </item>
+    
+      <item>
+        <title>Half-Baked Ideas on The Future of Static Analysis and Security</title>
+        <description>&lt;p&gt;It is well known that security policies for programs (such as
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Non-interference_(security)&quot;&gt;noninterference&lt;/a&gt;) are not properties of a single run, but rather of
+properties about sets of runs. For example, the following program uses
+a so-called &lt;em&gt;implicit&lt;/em&gt; flow to exfiltrate the value of its secret
+input:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input(secret)
+if (secret == 0) then
+    output(1)
+else
+    output(0)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This program is bad because it leaks something (one bit of knowledge)
+about its input: whether or not it is zero. Informally, a program that
+consumes a secret output and produces a publicly observable output is
+only secure if that ouput is a constant. Because most programs that
+produce constant outputs are not useful, this definition is often
+upgraded to a program that takes a public and private input. The
+program is then secure if — for any &lt;em&gt;fixed&lt;/em&gt; public input iᵖ
+— and all secret inputs iˢ, the program produces a fixed output
+o. Simple batch programs are boring and unrealistic, so there are a
+number of ways in which we can upgrade these definitions to more
+realistic programs. This is called noninterference, and it is not a
+property of single executions, but rather a property of a &lt;em&gt;set&lt;/em&gt; of
+executions.&lt;/p&gt;
+
+&lt;p&gt;My intention with this post is to make the argument that we are not
+being as systematic as we could be about constructing program analyses
+based on our security definitions.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.cs.cornell.edu/fbs/publications/Hyperproperties.pdf&quot;&gt;Hyperproperties&lt;/a&gt; offer a general framework for discussing these
+properties on sets of program exectuions.  But hyperproperties only
+give us the means to define what it means for a program to be secure,
+they don’t give us a tractable mechanism for checking program
+security. It’s also worth noting that hyperproperties do have some
+applications beyond merely security properties. They can reason about,
+e.g., properties of concurrent executions or program
+refinement. Clearly, the idea of checking sets of program executions
+is not radical, but doing so has proved difficult and impractical.&lt;/p&gt;
+
+&lt;p&gt;To check programs for security definitions like noninterference, a
+variety of mechanisms have been proposed. Perhaps the most popular in
+the literature has been security-typed languages, where types encode
+which information can flow to which sources and whose type systems
+enforce the security gaurentee. &lt;a href=&quot;http://www.cs.cornell.edu/jif/&quot;&gt;Jif&lt;/a&gt; and &lt;a href=&quot;https://hackage.haskell.org/package/lio&quot;&gt;lio&lt;/a&gt; are notable examples
+that fall into this category.&lt;/p&gt;
+
+&lt;p&gt;Checking properties about programs has a rich history in programming
+languages, that have established a variety of fields: static analysis,
+type theory, and model checking to name a few. Most of these
+techniques were originally developed with the intention of checking
+facts about single-run program properties (e.g., pointer analysis,
+taint analysis, etc..). Applying them to security is often nonobvious,
+because they have to be adapted to talk about &lt;em&gt;sets&lt;/em&gt; of program runs.&lt;/p&gt;
+
+&lt;p&gt;Figuring out how to upgrade our single-run techniques to reason about
+sets of runs has been the theme of a lot of security research:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Security type systems (like the ones in Jif) use type-based
+techniques to give a composable way to reason about security of a
+program from smaller components, just as type systems have done for
+traditional properties like type correctness and resource usage
+(linear logic).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://users.soe.ucsc.edu/~cormac/papers/popl12b.pdf&quot;&gt;Faceted execution&lt;/a&gt;
+(as seen in languages like
+&lt;a href=&quot;https://projects.csail.mit.edu/jeeves/&quot;&gt;Jeeves&lt;/a&gt;) is a method of
+enforcing program security dynamically. It uses an upgraded form of
+taint tracking to reason about what information has influenced
+computation of variables. Then it uses this to show observers a view
+of the computation that ensures they don’t learn secret inputs. This
+is analogous to inline reference monitors for policies like “the
+network can never be accessed after the file is read.”&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Relational program verifiection reasons about pairs of program
+components (like functions that manipulate heaps) in isolation and
+glues them together using composition. An example of this is
+&lt;a href=&quot;http://research.microsoft.com/apps/pubs/default.aspx?id=204802&quot;&gt;Relational F*&lt;/a&gt;,
+which uses dependent types to specify program behavior on pairs of
+input states and relates their output states.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.cs.cornell.edu/~clarkson/papers/clarkson_hyper_tl.pdf&quot;&gt;Hyper temporal logics&lt;/a&gt;
+levels up standard notions of model checking to apply them to
+checking temporal logic hyperproperties. That work includes a notion
+of model checking that begins by taking the program and modeling it
+as a state space of a single execution, and then runs a product
+semantics for it, showing how to systematically use this semantics
+to check hyper properties about temporal assertions on state
+sets. This allows a rich encoding for many trace-based
+hyperoproperties such as generalized noninterference and
+observational determinism.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-future-push-button-security-checking&quot;&gt;The Future: Push Button Security Checking&lt;/h2&gt;
+
+&lt;p&gt;One thing that I think is lacking in security currently is that our
+analyses are only tenuously tied to the properties we want to
+check. There’s no systematic way to go from a semantics and fact to a
+way to check facts about those properties for programs. Instead, we
+see lots of one-off security definitions, and lots of tools for
+checking definitions, but we rarely see security statements along with
+a systematically derived mechanism to check facts about those
+programs. This is an area I think we as a field could improve on.&lt;/p&gt;
+
+&lt;p&gt;Within PL, the
+&lt;a href=&quot;http://matt.might.net/papers/vanhorn2010abstract.pdf&quot;&gt;abstracting abstracting machines&lt;/a&gt;
+technique to deriving abstract interpreters has this flavor. You find
+the semantics you want to check, bake in the facts you want to check,
+and then systematically derive an abstract interpreter in a cookbook
+style. But we have no such bushbutton methodology for checking
+security properties of programs. As a designer of a system for
+security today, you have to read the vast literature on the set of
+security properties you might want to check, find one that suits you,
+and &lt;em&gt;then&lt;/em&gt; dream up an enforcement technique for whatever language you
+want to work with.&lt;/p&gt;
+
+&lt;p&gt;I’m not sure exactly what this would look like. But I think it’s going
+to be something like this: write down the semantics for the program
+you want, and then manipulate the semantics in some way to get a state
+space representing what you want. Then, perform a simple abstraction
+over that state space to get the properties you want to check.&lt;/p&gt;
+
+&lt;p&gt;Here’s how I think this might work. First, you could imagine taking
+your semantics and simply running it in parallel with another version
+of the program, so that the concrete state space is now a product
+space. Hyperproperties that rely on program pairs can be specified
+using sets of concrete runs. Now abstract the program using our AAM
+trick and get an abstract state space that is lifted to each component
+of the pair. Abstract states concretize to pairs of concrete runs, and
+now checking properties of executions means extending these properties
+to work on our abstract domain, however they are represented. E.g., if
+they are represented as symbolic states in a symbolic executor, you
+would write symbolic formulas asserting noninterference, though
+certainly other forms are possible. It’s also worth noting that this
+works for more than just pairs, you could also imagine doing it for
+triples to check properties like generalized noninterference.&lt;/p&gt;
+
+&lt;p&gt;The abstraction technique I proposed is running a product program and
+then doing the abstraction pointwise over each pair component. I think
+this is a good first cut because it is easier to see how it relates to
+the extensional property we want to check: simply check the property
+by concretizing each point in the abstract state product and running
+it through the formula. I’m not sure whether or not this technique
+will scale to larger programs.&lt;/p&gt;
+
+&lt;p&gt;One thing that’s missing from this technique is that the abstraction
+doesn’t know anything about the property we want to check, the
+abstraction is simply pointwise and the abstract domain hasn’t been
+efficiently engineered to be tailored to semantic knowlege about the
+program. But I think this is the right place to start, because it
+gives us an intuitive baseline for our abstraction.&lt;/p&gt;
+
+&lt;p&gt;Let’s say that we want to level this technique up. We would want an
+abstraction that &lt;em&gt;does&lt;/em&gt; know things about how the program is
+operating. Here’s how I think we might do that for the specific case
+of noninterference checking: run the original program under a faceted
+execution semantics with faceted values for the inputs we care
+about. The faceted semantics is implicitly unrolling this product
+program when it needs to to gaurentee that our security needs are
+met. If we want to check whether the program is secure, we simply need
+to look at the output and ask whether or not it is a faceted value. If
+it is, we still might be able to do something. Let’s say, for example,
+that we can prove the faceted value produces the same result no matter
+what the principle. If we can do this, we can still gaurentee the
+program doesn’t leak any information.&lt;/p&gt;
+
+&lt;p&gt;I’m not sure why this intuition holds, but I have a feeling that it’s
+because the facet refines the “dumb” product semantics so that it does
+the product behavior only when necessary. Frankly, I’m not sure if
+this single case generalizes to the intuition about other sorts of
+hyperproperties. But I this story of systematically deriving abstract
+interpreters for security properties is very appealing, and one that
+we should continue to push on.&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 10 Mar 2016 00:00:00 -0500</pubDate>
+        <link>/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</link>
+        <guid isPermaLink="true">/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</guid>
+        
+        
+        <category>security</category>
+        
+      </item>
+    
+      <item>
+        <title>The Environment Problem and Abstract Counting</title>
+        <description>&lt;p&gt;Over the weekend I attempted to read a paper by Matt Might called
+&lt;a href=&quot;http://matt.might.net/papers/might2007lfa.pdf&quot;&gt;Logic Flow Analysis&lt;/a&gt;. Logic
+Flow Analysis promises to marry constraint solvers and abstract
+interpretation so that they play off each other to produce better
+analysis results. Unfortunately, I fell somewhat flat on this, as the
+amount of technical detail in the paper is fairly overwhelming. So,
+instead, I switched to a simplified version of the paper Matt
+recommended I read instead: &lt;a href=&quot;http://matt.might.net/papers/might2010shape.pdf&quot;&gt;“Shape Analysis in the Absence of Pointers
+and Structure”&lt;/a&gt;. The
+paper describes an important problem in program analysis I hadn’t
+realized before, and manages to do so in a fairly approachable manner
+(meaning people like myself can read it). Or at least, as approachable
+as a paper can be whilst still including lines like the following:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Under anodization, bindings are not golden, but may be temporarily
+gold-plated.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Keep in mind, this is a (nominally, at least) a paper on programming
+language theory, and not battery design.&lt;/p&gt;
+
+&lt;h1 id=&quot;whats-the-paper-about&quot;&gt;What’s the paper about?&lt;/h1&gt;
+
+&lt;p&gt;The paper is about showing that control flow analyses for functional
+languages are insufficient to reason about properties we really might
+want to know about because they neglect to take the structure of
+environments into account. If you read traditional accounts of control
+flow analysis, you’ll see things like “function f flows to label 2”
+and the like. One key point that Matt makes is that talking about
+functions is insufficient, because it neglects to account for the fact
+that it is &lt;em&gt;closures&lt;/em&gt;, and not simply functions, that account for the
+runtime behavior of the program. Control flow analysis is really good
+about reasoning about how &lt;em&gt;functions&lt;/em&gt; flow through programs, but
+talking about environments is a separate issue.&lt;/p&gt;
+
+&lt;p&gt;As always, let’s start with an example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(let ((f (lambda (x h)
+  (if x
+    (h)                ; Line 3
+    (lambda () x)))))
+  (f #t (f #f nil)))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s say that we want to optimize the program. We’re going to do it
+as follows: we’re going to run a CFA and, if we see that there’s only
+one possible callee for a given call site (like &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; in line 3), we’ll
+replace it by the actual function that’s called. We run CFA and
+compute the set of functions that reach that point. What functions can
+&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; be? &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; is called once with &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;, so &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; could be &lt;code class=&quot;highlighter-rouge&quot;&gt;nil&lt;/code&gt;, and then
+&lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; is called with the result of &lt;code class=&quot;highlighter-rouge&quot;&gt;(f #f nil)&lt;/code&gt;, which is &lt;code class=&quot;highlighter-rouge&quot;&gt;(lambda ()
+x)&lt;/code&gt;. So if &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; is invoked, it will only ever be &lt;code class=&quot;highlighter-rouge&quot;&gt;(lambda () x)&lt;/code&gt;,
+meaning that we could inline that function in place of &lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; in line 3.&lt;/p&gt;
+
+&lt;p&gt;The problem is that doing this changes the meaning of the program:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(let ((f (lambda (x h)
+  (if x
+    (lambda () x)
+    (lambda () x)))))
+  (f #t (f #f nil)))
+ --&amp;gt; #t
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The problem with the previous line of thought is that we didn’t take
+into account that the &lt;em&gt;first&lt;/em&gt; invocation of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; produces the closure
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;(lambda () x), {x |-&amp;gt; #f}&amp;gt;&lt;/code&gt;, which is then subsequently fed in for
+&lt;code class=&quot;highlighter-rouge&quot;&gt;h&lt;/code&gt; in the second use of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt;.  When executed, the closure looks up x
+from its environment and gets the value &lt;code class=&quot;highlighter-rouge&quot;&gt;#f&lt;/code&gt; out.&lt;/p&gt;
+
+&lt;p&gt;Control flow analyses don’t usually take the closure structure into
+account. The paper makes the argument that we should think of this
+so-called environment analysis as analogous to shape analysis.&lt;/p&gt;
+
+&lt;h1 id=&quot;stating-the-problem&quot;&gt;Stating the problem&lt;/h1&gt;
+
+&lt;p&gt;The paper defines the semantics of a CPS-style lambda calculus using a
+variant of the standard
+&lt;a href=&quot;http://matt.might.net/articles/cesk-machines/&quot;&gt;CESK&lt;/a&gt; machine (leaving
+off the K). The machine employs the standard
+&lt;a href=&quot;http://matt.might.net/papers/vanhorn2010abstract.pdf&quot;&gt;AAM&lt;/a&gt;
+abstraction, indirecting values through the store: environments map
+variables to addresses, and the store maps addresses to values.  AAM
+also adds some auxiliary information (called the &lt;em&gt;time&lt;/em&gt;) to help the
+analysis designer control which things in the program get “smushed
+together:” e.g., calls with the same calling context (up to some
+finite bound that represents sensitivity).&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, when you play this trick of finitizing the store to get
+a decidable analysis, you &lt;em&gt;lose&lt;/em&gt; the ability to reason about how many
+things have been “smushed together.”&lt;/p&gt;
+
+&lt;h1 id=&quot;solving-the-problem-abstract-counting&quot;&gt;Solving the problem: abstract counting&lt;/h1&gt;
+
+&lt;p&gt;When we run our abstract interpretation, we end up with an abstract
+environment &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ^ : Var → Addr^&lt;/code&gt;, that maps variables to &lt;em&gt;abstract&lt;/em&gt;
+addresses. The (abstract) store maps abstract addresses to abstract
+values.  We want to determine, for &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ&#39;&lt;/code&gt;, and some variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x
+∈ dom(ρ)&lt;/code&gt;, if &lt;code class=&quot;highlighter-rouge&quot;&gt;σ(ρ(x)) = σ(ρ&#39;(x))&lt;/code&gt;. If we can successfully decide this
+is true for all of the free variables (&lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; in our example) in the term
+(&lt;code class=&quot;highlighter-rouge&quot;&gt;(lambda () x)&lt;/code&gt; in our example), then we can safely inline the
+function. Unfortunately, in general, because &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ(x)&lt;/code&gt; represents to a
+&lt;em&gt;set&lt;/em&gt; of concrete values, we would have to decide that &lt;code class=&quot;highlighter-rouge&quot;&gt;∀ x, x&#39;. x ∈ X
+= x&#39; ∈ X&#39;&lt;/code&gt;, where &lt;code class=&quot;highlighter-rouge&quot;&gt;X = α (σ(ρ(x)))&lt;/code&gt;, the concretization of &lt;code class=&quot;highlighter-rouge&quot;&gt;σ(ρ(x))&lt;/code&gt;,
+and &lt;code class=&quot;highlighter-rouge&quot;&gt;X&#39; = α (σ(ρ&#39;(x)))&lt;/code&gt;. Obviously this is false when the cardinality
+of &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;X&#39;&lt;/code&gt; is greater than one.&lt;/p&gt;
+
+&lt;p&gt;The key insight is that we instrument the analysis to keep track of
+“how many things have been smushed together” for a given location in
+the store. In other words, we will add a bit of information to the
+analysis to say that – even though &lt;code class=&quot;highlighter-rouge&quot;&gt;|α(σ(ρ(x)))| &amp;gt; 1&lt;/code&gt; in general, we
+really know that it actually represents &lt;em&gt;only one&lt;/em&gt; concrete
+instantiation. We can do this by keeping a separate map, called the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;count&lt;/code&gt;, that tracks how many things have been merged into the heap at
+a given point. When we put something into the abstract store, we also
+record its &lt;code class=&quot;highlighter-rouge&quot;&gt;count&lt;/code&gt; as &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;, when we merge another thing at that
+location, we increment the count. It turns out that our argument
+really only works for singletons, so in general it really only helps
+to know that a location’s count is either one or greater than one.&lt;/p&gt;
+
+&lt;p&gt;This idea is what Matt calls abstract counting. In his paper he some
+machinery to do what he calls &lt;em&gt;anodization&lt;/em&gt; (remembering something has
+a count of 1) and &lt;em&gt;deanodizing&lt;/em&gt; (incrementing its count &lt;em&gt;past&lt;/em&gt; one) a
+value. I don’t think this is very intuitive to me: instead I think
+it’s more clear to have an explicit count that tells us how many times
+something has been abstracted.&lt;/p&gt;
+
+&lt;p&gt;This is a neat little trick that helps get past the problem: when
+you’re dealing with functions involving free variables, it’s useful to
+know how many different possible instances of things could be closed
+over for a given variable. Knowing the answer seems generally useful
+to designing analyses in the AAM style.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 06 Mar 2016 00:00:00 -0500</pubDate>
+        <link>/program-analysis/2016/03/06/the-environment-problem/</link>
+        <guid isPermaLink="true">/program-analysis/2016/03/06/the-environment-problem/</guid>
+        
+        
+        <category>program-analysis</category>
+        
+      </item>
+    
+      <item>
+        <title>Efficient SAT Solving</title>
+        <description>&lt;p&gt;The &lt;a href=&quot;http://en.wikipedia.org/wiki/Boolean_satisfiability_problem&quot;&gt;Boolean satisfiability problem&lt;/a&gt; is simply stated:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Given a set of propositional formulas, decide whether or not there is an assignment to the variables in the formula such that the formula is satisfied (true).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This basically says: given a large set of constraints with AND and ORs, can you find a solution to the set of constraints. Interestingly, this was the first example of a problem known to be NP complete. As such, many classic problems can be reduced to SAT. The common stigma among computer science students is that if a problem is &lt;a href=&quot;http://en.wikipedia.org/wiki/NP-complete&quot;&gt;NP complete&lt;/a&gt;, you’re basically out of luck, and shouldn’t bother trying to find a better solution. However, this is far from the case, as demonstrated by the amazing advances made in industrial strength SAT solvers! There will always be evil instances of the SAT problem, but in reality, we can solve the SAT problem relatively efficiently.&lt;/p&gt;
+
+&lt;p&gt;So, SAT serves a number of purposes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;In some theoretical sense, it’s nice to know that we can reduce many other problems to SAT, it gives the problem a sort of mathematical relevance. (There are problems we can’t reduce to SAT, problems harder than NP complete, &lt;a href=&quot;http://en.wikipedia.org/wiki/Co-NP-complete&quot;&gt;co-NP compete&lt;/a&gt; problems and the &lt;a href=&quot;http://en.wikipedia.org/wiki/Polynomial_hierarchy&quot;&gt;Polynomial hierarchy&lt;/a&gt; are examples!)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We can use this reducibility in our proofs about NP complete problems, encoding other problems in the form of SAT.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Going beyond this, there is a real use of SAT in the real world! We can encode other problems in SAT, and then use a SAT solver to find a solution to these problems!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For a long time, the reducibility of SAT was merely of theoretical interest: even if we were able to reduce other problems to SAT, the SAT instances were still relatively huge, containing a great number of clauses and variables. The could not be realistically solved. And then something changed: computers started getting faster, people started caring about using SAT to encode their problem and then solving it with an efficient solver. Along with the development of faster hardware came better techniques for solving SAT, and I wanted to point out a few of them here.&lt;/p&gt;
+
+&lt;p&gt;There’s an obvious algorithm for solving SAT: try all the possible assignments of the variables until you find one that works, if you don’t then it’s not satisfiable. Improving on this, there’s a slightly smarter algorithm, known as the &lt;a href=&quot;http://en.wikipedia.org/wiki/DPLL_algorithm&quot;&gt;DPLL algorithm&lt;/a&gt;. You can read the wikipedia page to find more information about this one, but I can give the basic overview.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Start with a large list of clauses, these are sets of literals that are connected with ORs, the formula is taken as the conjunction of all of these clauses. So for example:&lt;/p&gt;
+
+    &lt;p&gt;[x1, ~x2][x2, ~x3, x1] [~x3, ~x1]&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That formula says, “x1 or NOT x2,” AND “x2, or NOT x3, or x1,” AND “NOT x3 or NOT x1.” This formula has multiple satisfying assignments, one of them being [x1=T,x3=F,x2=F].&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Construct a partial assignment. Initially this will have no variables assigned. For example, the assignment {} means that no variables have been assigned. Call this assignment set A. Start with A={}.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Check to see if the formula is satisfied by A.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Check to see there are any empty disjunctions, if so return false and go back to try again.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Choose a random variable in the formula but not in A. Chose a value for it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Do &lt;em&gt;unit propagation&lt;/em&gt;. This is best shown by an example. Let’s say that we have the partial assignment {x1=F}. Now look at the first clause in our formula. Eventually it has to be true. This means that x2 must be false. Why? Consider it weren’t, then we know there would be no way to satisfy all of the clauses in our formula.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;After doing unit propagation, go back to step 3 again and again, and backtrack until you either try all the combinations of variables, or you find a satisfying assignment.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let’s try an example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;We set A={}.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We see if the formula is satisfied by A. Is it? Well, no, because A doesn’t assign any variables.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Randomly pick x1, randomly assign it to be false. Now A={x1=F}.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Do unit propagation. Look at the first formula. Oh no! We find that now x2 has to be F or there is no way our assignment will work! So now A={x1=F,x2=F}.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Let’s look at the other formulas: Oh no!, we now find that x3 must also be false, otherwise the second clause won’t work! So now A={x1=F,x2=F,x3=F}. Now we have no other variables to pick.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We check to see if that assignment works on our last clause, it does! So now we have a satisfying assignment.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But let’s say that it hadn’t worked. Let’s say that our last clause had been something like [x3, ~x1]. We would have backtracked and kept trying assignments.&lt;/p&gt;
+
+&lt;p&gt;This algorithm lets you kind of gradually fill out a partial assignment, and the same technique can be used in many other problems within complexity (browse any complexity book, we used &lt;a href=&quot;http://www.cs.princeton.edu/theory/complexity/&quot;&gt;Aorara and Barak’s&lt;/a&gt; book in my class.&lt;/p&gt;
+
+&lt;p&gt;Although DPLL does pretty well, it still didn’t work well enough (when implemented naively) to solve real problems quickly enough, which is why I’ll focus now on how you can beef it up to really make it kick so serious ass. First, why do you want to do this?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can use SAT to encode &lt;a href=&quot;http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.19.6391&quot;&gt;bounded model checking&lt;/a&gt;, which asks questions about stateful software systems. This has seen much use in the hardware verification industry, for example!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SAT forms the basis for &lt;a href=&quot;http://en.wikipedia.org/wiki/Satisfiability_Modulo_Theories&quot;&gt;SMT solving&lt;/a&gt;. These are theories that combine SAT with more expressive theories, such as linear arithmetic or models of pointer logics. SMT solvers are the underlying technology behind many static analysis engines, so they&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can encode many other SAT problems, such as graph isomorphism, maximum cut, etc…, in the form of SAT. While many of these problems have more specialized decision procedures for their domain specific applications, SAT is still a favorite way to solve hard problems, as long as you can find a suitable encoding. (Last semester my advisor and some other students considered using a SAT encoding to solve a type checking problem, I believe…?)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For these wide range of applications, SAT has gained a reputation as the “assembly language of hard problems.” However, it wasn’t until rather recently that the really killer SAT techniques came along. Before that, classic problems such as &lt;a href=&quot;http://en.wikipedia.org/wiki/Symbolic_execution&quot;&gt;symbolic execution&lt;/a&gt; were infeasible.&lt;/p&gt;
+
+&lt;p&gt;The real breakthrough in SAT solving technology came in a few forms:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;em&gt;clause learning&lt;/em&gt; really helped out efficiency: when you got to an assignment which didn’t work, you would add it as a clause in your database. This helps prune part of the search space very quickly. The question (or optimization) then becomes which clauses to learn. Some clauses are more helpful than others, some portions of the search space are pushed on much harder, you really want to include clauses which help you prune as much of the search space as possible, without including a bunch of useless clauses. (Adding a new clause can hurt you, because you will forevermore have to do unit propagation on that clause, slowing down your procedure.) The best techniques use elaborate heuristics to determine which clauses should be learned, and forget various learned clauses if they seem to not be very helpful in pruning the space.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;At the same time, non chronological backtracking became a huge deal within the SAT solving community. This was the idea that: hey, don’t just jump back to the most recent assignment, go back a bunch of assignments. What’s the intuition here? Some variables matter a lot more than others, if you choose one variable badly, they can really start hurting your search, don’t waste time in a bad portion of the search space when you’re already hosed because you made a bad decision a long time ago!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Variable selection heuristics also really help. This basically gives some method to our madness in my step 5. Instead of choosing a variable to select at random, you can make a very well reasoned and well informed decision by using some good information. There are few of these heuristics, but off the top of my head I can think of VSIDS, which is used in the Chaff algorithm (implemented in the zChaff solver). zChaff was one of the first real killers in the new SAT solvers, and really worth looking into.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;There are some very smart tricks that you can play with the data structures representing SAT formulas within a solver, making it much quicker to do unit clause propagation. For example the “two watched literals” approach allows unit propagation to be quite speedy!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These breakthroughs have actually made SAT solving quite quick, such that we can now solve formulas with hundreds of thousands of variables (and millions of clauses!) in them! All of these techniques tweak the DPLL algorithm with various improvements: at the core it’s still the same basic procedure, with a few optimizations on the selection heuristics, clause database, etc… It’s also worth noting that there are hill climbing heuristics (notably WalkSAT and its variants), these are not sound: if a satisfying assignment does not exist, these solvers cannot determine so. For this reason (and the fact that SAT has seen some real speedups in the last twenty years!), these non DPLL based algorithms kind of fell by the wayside, however, these procedures do present promise for the case of MAX SAT, where you want to find (an approximation to) the assignment that satisfies the most clauses. However, the class of real world problems which MAXSAT solves is smaller than SAT, so I haven’t seen as much attention on it lately..&lt;/p&gt;
+
+&lt;p&gt;If you want to learn more about SAT, I’d recommend the following:&lt;/p&gt;
+
+&lt;p&gt;There is a &lt;a href=&quot;http://www.springer.com/computer/theoretical+computer+science/book/978-3-540-74104-6&quot;&gt;Decision Procedures&lt;/a&gt; book that you can read! Honestly, I own this, and it’s not really all that great. It does, however, contain a relatively readable explanation of how SAT works, along with the techniques for solving it rather quickly.&lt;/p&gt;
+
+&lt;p&gt;There is an international &lt;a href=&quot;http://www.satcompetition.org/&quot;&gt;SAT competition&lt;/a&gt;! This competition has been instrumental in advancing the state of the art for high performance industrial strength SAT solvers. It’s worth browsing through the improvements over the years to the various solvers, along with the problem sets that are used to test various SAT solvers. (For example, some problems come from constraints generated by bounded model checkers, some come from graph algorithms, etc…)&lt;/p&gt;
+
+&lt;p&gt;A real transformational read for me was the paper that describes the implementation of the &lt;a href=&quot;http://www.cs.umd.edu/~micinski/posts/minisat.se&quot;&gt;MiniSat&lt;/a&gt; solver. This is a high powered solver (it took the world cup a few times!) that a simple (and small!) implementation. I would recommend reading the solver’s source (written in simple C++) next to the &lt;a href=&quot;http://minisat.se/downloads/MiniSat.pdf&quot;&gt;paper that describes MiniSat’s implemenation&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;SAT solving is a fun passtime, there are lots of small simple tricks you can play, and becoming well versed in the developments isn’t all that hard. Perhaps more enticing is the knowledge that you can take a difficult problem and model it in SAT, and then farm it out to one of these quite excellent tools and get your problem solved for you!&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 22 Sep 2012 00:00:00 -0400</pubDate>
+        <link>/algorithms/sat/2012/09/22/efficient-sat-solving/</link>
+        <guid isPermaLink="true">/algorithms/sat/2012/09/22/efficient-sat-solving/</guid>
+        
+        
+        <category>algorithms</category>
+        
+        <category>sat</category>
+        
+      </item>
+    
+      <item>
+        <title>On Understanding Coinduction</title>
+        <description>&lt;p&gt;Here’s the basic story:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Induction is about finite data, co-induction is about infinite data.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The typical example of infinite data is the type of a lazy list (a
+stream). For example, lets say that we have the following object in
+memory:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let (pi : int list) = (* some function which computes the digits of pi. *)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The computer can’t hold all of pi, because it only has a finite amount
+of memory! But what it can do is hold a finite program, which will
+produce any arbitrarily long expansion of pi that you desire. As long
+as you only use finite pieces of the list, you can compute with that
+infinite list as much as you need. However, consider the following
+program:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let print_third_element (k : int list) =
+  match k with
+    | _ :: _ :: thd :: tl -&amp;gt; print thd
+
+print_third_element pi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;What does this program do? Intuitively, this program should print the
+third digit of &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt;. In reality, the behavior differs between
+languages. In OCaml, any argument to a function is evaluated before
+being passed into a function (so called strict evaluation). If we use
+this reduction order, then our above program will run forever
+computing the digits of &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt; before it can be passed to our printer
+function (which never happens). Since the machine does not have
+infinite memory, the program will eventually run out of memory and
+crash. However, morally this might not be the best evaluation
+order. Our program does not use all of the sequence &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt;, it uses only
+the third element. Other languages (most notably, Haskell) use a lazy
+evaluation order, in which functions are evaluated only as much as
+they need be so that further computation can be done.&lt;/p&gt;
+
+&lt;p&gt;There are other examples of infinite structures in computing as well: any program which runs forever (a so called, process) is typically defined in a similar manner. Operating systems, web servers, text editors, and most other interesting programs. The basic idea behind these processes is closely tied to the example given above: rather than being specified by recursive calls, these processes are modeled as co-recursive calls (with their associated co inductive types).&lt;/p&gt;
+
+&lt;p&gt;I’m not prepared to explain coinduction in it’s full generality, but I wanted to give some pointers to literature that introduces it. One basic story is clear:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Inductive structures form least fixed points, and coinductive structures form greatest fixed points.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;While this tag line is used all over the place, it’s not really clear
+in what sense (co)inductive form fixed points, and it’s really not
+clear how one fixed point would be “larger” than another. The answer,
+as it turns out, is somewhat involved and deals with a bit of algebra:
+specifically, treating inductive and coinductive types as forming
+algebras (sets with operations on those sets) with certain properties
+that you use to define recursive functions and inductive proof
+principles.&lt;/p&gt;
+
+&lt;p&gt;I’ll assume that you’re familiar with regular old induction, and
+recursive definitions of functions. The following definition suffices
+to think about corecursive functions:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Recursive functions break apart finite data, co-recursive functions build infinite data.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I think this seems strange to people who haven’t seen it before (it still seems strange to me):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;The need for infinite data is not clear to those who have never used it. We wrote programs without using infinite data, why use it?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We can’t physically hold infinite objects in memory. By contrast, we can hold finite data in memory. It seems kind of crazy that we should be able to hold an infinite object in memory. Here’s something to alleviate your understandable discomfort: let’s say we have an infinite loop in a program which outputs a long sequence of (unknown) digits (say, pi). Can we keep the output of this program in memory? Not all of it. So what do we do instead? We keep the (finite) program (the code of the loop) which generates the object in memory.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We don’t ever use all of the infinite object in our programs, we only ever use a finite prefix of an infinite object.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Coinduction is cool, however, because it opens the gateway to a whole different side of viewing datatypes and computation. Most datatypes that we work with also have an analogue that can be thought of as a “lazy” type, sometimes the silver bullet in implementing elegant algorithms, amortized bounds, or cute programming tricks (as in Chris Okasaki’s &lt;a href=&quot;http://www.amazon.com/Purely-Functional-Structures-Chris-Okasaki/dp/0521663504&quot;&gt;Purely Functional Data Structures&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Another thing which I’ve always been fascinated is the idea that we can represent computation over arbitrarily sized things with finite space. This is the whole notion underpinning loops, which desugar to fixed points, which desugar to similar interpretations to what I’ve been describing here. When the computation is meantf to terminate, these loops take finite data, do some computation over it in some computation time (complexity) parameterized by (typically) the size of the input. This is the idea of how we give semantics to loops, though in reality loops do not always terminate, and in reality many programming languages are given “big step” (coinductive) semantics! Here we can see a cute connection between a desugaring of a programming language’s semantics and the data structures that can live inside languages.&lt;/p&gt;
+
+&lt;p&gt;In what follows, I discuss various techniques that you might use to learn about coinduction. I would suggest that you take the following approach:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Learn a few common lazy data structures in different languages (say, Haskell, OCaml, and JavaScript). Enough to get the idea.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Spend some time thinking about what infinite data structures are, and then puzzle over what an infinite proof might look like and why you would use one.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Pull out a theorem prover and work through some exercises in Coq that deal with coinduction. Read the CPDT or the Coq’Art book and work the examples aside the text.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;After spending some time thinking over those, read the total functional programming paper.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;To go even lower level, sit down at a coffeeshop and transcribe the tutorial paper on coalgebras and coinduction.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Go back to the examples in Coq, rework all of them, and spend a while thinking about and implementing your own (I’m on this step :-).&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;the-data-structures-approach&quot;&gt;The data structures approach&lt;/h1&gt;
+
+&lt;p&gt;To actually learn about coinduction by analogy to familiar programming structures, you might learn about lazy data structures, or lazy languages:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Chris Okasaki’s Purely Functional Data Structures book contains a number of interesting data structures that rely heavily on the use of laziness to guarantee their amortized bounds.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The &lt;a href=&quot;http://en.wikibooks.org/wiki/Haskell&quot;&gt;Haskell wiki book&lt;/a&gt; always has interesting things to say about the language, as well as the archives of the actual Haskell wiki and mailing list.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Any other Haskell book or reference will surely have a lot to say..&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The implementation of the &lt;a href=&quot;http://research.microsoft.com/apps/pubs/default.aspx?id=67083&quot;&gt;Spineless Tagless G-machine&lt;/a&gt; gives a good perspective on how thunks are used to implement lazy evaluation within Haskell. (I have not read all of that, yet..)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;learning-with-a-theorem-prover&quot;&gt;Learning with a theorem prover&lt;/h1&gt;
+
+&lt;p&gt;The first time I encountered coinduction was some time ago in Adam Chlipala’s book &lt;a href=&quot;http://adam.chlipala.net/cpdt/&quot;&gt;Certified Programming with Dependent Types&lt;/a&gt;. It was introduced within the context of infite data and proofs:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;The CPDT’s &lt;a href=&quot;http://adam.chlipala.net/cpdt/html/Coinductive.html&quot;&gt;Coinductive.v&lt;/a&gt; chapter contains a number of good pragmatic examples of coinduction. I find it invaluable to actually play with examples of things before thinking about them more. (I would suspect this is the case with most others as well..)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.labri.fr/perso/casteran/CoqArt/index.html&quot;&gt;Coq’Art&lt;/a&gt; has an excellent chapter (chapter 13) on coinduction, which complements the CPDT quite well! I would recommend reading it multiple times. In general Coq’Art is an excellent book on not only Coq, but also serves as a great introduction to constructive logic as well!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Play around with the examples, rinse and repeat.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;the-total-functional-programming-paper&quot;&gt;The Total Functional Programming paper&lt;/h1&gt;
+
+&lt;p&gt;Turner has a great paper:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Total Functional Programming, D.A.Turner. Journal of Universal
+Computer Science, vol. 10, no 7 (2004), 751-768.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I would &lt;em&gt;really, really&lt;/em&gt; recommend reading this paper. It’s quite easy to read, and gives some good perspective on why induction, coinduction, and totality matter. The paper also highlights some of the finer points dealing with termination of functional programming that might not have been immediately obvious to you.&lt;/p&gt;
+
+&lt;h1 id=&quot;reasoning-about-structure&quot;&gt;Reasoning about structure&lt;/h1&gt;
+
+&lt;p&gt;Undergrads in math typically take courses in abstract algebra: the study of the structure of mathematical objects. For example, we look at groups (structures where we can multiply things), rings (structures where we can multiply things and add things), etc… It turns out that this mirrors a very similar concept in programming languages:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data Tree a =
+  | Leaf of a
+  | Node of Tree a * a * Tree a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this case, we define two constructors for the type (Leaf and `Node), which naturally generate two destructors:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let get_leaf = function
+  | Leaf a -&amp;gt; a
+
+let get_node = function
+  | Node n -&amp;gt; n
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There’s one intricacy to note here: we have to be sure that we never try to use &lt;code class=&quot;highlighter-rouge&quot;&gt;get_leaf&lt;/code&gt; with something of the form &lt;code class=&quot;highlighter-rouge&quot;&gt;Node (...) 32 (...)&lt;/code&gt; (assuming we bind &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt;, for example).&lt;/p&gt;
+
+&lt;p&gt;So let’s take a step back here: when you define algebras in your abstract algebra class, you define a carrier set along with the operations on that set. (Perhaps more importantly, you also define certain laws those operations satisfy, but that’s a part of the story that’s not encoded in the simple structure, and another story.) This is the same thing we do in this case: defining a type by means of it’s constructors and destructors. This motivates the algebraic interpretation of the “regular types:” types formed from sums and products of other regular types. (I’m not sure on the terminology, it comes from one of &lt;a href=&quot;http://strictlypositive.org/&quot;&gt;Conor Mcbride’s&lt;/a&gt; papers though surely elsewhere.) These structures actually form algebras: with a carrier set and collection of operations over that set. All of this reason comes from a categorical interpretation of datatypes, but the following paper explains it quite nicely:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A Tutorial on (Co)Algebras and (Co)Induction, Bart Jacobs and Jan
+Rutten, EATCS Bulletin, v62, p62–222, 1997.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The paper presents the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Coinduction at a high level&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Examples of processes and coinductive data structures.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The categorial interpretation of regular data types as functors and their associated algebras.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Use of these to establish recursive definitions of functions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Use of these to do inductive proofs of propositions about data of that type.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Using this to do that same stuff with coinductive and inductive types.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The thing I like most about the paper is that while the concepts it touches deal with slightly nontrivial category theory, they explain the concepts within the category of sets (the category of sets form one of the simpler examples of a &lt;a href=&quot;http://en.wikipedia.org/wiki/Category_(mathematics)&quot;&gt;category&lt;/a&gt;). This is great for actually understanding stuff, and if you want to jump up to more category theory later you always can.&lt;/p&gt;
+
+&lt;h1 id=&quot;about-bisimulation&quot;&gt;About Bisimulation&lt;/h1&gt;
+
+&lt;p&gt;One thing that you’ll see no matter what in your studies on coinductive types is the notion of a bisimulation. I won’t say exactly what this is, but I will offer a simple explanation of why we need it. Look at the definition of equality in Coq, it’s an &lt;code class=&quot;highlighter-rouge&quot;&gt;Inductive&lt;/code&gt; type &lt;code class=&quot;highlighter-rouge&quot;&gt;eq&lt;/code&gt; that (when instantiated properly) forms something in &lt;code class=&quot;highlighter-rouge&quot;&gt;Prop&lt;/code&gt; (a proof). It should make sense that, using only the standard rules of convertability within Coq, we cannot demonstrate two infinite objects are equal. To deal with this, we define a new (relaxed) notion of equality: the bisimulation. The basic story about a bisimulation is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If two (potentially infinite) objects are bisimilar, any two arbitrarily sized finite expansins of those objects will be identical.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This mirrors the use of lazy datatypes. We can’t really speak about
+equality, because the objects are infintie in size, but we can say
+that, “well, for all intents and purposes, whenever we need to compute
+with this infinitely sized thing, it’s going to be all right.”&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;This is a somewhat shoddy write up on my thoughts on learning coinduction. It’s something I’ve wanted to share for a while, but also something I think may be helpful for others trying to learn about the couniverse. It’s an interesting area, and has applications to speeding up your data structures, cleaning up your implementation, understanding process calculi, defining programming language semantics, and so much more. For me, I tried most of these steps over and over, peeling back another onion layer, and still haven’t made it to the core yet. I suppose, as long as it happens inside the constructor of the peel, that may just (perhaps ironically) be the sate of things.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 04 Sep 2012 00:00:00 -0400</pubDate>
+        <link>/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</link>
+        <guid isPermaLink="true">/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</guid>
+        
+        
+        <category>coinduction</category>
+        
+        <category>functional-programming</category>
+        
+      </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Program Visualization as Abstract Interpretation</title>
+  <meta name="description" content="For this past semester, I’ve been thinking in a semi-principaled wayabout how we should visualize program executions. For example, howshould we visualize thi...">
+
+  <link rel="stylesheet" href="https://cs.umd.edu/~micinski/css/main.css">
+  <link rel="canonical" href="https://cs.umd.edu/~micinskihttps://cs.umd.edu/~micinski/program-analysis/2016/05/11/program-viz-galois.html">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="https://cs.umd.edu/~micinskihttps://cs.umd.edu/~micinski/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="https://cs.umd.edu/~micinski/">Kristopher Micinski</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="https://cs.umd.edu/~micinski/application.html">Application</a>
+          
+        
+          
+          <a class="page-link" href="https://cs.umd.edu/~micinski/blog.html">Blog</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="https://cs.umd.edu/~micinski/">About</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="https://cs.umd.edu/~micinski/publications.html">Publications</a>
+          
+        
+          
+          <a class="page-link" href="https://cs.umd.edu/~micinski/teaching.html">Teaching</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Program Visualization as Abstract Interpretation</h1>
+    <p class="post-meta"><time datetime="2016-05-11T00:00:00-05:00" itemprop="datePublished">May 11, 2016</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>For this past semester, I’ve been thinking in a semi-principaled way
+about how we should visualize program executions. For example, how
+should we visualize this program:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let id x = x in
+let g x = id x
+let check_zero y = if y = 0 then bad () else 1
+if (y &gt;= 0) check_zero (g y) else h y
+</code></pre>
+</div>
+
+<p>Let’s say we want to check whether or not <code class="highlighter-rouge">bad</code> is ever called: and if
+so under what circumstances The most intuitive way we could do this is
+obviously to just sit and think about the program: the program will
+call <code class="highlighter-rouge">bad</code> exactly when <code class="highlighter-rouge">y</code> is zero.</p>
+
+<p>For small programs like these, checking things like this are easy
+enough, even if the control flow is a little convoluted. As programs
+get larger, it’s harder and harder to convince ourselves that these
+properties are correct: so we build tools to do it for us. One of the
+most basic tools we can use is a test-suite and a debugger. The
+programmer will provide a set of sample inputs to test these inputs
+on, and will visualize them as they go.</p>
+
+<p>With a debugger, we can see exactly when the call to bad happens by
+“focusing” in on a single run of the program where <code class="highlighter-rouge">y</code> is zero. But
+what if we have a <em>bunch</em> of runs of the program and we want to see
+what sorts of functions are called by it, perhaps because we’d like to
+get some understanding of what the program does? For example, let’s
+say that we wanted to see what happens to the program when <code class="highlighter-rouge">y</code> is <code class="highlighter-rouge">0</code>
+and when <code class="highlighter-rouge">y</code> is <code class="highlighter-rouge">1</code>.</p>
+
+<p>We could use our debugger for each of those paths, but clearly as the
+programs get large, introspecting program behavior like is going to
+start to become very tedious. And this is the crux of my post:</p>
+
+<blockquote>
+  <p>We can use tools from abstract interpretation to guide us in
+constructing program visualizations.</p>
+</blockquote>
+
+<p>Namely: we’re going to think about a debugger as something that
+produces “steps” of the program execution, and then we’re going to
+construct a graph of the program that will summarize what the program
+is doing to a viewer. Because we want this graph to summarize a bunch
+of executions, we’re going to collapose certain parts of the graph
+(perhaps each invocation of <code class="highlighter-rouge">f</code> in this program, perhaps) so that they
+can be more easily viewable by a user. Then, we’re going to make it
+interactive, so that when the user wants more information they can
+click on a node and disambiguate that node based on its context.</p>
+
+<p>For example, here’s a mockup of what this might look like after we’re
+done:</p>
+
+<p><img src="https://cs.umd.edu/~micinski/assets/viz-abs-1.png" alt="Shot 1" /></p>
+
+<p>On the left are two runs of the program. In the first, we start with
+<code class="highlighter-rouge">y = 1</code>, we then call (the <code class="highlighter-rouge">&gt;</code> designate entries) <code class="highlighter-rouge">g</code>, which
+subsequently calls <code class="highlighter-rouge">id</code>, returns to <code class="highlighter-rouge">g</code> (with <code class="highlighter-rouge">1</code> as the return
+value), and then calls <code class="highlighter-rouge">check_zero</code>. In the other run, we see the same
+thing, except with the bad behavior.</p>
+
+<p>In this case, the logs we see on the left represent a subset of the
+actual program behavior, so the facts we get to check are up to the
+granularity of the information given in these logs. What I want to do
+in this blog post is to convince you that visualizing dynamic runs in
+this way can be aided by coalescing this dynamic information into a
+graph-based representation, and then be disambiguated by interacting
+with that graph.</p>
+
+<p>This summary seems like a nice idea, but it doesn’t actually allow us
+to see what really happened in the program: it just shows us a control
+flow graph. We know that <code class="highlighter-rouge">bad</code> was called, but not under what
+condtiions. Similarly, we might like to find out under what conditions
+our various functions (like <code class="highlighter-rouge">g</code> and <code class="highlighter-rouge">id</code>) were called. To do this,
+we’re going to have this behavior: whenever you click on a various
+node, you’re going to be able to see (in another view) which points in
+each run correspond to that node. For example, let’s say you want to
+know all of he possible places that <code class="highlighter-rouge">g</code> was called from. You click on
+it, and then our visualizer will tell you which lines in the program
+actually corresponded to that invocation. Like so:</p>
+
+<p><img src="https://cs.umd.edu/~micinski/assets/viz-abs-2.png" alt="Shot 2" /></p>
+
+<p>Let’s say that you want to introspect here, you might want to just
+“focus in” on the bad log. To do that, you’ll just project out the
+operation of building the graph. You can even build a more finely
+grained graph which shows precise call / return structure:</p>
+
+<p><img src="https://cs.umd.edu/~micinski/assets/viz-abs-3.png" alt="Shot 3" /></p>
+
+<p>The last execution graph is obviously the most precise. It shows exact
+call/return sequences in a finely grained way. If we were to formalize
+it, the concrete states would differ: the first <code class="highlighter-rouge">g</code> represents the
+entry while the second represents something like the exit. But this
+precision comes at a cost: it shows us a lot of information that will
+probably be meaningless until we really know what we want to look for.</p>
+
+<p>For example, here’s a program with an off by one error:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void traverseList(Link *list) {
+  Link *x = list;
+  Link *y;
+  do {
+    x = x-&gt;next;                // Line 4
+    y = x-&gt;next;                // Line 5
+  } while (x != null)           // Line 6
+  // ...
+}
+</code></pre>
+</div>
+
+<p>As a high level view of the program, we might make our states function
+calls with line numbers into the function. A concrete execution would
+look like:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>x = ptr;      // x -&gt; &lt;1,2&gt;
+x = x-&gt;next   // x -&gt; &lt;1&gt;
+y = x-&gt;next   // y -&gt; null
+x != null
+x = x-&gt;next   // x -&gt; &lt;null&gt;
+y = x-&gt;next   // BAD!
+</code></pre>
+</div>
+
+<p>Once we isolate the bad thing, we can traverse back to the bad
+configuration that caused it to happen, perhaps with the aid of
+(e.g.,) a time traveling debugger such as that in OCaml.</p>
+
+<p>I haven’t yet said how we get these logs, or what the concrete
+structure of the logs looks like. In this case, we wanted to know
+about the program’s control flow behavior: when did bad states get
+reached, or which functions called which others. Because I only cared
+about the control flow behavior of the program under various
+circumstances, it was sufficient to include function entries and
+exits. If I had instead wanted to talk about something more general,
+I’d have to change what the log looks like. For example, say I wanted
+to talk about the structure of the heap. I’d have to instead include
+information in the log about how the heap evolves over time. I’m not
+particularly concerned with how we get the information here at a
+technical level, but I’m currently simply instrumenting the program to
+log method-call sequences. I’m sure you could get useful information
+via a similar program instrumentation framework like Valgrind or a
+debugger.</p>
+
+<h2 id="getting-more-formal-with-it">Getting more formal with it</h2>
+
+<p>So now that I’ve presented some of this, I’d like to make the case
+that we can use machinery from abstract interpretation to help us draw
+these cool graphs. To start off developing the machinery we’ll need
+for graph, and abstraction, let’s first develop the “most precise” one
+I discussed above.</p>
+
+<p>First, we need to define a little bit formally what our log looks
+like. In this example, the method call sequnce gives us an idea about
+the evolution of the program’s control flow. We can think about this
+as having our semantics running in an abstract machine, and our log
+entries (each individual line of the logs) showing us deltas that
+generate new machine states. In other words, log entries represent
+transitions from machine states to new machine states. Now, if our log
+contains all of the possible information we could need to recover the
+concrete execution of the program, we’d end up being able to use our
+log entries to perfectly recover the concrete execution of the
+program. Let’s say that our log is a list of transitions:
+<code class="highlighter-rouge">t₁,t₂,...,tᵢ</code></p>
+
+<p>Let’s assume that we have some type <code class="highlighter-rouge">transition</code> that stands for
+whatever transitions are. In this example, my type transition would
+look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type transition =
+  | Entry of name * value list
+  | Return of value
+</code></pre>
+</div>
+
+<p>Then, formally, each transition would take us from some program state
+<code class="highlighter-rouge">Σ</code>, to a new state <code class="highlighter-rouge">Σ'</code>: <code class="highlighter-rouge">step : Σ → transition → Σ</code>. Typically, we
+designate some initial state <code class="highlighter-rouge">Σι</code> that acts as the initial state of
+the program. If this is the case, then for any sequence of transitions
+<code class="highlighter-rouge">t₁,...,tᵢ</code>, we have that the transitive closure of the step relation
+with that set of transitions will reach some new program point:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
+</code></pre>
+</div>
+
+<p>Now, so far I haven’t put any meaningful stipulations on what the
+transition function must look like. I have merely asserted that for it
+to be meaningful, we have that there be some definition of program
+states <code class="highlighter-rouge">Σ</code> and a step relation that operates on states and
+transitions. But how do we know that the transition function we have
+in mind is actually meaningful? I haven’t worked out all the details,
+but I think you basically want some correspondence between derivations
+of new states via the <code class="highlighter-rouge">step</code> function and the actual semantics for
+your program. In other words, you want this to hold: “whenever I
+observe that <code class="highlighter-rouge">Σι →ᵗ¹⁻ᵗⁱ Σᵢ</code>, I can come up with a derivation in the
+semantics that mirrors that set of transitions.”</p>
+
+<p>Now, notice that my transitions here are only giving us <em>partial</em>
+information about program states. In reality, this is fine, as long as
+they’re giving us enough information to ascertain what we care
+about. But formally, it means that our transition relation won’t talk
+about the concrete program semantics, it’ll actually be talking about
+an abstract semantics. To make this idea more concrete, in my example
+logs here, I’ve included the function parameters and return
+values. But let’s say I <em>didn’t</em>. Then, when we looked at a line in
+the log, say <code class="highlighter-rouge">&gt;g</code>, we wouldn’t know what actual parameter <code class="highlighter-rouge">g</code> was
+called with. Instead, we’d be forced to think that <code class="highlighter-rouge">g</code> could have been
+called with anything (that the program could have called it with, of
+course).</p>
+
+<h3 id="producing-the-most-precise-graph">Producing the “most precise” graph</h3>
+
+<p>Now that I’ve set up all this machinery, what is the version of this
+“most precise” graph for our semantics. Here we’ll assume that our
+transitions have a type like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type transition = entry × line number × log number
+and entry =
+  | Entry of name * value list
+  | Exit of value
+</code></pre>
+</div>
+
+<p>Let’s first define our program states. Our states are literally just
+going to be mirrorings of the transitions, except for a special
+initial state I designate as <code class="highlighter-rouge">Root</code> so that our step function will
+then just be the identity. This will give us a forest of possible
+configurations (one linear sequence of states for each log).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Σ = log entry × line number × log number + Root
+Σᵢ (log_number) = Root
+step (_,i,k) (entry) = (entry,i+1,k)
+</code></pre>
+</div>
+
+<p>Here’s what it looks like for our two logs shown here:</p>
+
+<p><img src="https://cs.umd.edu/~micinski/assets/viz-abs-4.png" alt="Shot 5" /></p>
+
+<h3 id="a-control-flow-analogue">A control flow analogue</h3>
+
+<p>Let’s say that we want to make the first graph above: in that setting
+we wanted to give a high level view of the program’s control flow,
+while still allowing the user to disambiguate points in the chart. In
+other words, we’re trying to find a way to compress the most recent
+picture – where we show all of the possible “unrolled” behavior –
+into the first one (that coalesces that behavior).</p>
+
+<p>Since we’re trying to think about control flow problems (“who called
+what”), it seems sensible to think about the control flow behavior of
+the runs.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>y = 0
+&gt; g(0)
+  &gt; id(0)
+  &lt; id with 0
+&lt; g with 0
+&gt; check_zero 0
+  &gt; bad()
+</code></pre>
+</div>
+
+<p>To build up our graph, we’ll start in the “main” function, and then
+watch for transitions. For example, upon seeing the <code class="highlighter-rouge">&gt;g(0)</code>
+transition, we’ll draw a new state <code class="highlighter-rouge">g</code>. And then, upon seeing the
+<code class="highlighter-rouge">&gt;id(0)</code> transition, we’ll draw another new state <code class="highlighter-rouge">id</code>. How do we know
+where to go when we see the <code class="highlighter-rouge">&lt;id</code> transition, however? We want to
+return to the caller, but don’t have the information to know where to
+return.</p>
+
+<p>The semantics of the program handles this by maintaining a stack of
+functions. We can do that here:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Σ = frame list
+frame = function name
+</code></pre>
+</div>
+
+<p>Here, we’re ignoring arguments to functions (our frames don’t maintain
+environments), but we do get arbitrary context sensitivity as long as
+we set things up correctly.</p>
+
+<p>Now, we need to define the step function for a single log, and then
+lift that up to a set of logs. This is pretty simple: when we see an
+entry we add generate a new state that adds it to the stack, and when
+we see a return we pop a frame from the stack. We assume that calls
+and returns are balanced (which would be required by the semantic
+rules defining soundness I mentioned above).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>step Σ (&gt; method)             = method :: Σ
+step (method :: Σ) (&lt; method) = Σ 
+</code></pre>
+</div>
+
+<p>We then take the reflexitive transitive closure of this relation over
+both of our logs. This graph has as its nodes sequences of call frames
+(without their arguments / returns), and is isomorphic to the graph in
+the first example:</p>
+
+<p><img src="https://cs.umd.edu/~micinski/assets/viz-abs-5.png" alt="Abs screenshot one" /></p>
+
+<p>Unfortunately, because this style of analysis allows an arbitrarily
+large permutations of method calling sequences, it allows the graph’s
+behavior to degrade to a pathological case we want to avoid. For
+example, consider the factorial function:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let fac n = 
+  if n = 0 then 1 else fac (n-1)*n
+</code></pre>
+</div>
+
+<p>In that graph, we’d see an arbitrarily long chain of <code class="highlighter-rouge">fac</code> calls when
+our log called the program for some large value of <code class="highlighter-rouge">n</code>. Instead of
+showing that, let’s say we wanted to only have one occurrence of each
+method in the program, and then show arrows between method calls when
+there could potentially be control flow between them.</p>
+
+<p>To set this up, we’ll change our state space slightly to mirror a
+little bit more of a traditional abstract machine. We’ll get an
+isomorphic state space, but we’ll massage the machine a bit so that
+it’s easier to abstract things later. Just as before, our state space
+will keep track of the current function <code class="highlighter-rouge">fn</code>, but now we’ll keep a
+<em>pointer</em> to the continuation. That pointer is going to be an address
+into a store <code class="highlighter-rouge">σ</code>, which has the type <code class="highlighter-rouge">Address → Continuation</code>. The
+store is just a place through which we thread continuations (in a
+linked-list style structure). Continuations are either function names
+and addresses, or the special <code class="highlighter-rouge">Done</code> continuation (which says there is
+nothing else to do). We also need an auxiliary function <code class="highlighter-rouge">alloc</code>, which
+gives us a fresh address for the store. We will define the step
+function to put a new address in the store whenever we see a new stack
+frame. The notation <code class="highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> reads, “extend the store <code class="highlighter-rouge">σ</code>
+with a binding that makes <code class="highlighter-rouge">a</code> point to the continuation <code class="highlighter-rouge">(fn,k)</code>.”</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Σ = ⟨ fn, σ, c ⟩
+σ : Address → Continuation
+Continution = fn , address | Done
+c : Address 
+Σι = ⟨ main, [a₀ ↦ Done], a₀ ⟩
+
+a = alloc (Σ)
+step ⟨ fn, σ, c ⟩ (&gt; f) = ⟨ f, σ ⊔ [ a ↦ (fn, k) ], a ⟩
+step ⟨ fn, σ, c ⟩ (&lt; f) =
+  let fn', c' = σ(κ) in ⟨ fn', σ, c' ⟩
+</code></pre>
+</div>
+
+<p>For our example program above, we’d get this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; g(0)
+⟨ g, [a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
+  &gt; id(0)
+  ⟨ id, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₂ ⟩
+  &lt; id with 0
+  ⟨ g, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
+&lt; g with 0
+⟨ main, [a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
+&gt; check_zero 0
+  ⟨ check_zero, [a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
+  &gt; bad()
+  ⟨ bad, [a₄ ↦ (check_zero, a₁),
+          a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₄ ⟩
+</code></pre>
+</div>
+
+<p>If you haven’t guessed yet, this machine is an instance of the
+<a href="http://matt.might.net/papers/vanhorn2010abstract.pdf">abstracting abstract machines</a>
+formulation, and my approach follows theirs.</p>
+
+<h3 id="the-last-step-abstraction">The last step: abstraction</h3>
+
+<p>Now that we’ve rearranged our visualization to use an abstract machine
+structure, we need to exploit it. Let’s think about what happens to
+our state space as we add the next log. First, we need to start with
+the last state from performing our last analysis, and we need to
+“reset” the analysis into the initial state. But it’s not quite the
+same initial state: we just want to reset to the start function:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>⟨ main, [a₄ ↦ (check_zero, a₁),
+         a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
+y = 1
+&gt; g(1)
+  ⟨ g, [a₅, (main,a₀), a₄ ↦ (check_zero, a₁),
+        a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₅ ⟩
+  ...
+</code></pre>
+</div>
+
+<p>Now here, our function <code class="highlighter-rouge">alloc</code> returns a fresh address <code class="highlighter-rouge">a₅</code>. To get
+the behavior, we actually want to <em>reallocate</em> <code class="highlighter-rouge">a₁</code>. This means that
+our continuations have to be able to store <em>sets</em> of functions, and
+<em>sets</em> of next continuations. So instead of our store having the
+structure:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>σ : Address → Continution
+Continution = fn , address | Done
+</code></pre>
+</div>
+
+<p>We need to lift continuations to hold sets of functions and
+addresses. Because they actually represent <em>sets</em> of continuations,
+we’ll call them abstract continuations (or flow sets, in control flow
+terminology):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Continution^ = ℘(fn) × ℘(address) | Done
+</code></pre>
+</div>
+
+<p>Now, we’re going to have to modify our <code class="highlighter-rouge">alloc</code> function to “smush
+together” things that come from the same function. We’re going to do
+that by changing the structure of addresses (which I’ve so far been
+leaving as opaque). Instead, we’re going to make addresss simply
+function names:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Address = fn | Done
+</code></pre>
+</div>
+
+<p>Now, our allocator is going to be this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>alloc (fn,σ,c) = fn
+</code></pre>
+</div>
+
+<p>Last, we have an operation <code class="highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> which we have to make
+sense of with our modified notion of continuations. First, we need to
+note that it must really be <code class="highlighter-rouge">σ ⊔ [ a ↦ {(fn,k)} ]</code>. Then, the join
+operator <code class="highlighter-rouge">⊔</code> will be the natural elementwise distribution over the
+sets of functions and continuations.</p>
+
+<h2 id="mapping-between-different-analyses-insertions">Mapping between different analyses: insertions</h2>
+
+<p>(This is the most hand-wavy section because I haven’t really figured
+it out yet..)</p>
+
+<p>Alright, so now we have a few different kind of analyses, and I’m
+convinced that we can generate many, many more. But when we’re
+visualizing programs, we don’t just want one analysis, we want to mix
+a few of them together and map between them.</p>
+
+<p>Let’s say that you want to map this 0CFA-continuation-allocator
+semantics to the “fully unrolled” visualization, like I showed in the
+second picture. What you do is to run both step functions in sequence,
+and recognize when you’re coalescing the fine grained states into the
+abstract states. Doing that, you establish a mapping between the 0CFA
+thing and the fully precise thing. But in general, I imagine a big
+interactive tool that allows you to take a set of logs (equivalently:
+one really big log) and imbue any sort of visualization (or analysis)
+you want onto it. I think this trick of running the different analyses
+in parallel can be formalized as Galois insertions, but I haven’t
+fully worked out the details yet.</p>
+
+<p>For measure, I’m doing this right now in ongoing research: where I map
+function entries down to the set of concrete points in a “fully
+precise” (linear) log. The visualizer allows the user to click on
+function entries and disambiguate based on the places in the log that
+are being coalesced into that high level node.</p>
+
+<h2 id="closing-notes">Closing notes</h2>
+
+<p>The fact that we can use the machinery of abstract machines to think
+about visualizing program executions is probably unsurprising to many
+people: concrete executions are, of course, simply instances of
+abstract executions. However, I think there are a few powerful things
+that we can take away from this exercise.</p>
+
+<p>First, there are situations in which building an abstract interpreter
+might be too difficult to do with sufficient precision. Perhaps it’s a
+new programming language, toolchain, etc.. In these cases, I would
+guess that it’s easier to dynamically instrument the program to
+capture the facts you want, and then write a visualization for it
+post-hoc.</p>
+
+<p>Next, real program runs allow us to “focus in” on the interesting
+behavior in our program. Concrete executions allow infinite precision
+(at the cost of soundness). In this post, I’ve set things up so that
+we can use abstract interpretation machinery to view and understand
+concrete runs. But I think there’s also room to be able to use these
+insights to design patterns that allow mixing the concrete and
+abstract worlds, or even turning the knobs on various
+analyses. Specifically, I think these ideas could immediately be used
+to visualize runs of a symbolic executor. Expanding on that, I think a
+good way to interact with a program analysis is to gradually “peel
+away” and “focus in” on various parts of the exeuction, in the way
+that I’ve tried to do here.</p>
+
+<p>Last, thinking about this was interesting for me in that it helped
+further connect abstract interpretation to something tangible that
+makes sense to me (debugging a program). When I first learned about
+abstract interpretation (and still), I was tempted to think about it
+as something separate from a metaphor that I can easily comprehend:
+tracking concrete executions.</p>
+
+<p>The upshot of this post is this question: to what extent can we use
+the abstractions we design for program <em>analysis</em> to also <em>visualize</em>
+executions of those programs. This is one of the first posts I hope to
+make on this topic. It came out of wanting to generalize some of the
+work I’d been doing in visualizing security properties for
+programs. That being said, I think there’s still a long way to go:
+defining more concretely what an “instrumentation” is, trying it out
+for a lot more examples, and applying it to popular program
+visualization tools (like <a href="http://pythontutor.com/">Python Tutor</a>!). I
+hope I get a chance to work on this more and flesh some of these ideas
+out in the future.</p>
+
+
+  </div>
+
+</article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Kristopher Micinski</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Kristopher Micinski</li>
+          <li><a href="mailto:micinski@cs.umd.edu">micinski@cs.umd.edu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kmicinski"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">kmicinski</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/krismicinski"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">krismicinski</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kristopher Micinski's personal website: research in programming languages, security, and Android.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
