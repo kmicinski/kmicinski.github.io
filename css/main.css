@@ -593,7 +593,7 @@ ul p {
   position: relative;
   text-align: center;
   background-color: black;
-  background-image: linear-gradient(to bottom, transparent 45%, black 100%), linear-gradient(to right, transparent 80%, black 100%), linear-gradient(to left, transparent 80%, black 100%), url("https://kmicinski.com/assets/img/haverfordpic.jpg");
+  background-image: linear-gradient(to bottom, transparent 45%, black 100%), linear-gradient(to right, transparent 80%, black 100%), linear-gradient(to left, transparent 80%, black 100%), url("http://kmicinski.com/assets/img/haverfordpic.jpg");
   background-size: 999px 400px;
   height: 400px;
   background-repeat: no-repeat;
