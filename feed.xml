@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kristopher Micinski</title>
-    <description>Kris Micinski&#39;s personal website. Visiting CS Prof at Haverford.
+    <description>Kris Micinski's personal website. Visiting CS Prof at Haverford.
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 05 Jun 2017 09:03:54 -0400</pubDate>
-    <lastBuildDate>Mon, 05 Jun 2017 09:03:54 -0400</lastBuildDate>
-    <generator>Jekyll v3.1.2</generator>
+    <pubDate>Fri, 01 Sep 2017 20:49:57 -0400</pubDate>
+    <lastBuildDate>Fri, 01 Sep 2017 20:49:57 -0400</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
     
       <item>
         <title>Here: Have Some PLUM Scrum</title>
@@ -394,7 +394,7 @@ look like this:&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Then, formally, each transition would take us from some program state
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt;, to a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&#39;&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;step : Σ → transition → Σ&lt;/code&gt;. Typically, we
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt;, to a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ'&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;step : Σ → transition → Σ&lt;/code&gt;. Typically, we
 designate some initial state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σι&lt;/code&gt; that acts as the initial state of
 the program. If this is the case, then for any sequence of transitions
 &lt;code class=&quot;highlighter-rouge&quot;&gt;t₁,...,tᵢ&lt;/code&gt;, we have that the transitive closure of the step relation
@@ -561,7 +561,7 @@ c : Address
 a = alloc (Σ)
 step ⟨ fn, σ, c ⟩ (&amp;gt; f) = ⟨ f, σ ⊔ [ a ↦ (fn, k) ], a ⟩
 step ⟨ fn, σ, c ⟩ (&amp;lt; f) =
-  let fn&#39;, c&#39; = σ(κ) in ⟨ fn&#39;, σ, c&#39; ⟩
+  let fn', c' = σ(κ) in ⟨ fn', σ, c' ⟩
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -1029,15 +1029,15 @@ things have been “smushed together.”&lt;/p&gt;
 &lt;p&gt;When we run our abstract interpretation, we end up with an abstract
 environment &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ^ : Var → Addr^&lt;/code&gt;, that maps variables to &lt;em&gt;abstract&lt;/em&gt;
 addresses. The (abstract) store maps abstract addresses to abstract
-values.  We want to determine, for &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ&#39;&lt;/code&gt;, and some variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x
-∈ dom(ρ)&lt;/code&gt;, if &lt;code class=&quot;highlighter-rouge&quot;&gt;σ(ρ(x)) = σ(ρ&#39;(x))&lt;/code&gt;. If we can successfully decide this
+values.  We want to determine, for &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ'&lt;/code&gt;, and some variable &lt;code class=&quot;highlighter-rouge&quot;&gt;x
+∈ dom(ρ)&lt;/code&gt;, if &lt;code class=&quot;highlighter-rouge&quot;&gt;σ(ρ(x)) = σ(ρ'(x))&lt;/code&gt;. If we can successfully decide this
 is true for all of the free variables (&lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; in our example) in the term
 (&lt;code class=&quot;highlighter-rouge&quot;&gt;(lambda () x)&lt;/code&gt; in our example), then we can safely inline the
 function. Unfortunately, in general, because &lt;code class=&quot;highlighter-rouge&quot;&gt;ρ(x)&lt;/code&gt; represents to a
-&lt;em&gt;set&lt;/em&gt; of concrete values, we would have to decide that &lt;code class=&quot;highlighter-rouge&quot;&gt;∀ x, x&#39;. x ∈ X
-= x&#39; ∈ X&#39;&lt;/code&gt;, where &lt;code class=&quot;highlighter-rouge&quot;&gt;X = α (σ(ρ(x)))&lt;/code&gt;, the concretization of &lt;code class=&quot;highlighter-rouge&quot;&gt;σ(ρ(x))&lt;/code&gt;,
-and &lt;code class=&quot;highlighter-rouge&quot;&gt;X&#39; = α (σ(ρ&#39;(x)))&lt;/code&gt;. Obviously this is false when the cardinality
-of &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;X&#39;&lt;/code&gt; is greater than one.&lt;/p&gt;
+&lt;em&gt;set&lt;/em&gt; of concrete values, we would have to decide that &lt;code class=&quot;highlighter-rouge&quot;&gt;∀ x, x'. x ∈ X
+= x' ∈ X'&lt;/code&gt;, where &lt;code class=&quot;highlighter-rouge&quot;&gt;X = α (σ(ρ(x)))&lt;/code&gt;, the concretization of &lt;code class=&quot;highlighter-rouge&quot;&gt;σ(ρ(x))&lt;/code&gt;,
+and &lt;code class=&quot;highlighter-rouge&quot;&gt;X' = α (σ(ρ'(x)))&lt;/code&gt;. Obviously this is false when the cardinality
+of &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;X'&lt;/code&gt; is greater than one.&lt;/p&gt;
 
 &lt;p&gt;The key insight is that we instrument the analysis to keep track of
 “how many things have been smushed together” for a given location in
