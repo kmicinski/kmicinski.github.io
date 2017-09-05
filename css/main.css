@@ -614,5 +614,9 @@ ul p {
   magin: auto; }
 
 .post-link {
+  font-size: 11pt;
   margin-top: auto;
   margin-bottom: auto; }
+
+.post-link.label {
+  font-size: 8pt; }
