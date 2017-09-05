@@ -275,7 +275,7 @@ pre {
   padding: 30px 0; }
 
 .page-heading {
-  font-size: 36px; }
+  font-size: 20px; }
 
 .post-list {
   margin-left: 0;
@@ -605,15 +605,17 @@ ul p {
   position: relative;
   text-align: center;
   background-color: black;
-  background-image: linear-gradient(to bottom, transparent 45%, black 100%), linear-gradient(to right, transparent 80%, black 100%), linear-gradient(to left, transparent 80%, black 100%), url("http://kmicinski.com/assets/img/haverfordpic.jpg");
+  background-image: linear-gradient(to bottom, transparent 45%, black 100%), linear-gradient(to right, transparent 80%, black 100%), linear-gradient(to left, transparent 80%, black 100%), url("file:///Users/micinski/projects/micinski-website/_site/assets/img/haverfordpic.jpg");
   background-size: 999px 400px;
   height: 400px;
   background-repeat: no-repeat;
   background-position: center; }
 
 #researchareas {
-  magin: auto; }
+  magin: auto;
+}
 
 h2.post-link {
-  margin-top: auto;
-  margin-bottom: auto; }
+    margin-top: auto;
+    margin-bottom: auto;
+}
