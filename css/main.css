@@ -618,6 +618,9 @@ ul p {
   margin-top: auto;
   margin-bottom: auto; }
 
+.social-media-list .glyphicon-calendar {
+  margin-right: 5px; }
+
 .tagbox {
   font-size: 11pt; }
 
