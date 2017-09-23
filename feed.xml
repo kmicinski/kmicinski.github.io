@@ -6,8 +6,8 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 23 Sep 2017 14:44:51 -0400</pubDate>
-    <lastBuildDate>Sat, 23 Sep 2017 14:44:51 -0400</lastBuildDate>
+    <pubDate>Sat, 23 Sep 2017 18:54:57 -0400</pubDate>
+    <lastBuildDate>Sat, 23 Sep 2017 18:54:57 -0400</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
@@ -24,7 +24,7 @@
       &lt;li&gt;E.g., CMSC245 at Haverford or CMSC246 at Bryn Mawr&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Experience with or willingness to learn learn new language (Python, SQL, JavaScript, etc..)&lt;/li&gt;
+  &lt;li&gt;Experience with or willingness to learn learn new languages (Python, SQL, JavaScript, etc..)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Workload&lt;/strong&gt;:&lt;/p&gt;
@@ -64,6 +64,7 @@ sufficient​ ​for​ ​helping​ ​us​ ​understand​ ​how​ ​to�
 
 &lt;p&gt;We​ ​will​ ​cover​ ​parts​ ​of​ ​the​ ​following​ ​topics,​ ​adjusted​ ​for​ ​time​ ​and​ ​pace​ ​of​ ​the​ ​course,​ ​along​ ​with
 student​ ​interest​ ​in​ ​each​ ​area.&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;Low-level​ ​memory​ ​attacks​ ​and​ ​defenses
     &lt;ul&gt;
@@ -73,11 +74,14 @@ student​ ​interest​ ​in​ ​each​ ​area.&lt;/p&gt;
       &lt;li&gt;Return​ ​to​ ​libc​ ​/​ ​return-oriented-programming&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Cryptography&lt;/li&gt;
-  &lt;li&gt;Symmetric​ ​and​ ​asymmetric-key​ ​cryptography&lt;/li&gt;
-  &lt;li&gt;Certificates,​ ​CAs,​ ​and​ ​PKI&lt;/li&gt;
-  &lt;li&gt;SSL​ ​/​ ​TLS&lt;/li&gt;
-  &lt;li&gt;Web​ ​security
+  &lt;li&gt;Cryptography
+    &lt;ul&gt;
+      &lt;li&gt;Symmetric and asymmetric-key cryptography&lt;/li&gt;
+      &lt;li&gt;Certificates, CAs, and​ ​PKI&lt;/li&gt;
+      &lt;li&gt;SSL/TLS&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Web security
     &lt;ul&gt;
       &lt;li&gt;SQL​ ​injections&lt;/li&gt;
       &lt;li&gt;Cross-site​ ​scripting&lt;/li&gt;
@@ -103,12 +107,12 @@ student​ ​interest​ ​in​ ​each​ ​area.&lt;/p&gt;
   &lt;li&gt;Theoretical​ ​underpinnings​ ​of​ ​security
     &lt;ul&gt;
       &lt;li&gt;Full​ ​abstraction&lt;/li&gt;
-      &lt;li&gt;Information​ ​flow&lt;/li&gt;
+      &lt;li&gt;Information​ ​flow
+        &lt;h2 id=&quot;projects-and-labs&quot;&gt;Projects and Labs&lt;/h2&gt;
+      &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;h2 id=&quot;projects-and-labs&quot;&gt;Projects and Labs&lt;/h2&gt;
 
 &lt;p&gt;Projects​ ​will​ ​be​ ​started​ ​in​ ​labs,​ ​and​ ​then​ ​continued​ ​individually.​
 ​Some​ ​labs​ ​are​ ​structured​ ​so​ ​that they​ ​begin​ ​with​ ​a​ ​concrete​
