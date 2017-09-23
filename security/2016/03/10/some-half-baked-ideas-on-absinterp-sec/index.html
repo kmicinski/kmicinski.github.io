@@ -82,13 +82,12 @@ properties about sets of runs. For example, the following program uses
 a so-called <em>implicit</em> flow to exfiltrate the value of its secret
 input:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>input(secret)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>input(secret)
 if (secret == 0) then
     output(1)
 else
     output(0)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This program is bad because it leaks something (one bit of knowledge)
 about its input: whether or not it is zero. Informally, a program that

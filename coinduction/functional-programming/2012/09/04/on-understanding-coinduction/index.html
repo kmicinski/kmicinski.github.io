@@ -86,9 +86,8 @@
 stream). For example, lets say that we have the following object in
 memory:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let (pi : int list) = (* some function which computes the digits of pi. *)
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let (pi : int list) = (* some function which computes the digits of pi. *)
+</code></pre></div></div>
 
 <p>The computer can’t hold all of pi, because it only has a finite amount
 of memory! But what it can do is hold a finite program, which will
@@ -97,13 +96,12 @@ as you only use finite pieces of the list, you can compute with that
 infinite list as much as you need. However, consider the following
 program:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let print_third_element (k : int list) =
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let print_third_element (k : int list) =
   match k with
     | _ :: _ :: thd :: tl -&gt; print thd
 
 print_third_element pi
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>What does this program do? Intuitively, this program should print the
 third digit of <code class="highlighter-rouge">pi</code>. In reality, the behavior differs between
@@ -235,21 +233,19 @@ Computer Science, vol. 10, no 7 (2004), 751-768.</p>
 
 <p>Undergrads in math typically take courses in abstract algebra: the study of the structure of mathematical objects. For example, we look at groups (structures where we can multiply things), rings (structures where we can multiply things and add things), etc… It turns out that this mirrors a very similar concept in programming languages:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>data Tree a =
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data Tree a =
   | Leaf of a
   | Node of Tree a * a * Tree a
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In this case, we define two constructors for the type (Leaf and `Node), which naturally generate two destructors:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let get_leaf = function
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let get_leaf = function
   | Leaf a -&gt; a
 
 let get_node = function
   | Node n -&gt; n
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>There’s one intricacy to note here: we have to be sure that we never try to use <code class="highlighter-rouge">get_leaf</code> with something of the form <code class="highlighter-rouge">Node (...) 32 (...)</code> (assuming we bind <code class="highlighter-rouge">a</code> to <code class="highlighter-rouge">int</code>, for example).</p>
 

@@ -6,9 +6,98 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 08 Sep 2017 22:08:51 -0400</pubDate>
-    <lastBuildDate>Fri, 08 Sep 2017 22:08:51 -0400</lastBuildDate>
-    <generator>Jekyll v3.4.3</generator>
+    <pubDate>Fri, 22 Sep 2017 20:29:07 -0400</pubDate>
+    <lastBuildDate>Fri, 22 Sep 2017 20:29:07 -0400</lastBuildDate>
+    <generator>Jekyll v3.6.0</generator>
+    
+      <item>
+        <title>Writing tip: say the text back to you</title>
+        <description>&lt;p&gt;Here’s the tip: have your computer read your writing back to
+you. Listen to how it sounds. Then, iterate until it conveys what
+you’d like to hear. On a mac, you can do this it like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;say -r words_per_minute &quot;My speech goes here&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I do this to either:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Read the text back to me quickly (&lt;code class=&quot;highlighter-rouge&quot;&gt;-r 240-270&lt;/code&gt;). This helps follow
+along with a document in front of me and check it for flow. It also
+catches miswordings, (some) grammar errors, and typos.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Close my eyes, sit back, and really try to absorb the text. I listen
+slowly, around 180-200 words per minute. This allows me to hear
+places where the text sounds awkward or redundant.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The book &lt;a href=&quot;https://www.amazon.com/BUGS-Writing-Revised-Guide-Debugging/dp/020137921X&quot;&gt;BUGS in
+Writing&lt;/a&gt;
+talks at length about developing an “ear” for good writing. While I
+found the book’s content useful, it’s decidedly hard to be able to
+objectively “hear” your own writing. I have a tough time divorcing the
+process of reading from pondering over the endless ways I could
+improve any given sentence.&lt;/p&gt;
+
+&lt;p&gt;I’ve found that listening to the text spoken back to you is a great
+way to perform rapid prototyping on documents. For example, I wrote a
+rough draft of this post, listened to it, and then restructured based
+on what I heard. I don’t think of myself as a naturally good
+writer. Forcing myself to slow down and concentrate naturally shifts
+my sentences towards being shorter and more concise.&lt;/p&gt;
+
+&lt;p&gt;Here’s an example from the syllabus for my upcoming security course,
+which I was editing today:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;To understand how attackers think, we will learn about the attacks
+they employ. But understanding a collection of attacks is not alone
+sufficient for helping us understand how to build secure systems. So
+alongside attacks, we will also cover the theory behind building
+defenses into our systems. We will dissect a number of real-world
+attacks (such as Heartbleed or WannaCry) and reflect upon what could
+have been done to prevent them. To complement these examples, will
+learn the theoretical underpinnings of security that apply across
+systems.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I spent some amount of time going over this text, but never really
+“heard” it all together. When I did, I immediately identified the
+problem: the paragraph was saying the same thing twice, breaking the
+natural flow.&lt;/p&gt;
+
+&lt;p&gt;I then came up with this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;To understand how attackers think, we will learn about the attacks
+they employ. We will dissect a number of real-world attacks (such as
+Heartbleed or WannaCry) and reflect upon what could have been done
+to prevent them. But understanding a collection of attacks is not
+alone sufficient for helping us understand how to build secure
+systems. So alongside attacks, we will also learn the theoretical
+underpinnings of security, and use it to build defenses into our
+systems.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Which sounds a lot better to me!&lt;/p&gt;
+
+&lt;p&gt;By the way, I learned this trick from Philip Guo:&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Do other people do this too? I often use text-to-speech to have my computer/phone read my own writing back to me to sense how it sounds&lt;/p&gt;&amp;mdash; Philip Guo (@pgbovine) &lt;a href=&quot;https://twitter.com/pgbovine/status/910182577767514113&quot;&gt;September 19, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+</description>
+        <pubDate>Fri, 22 Sep 2017 00:00:00 -0400</pubDate>
+        <link>http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</guid>
+        
+        
+        <category>writing</category>
+        
+      </item>
     
       <item>
         <title>How to Succeed in Grad School</title>
@@ -240,12 +329,11 @@ was heard.&lt;/p&gt;
 about how we should visualize program executions. For example, how
 should we visualize this program:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let id x = x in
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let id x = x in
 let g x = id x
 let check_zero y = if y = 0 then bad () else 1
 if (y &amp;gt;= 0) check_zero (g y) else h y
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Let’s say we want to check whether or not &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; is ever called: and if
 so under what circumstances The most intuitive way we could do this is
@@ -336,7 +424,7 @@ probably be meaningless until we really know what we want to look for.&lt;/p&gt;
 
 &lt;p&gt;For example, here’s a program with an off by one error:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void traverseList(Link *list) {
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void traverseList(Link *list) {
   Link *x = list;
   Link *y;
   do {
@@ -345,21 +433,19 @@ probably be meaningless until we really know what we want to look for.&lt;/p&gt;
   } while (x != null)           // Line 6
   // ...
 }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;As a high level view of the program, we might make our states function
 calls with line numbers into the function. A concrete execution would
 look like:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x = ptr;      // x -&amp;gt; &amp;lt;1,2&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x = ptr;      // x -&amp;gt; &amp;lt;1,2&amp;gt;
 x = x-&amp;gt;next   // x -&amp;gt; &amp;lt;1&amp;gt;
 y = x-&amp;gt;next   // y -&amp;gt; null
 x != null
 x = x-&amp;gt;next   // x -&amp;gt; &amp;lt;null&amp;gt;
 y = x-&amp;gt;next   // BAD!
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Once we isolate the bad thing, we can traverse back to the bad
 configuration that caused it to happen, perhaps with the aid of
@@ -406,11 +492,10 @@ program. Let’s say that our log is a list of transitions:
 whatever transitions are. In this example, my type transition would
 look like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition =
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition =
   | Entry of name * value list
   | Return of value
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Then, formally, each transition would take us from some program state
 &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt;, to a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ'&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;step : Σ → transition → Σ&lt;/code&gt;. Typically, we
@@ -419,9 +504,8 @@ the program. If this is the case, then for any sequence of transitions
 &lt;code class=&quot;highlighter-rouge&quot;&gt;t₁,...,tᵢ&lt;/code&gt;, we have that the transitive closure of the step relation
 with that set of transitions will reach some new program point:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now, so far I haven’t put any meaningful stipulations on what the
 transition function must look like. I have merely asserted that for it
@@ -454,12 +538,11 @@ course).&lt;/p&gt;
 “most precise” graph for our semantics. Here we’ll assume that our
 transitions have a type like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition = entry × line number × log number
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition = entry × line number × log number
 and entry =
   | Entry of name * value list
   | Exit of value
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Let’s first define our program states. Our states are literally just
 going to be mirrorings of the transitions, except for a special
@@ -467,11 +550,10 @@ initial state I designate as &lt;code class=&quot;highlighter-rouge&quot;&gt;Roo
 then just be the identity. This will give us a forest of possible
 configurations (one linear sequence of states for each log).&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = log entry × line number × log number + Root
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = log entry × line number × log number + Root
 Σᵢ (log_number) = Root
 step (_,i,k) (entry) = (entry,i+1,k)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here’s what it looks like for our two logs shown here:&lt;/p&gt;
 
@@ -490,15 +572,14 @@ into the first one (that coalesces that behavior).&lt;/p&gt;
 what”), it seems sensible to think about the control flow behavior of
 the runs.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;y = 0
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;y = 0
 &amp;gt; g(0)
   &amp;gt; id(0)
   &amp;lt; id with 0
 &amp;lt; g with 0
 &amp;gt; check_zero 0
   &amp;gt; bad()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;To build up our graph, we’ll start in the “main” function, and then
 watch for transitions. For example, upon seeing the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;g(0)&lt;/code&gt;
@@ -511,10 +592,9 @@ return.&lt;/p&gt;
 &lt;p&gt;The semantics of the program handles this by maintaining a stack of
 functions. We can do that here:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = frame list
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = frame list
 frame = function name
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Here, we’re ignoring arguments to functions (our frames don’t maintain
 environments), but we do get arbitrary context sensitivity as long as
@@ -527,10 +607,9 @@ we see a return we pop a frame from the stack. We assume that calls
 and returns are balanced (which would be required by the semantic
 rules defining soundness I mentioned above).&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;step Σ (&amp;gt; method)             = method :: Σ
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;step Σ (&amp;gt; method)             = method :: Σ
 step (method :: Σ) (&amp;lt; method) = Σ 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;We then take the reflexitive transitive closure of this relation over
 both of our logs. This graph has as its nodes sequences of call frames
@@ -544,10 +623,9 @@ large permutations of method calling sequences, it allows the graph’s
 behavior to degrade to a pathological case we want to avoid. For
 example, consider the factorial function:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fac n = 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fac n = 
   if n = 0 then 1 else fac (n-1)*n
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;In that graph, we’d see an arbitrarily long chain of &lt;code class=&quot;highlighter-rouge&quot;&gt;fac&lt;/code&gt; calls when
 our log called the program for some large value of &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt;. Instead of
@@ -571,7 +649,7 @@ function to put a new address in the store whenever we see a new stack
 frame. The notation &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ (fn,k) ]&lt;/code&gt; reads, “extend the store &lt;code class=&quot;highlighter-rouge&quot;&gt;σ&lt;/code&gt;
 with a binding that makes &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; point to the continuation &lt;code class=&quot;highlighter-rouge&quot;&gt;(fn,k)&lt;/code&gt;.”&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = ⟨ fn, σ, c ⟩
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = ⟨ fn, σ, c ⟩
 σ : Address → Continuation
 Continution = fn , address | Done
 c : Address 
@@ -581,12 +659,11 @@ a = alloc (Σ)
 step ⟨ fn, σ, c ⟩ (&amp;gt; f) = ⟨ f, σ ⊔ [ a ↦ (fn, k) ], a ⟩
 step ⟨ fn, σ, c ⟩ (&amp;lt; f) =
   let fn', c' = σ(κ) in ⟨ fn', σ, c' ⟩
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;For our example program above, we’d get this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; g(0)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; g(0)
 ⟨ g, [a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
   &amp;gt; id(0)
   ⟨ id, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₂ ⟩
@@ -599,8 +676,7 @@ step ⟨ fn, σ, c ⟩ (&amp;lt; f) =
   &amp;gt; bad()
   ⟨ bad, [a₄ ↦ (check_zero, a₁),
           a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₄ ⟩
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;If you haven’t guessed yet, this machine is an instance of the
 &lt;a href=&quot;http://matt.might.net/papers/vanhorn2010abstract.pdf&quot;&gt;abstracting abstract machines&lt;/a&gt;
@@ -615,15 +691,14 @@ the last state from performing our last analysis, and we need to
 “reset” the analysis into the initial state. But it’s not quite the
 same initial state: we just want to reset to the start function:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;⟨ main, [a₄ ↦ (check_zero, a₁),
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;⟨ main, [a₄ ↦ (check_zero, a₁),
          a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
 y = 1
 &amp;gt; g(1)
   ⟨ g, [a₅, (main,a₀), a₄ ↦ (check_zero, a₁),
         a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₅ ⟩
   ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now here, our function &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt; returns a fresh address &lt;code class=&quot;highlighter-rouge&quot;&gt;a₅&lt;/code&gt;. To get
 the behavior, we actually want to &lt;em&gt;reallocate&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;a₁&lt;/code&gt;. This means that
@@ -631,19 +706,17 @@ our continuations have to be able to store &lt;em&gt;sets&lt;/em&gt; of function
 &lt;em&gt;sets&lt;/em&gt; of next continuations. So instead of our store having the
 structure:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;σ : Address → Continution
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;σ : Address → Continution
 Continution = fn , address | Done
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;We need to lift continuations to hold sets of functions and
 addresses. Because they actually represent &lt;em&gt;sets&lt;/em&gt; of continuations,
 we’ll call them abstract continuations (or flow sets, in control flow
 terminology):&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Continution^ = ℘(fn) × ℘(address) | Done
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Continution^ = ℘(fn) × ℘(address) | Done
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now, we’re going to have to modify our &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt; function to “smush
 together” things that come from the same function. We’re going to do
@@ -651,15 +724,13 @@ that by changing the structure of addresses (which I’ve so far been
 leaving as opaque). Instead, we’re going to make addresss simply
 function names:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Address = fn | Done
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Address = fn | Done
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now, our allocator is going to be this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alloc (fn,σ,c) = fn
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alloc (fn,σ,c) = fn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Last, we have an operation &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ (fn,k) ]&lt;/code&gt; which we have to make
 sense of with our modified notion of continuations. First, we need to
@@ -762,13 +833,12 @@ properties about sets of runs. For example, the following program uses
 a so-called &lt;em&gt;implicit&lt;/em&gt; flow to exfiltrate the value of its secret
 input:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input(secret)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input(secret)
 if (secret == 0) then
     output(1)
 else
     output(0)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This program is bad because it leaks something (one bit of knowledge)
 about its input: whether or not it is zero. Informally, a program that
@@ -988,13 +1058,12 @@ talking about environments is a separate issue.&lt;/p&gt;
 
 &lt;p&gt;As always, let’s start with an example:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(let ((f (lambda (x h)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(let ((f (lambda (x h)
   (if x
     (h)                ; Line 3
     (lambda () x)))))
   (f #t (f #f nil)))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Let’s say that we want to optimize the program. We’re going to do it
 as follows: we’re going to run a CFA and, if we see that there’s only
@@ -1008,14 +1077,13 @@ meaning that we could inline that function in place of &lt;code class=&quot;high
 
 &lt;p&gt;The problem is that doing this changes the meaning of the program:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(let ((f (lambda (x h)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(let ((f (lambda (x h)
   (if x
     (lambda () x)
     (lambda () x)))))
   (f #t (f #f nil)))
  --&amp;gt; #t
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The problem with the previous line of thought is that we didn’t take
 into account that the &lt;em&gt;first&lt;/em&gt; invocation of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; produces the closure
@@ -1251,9 +1319,8 @@ to designing analyses in the AAM style.&lt;/p&gt;
 stream). For example, lets say that we have the following object in
 memory:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let (pi : int list) = (* some function which computes the digits of pi. *)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let (pi : int list) = (* some function which computes the digits of pi. *)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The computer can’t hold all of pi, because it only has a finite amount
 of memory! But what it can do is hold a finite program, which will
@@ -1262,13 +1329,12 @@ as you only use finite pieces of the list, you can compute with that
 infinite list as much as you need. However, consider the following
 program:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let print_third_element (k : int list) =
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let print_third_element (k : int list) =
   match k with
     | _ :: _ :: thd :: tl -&amp;gt; print thd
 
 print_third_element pi
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;What does this program do? Intuitively, this program should print the
 third digit of &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt;. In reality, the behavior differs between
@@ -1400,21 +1466,19 @@ Computer Science, vol. 10, no 7 (2004), 751-768.&lt;/p&gt;
 
 &lt;p&gt;Undergrads in math typically take courses in abstract algebra: the study of the structure of mathematical objects. For example, we look at groups (structures where we can multiply things), rings (structures where we can multiply things and add things), etc… It turns out that this mirrors a very similar concept in programming languages:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data Tree a =
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data Tree a =
   | Leaf of a
   | Node of Tree a * a * Tree a
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;In this case, we define two constructors for the type (Leaf and `Node), which naturally generate two destructors:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let get_leaf = function
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let get_leaf = function
   | Leaf a -&amp;gt; a
 
 let get_node = function
   | Node n -&amp;gt; n
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;There’s one intricacy to note here: we have to be sure that we never try to use &lt;code class=&quot;highlighter-rouge&quot;&gt;get_leaf&lt;/code&gt; with something of the form &lt;code class=&quot;highlighter-rouge&quot;&gt;Node (...) 32 (...)&lt;/code&gt; (assuming we bind &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt;, for example).&lt;/p&gt;
 

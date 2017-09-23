@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Teaching</title>
-  <meta name="description" content="Kris Micinski's personal website. Visiting CS Prof at Haverford.
-">
+  <title>Writing tip: say the text back to you</title>
+  <meta name="description" content="Here’s the tip: have your computer read your writing back toyou. Listen to how it sounds. Then, iterate until it conveys whatyou’d like to hear. On a mac, yo...">
   <link rel="shortcut icon" type="image/png" href="http://kmicinski.com/assets/img/favicon.png">
   <link rel="stylesheet" href="http://kmicinski.com/css/main.css">
-  <link rel="canonical" href="http://kmicinski.comhttp://kmicinski.com/teaching/">
+  <link rel="canonical" href="http://kmicinski.comhttp://kmicinski.com/writing/2017/09/21/reading-text-back/">
   <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="http://kmicinski.comhttp://kmicinski.com/feed.xml">
 </head>
 
@@ -69,75 +68,108 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <article class="post">
-  <div class="main">
-    <h1 id="teaching">Teaching</h1>
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-<p>I love it! Sign up and let’s have a class together!</p>
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Writing tip: say the text back to you</h1>
+    <p class="post-meta"><time datetime="2017-09-21T00:00:00-04:00" itemprop="datePublished">Sep 21, 2017</time></p>
+  </header>
 
-<h2 id="cmsc-245-fall-2017"><a href="http://kmicinski.com/cmsc245">CMSC 245, Fall 2017</a></h2>
+  <div class="post-content" itemprop="articleBody">
+    <p>Here’s the tip: have your computer read your writing back to
+you. Listen to how it sounds. Then, iterate until it conveys what
+you’d like to hear. On a mac, you can do this it like this:</p>
 
-<p>I am currently teaching CMSC 245, Principles of Programming
-Languages. The course covers programming paradigms at several
-different levels of hardware abstraction, and teaches students to both
-understand how the machine executes code and expand their foundational
-understanding of programming abstractions. The main course website is
-<a href="http://kmicinski.com/cmsc245">here</a>.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>say -r words_per_minute "My speech goes here"
+</code></pre></div></div>
 
-<h2 id="cmsc-330-summer-2015">CMSC 330, Summer 2015</h2>
-
-<p class="smallright"><img src="http://kmicinski.com/assets/330board.jpg" alt="330 Board screenshot" /></p>
-
-<p><a href="https://cs.umd.edu/class/summer2015/cmsc330/">Course webpage</a></p>
-
-<p><a href="https://github.com/kmicinski/cmsc330examples">Link to GitHub repository with examples</a></p>
-
-<p>During the summer of 2015, I taught CMSC 330, an undergraduate course
-on programming languages.  CMSC 330 covers a wide range of concepts in
-programming languages: both foundational and practical. In particular,
-the students learn OCaml, Ruby, and Prolog, and learn core material
-such as automata theory (finite state machines and grammars) and
-programming language semantics.</p>
-
-<p>For the Summer 2015 iteration of the course, I reworked a large part
-of the lectures to cover the same set of material, but presented it in
-an interactive style: developing concepts in class, while
-supplementing this development with projects and course notes. I also
-elected to put more emphasis on teaching functional programming and
-programming language semantics. The course included extensive coverage
-of small step semantics: for one project students implement an
-interpreter for a core-ML.</p>
-
-<p>Relevant lecture material I particular enjoyed writing includes:</p>
+<p>I do this to either:</p>
 
 <ul>
   <li>
-    <p><a href="https://github.com/kmicinski/cmsc330examples/tree/master/ocaml">A set of lecture notes on introductory functional programming</a></p>
+    <p>Read the text back to me quickly (<code class="highlighter-rouge">-r 240-270</code>). This helps follow
+along with a document in front of me and check it for flow. It also
+catches miswordings, (some) grammar errors, and typos.</p>
   </li>
   <li>
-    <p><a href="https://github.com/kmicinski/cmsc330examples/tree/master/lambda-calculus">Notes on the lambda calculus and introductory semantics in the big, small, and abstract machine style</a></p>
-  </li>
-  <li>
-    <p><a href="https://github.com/kmicinski/cmsc330examples/tree/master/module-systems">Notes on the OCaml module system</a></p>
+    <p>Close my eyes, sit back, and really try to absorb the text. I listen
+slowly, around 180-200 words per minute. This allows me to hear
+places where the text sounds awkward or redundant.</p>
   </li>
 </ul>
 
-<h2 id="one-off-lectures">One off lectures</h2>
+<p>The book <a href="https://www.amazon.com/BUGS-Writing-Revised-Guide-Debugging/dp/020137921X">BUGS in
+Writing</a>
+talks at length about developing an “ear” for good writing. While I
+found the book’s content useful, it’s decidedly hard to be able to
+objectively “hear” your own writing. I have a tough time divorcing the
+process of reading from pondering over the endless ways I could
+improve any given sentence.</p>
 
-<p>Occasionally I get invited to give one-off lectures in various
-classes. I see this as a great opportunity to expend some energy into
-digesting a topic well enough to present it to other people in a
-comprehensible way. In particular, I have a set of lectures I’ve given
-(some a few times) in courses:</p>
+<p>I’ve found that listening to the text spoken back to you is a great
+way to perform rapid prototyping on documents. For example, I wrote a
+rough draft of this post, listened to it, and then restructured based
+on what I heard. I don’t think of myself as a naturally good
+writer. Forcing myself to slow down and concentrate naturally shifts
+my sentences towards being shorter and more concise.</p>
 
-<ul>
-  <li><a href="http://kmicinski.com /assets/Micinski-631-Dependent-Types-14.pdf">A set of slides on dependent types</a> for David Van Horn’s CMSC631
-graduate class on programming languages</li>
-</ul>
+<p>Here’s an example from the syllabus for my upcoming security course,
+which I was editing today:</p>
+
+<blockquote>
+  <p>To understand how attackers think, we will learn about the attacks
+they employ. But understanding a collection of attacks is not alone
+sufficient for helping us understand how to build secure systems. So
+alongside attacks, we will also cover the theory behind building
+defenses into our systems. We will dissect a number of real-world
+attacks (such as Heartbleed or WannaCry) and reflect upon what could
+have been done to prevent them. To complement these examples, will
+learn the theoretical underpinnings of security that apply across
+systems.</p>
+</blockquote>
+
+<p>I spent some amount of time going over this text, but never really
+“heard” it all together. When I did, I immediately identified the
+problem: the paragraph was saying the same thing twice, breaking the
+natural flow.</p>
+
+<p>I then came up with this:</p>
+
+<blockquote>
+  <p>To understand how attackers think, we will learn about the attacks
+they employ. We will dissect a number of real-world attacks (such as
+Heartbleed or WannaCry) and reflect upon what could have been done
+to prevent them. But understanding a collection of attacks is not
+alone sufficient for helping us understand how to build secure
+systems. So alongside attacks, we will also learn the theoretical
+underpinnings of security, and use it to build defenses into our
+systems.</p>
+</blockquote>
+
+<p>Which sounds a lot better to me!</p>
+
+<p>By the way, I learned this trick from Philip Guo:</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Do other people do this too? I often use text-to-speech to have my computer/phone read my own writing back to me to sense how it sounds</p>&mdash; Philip Guo (@pgbovine) <a href="https://twitter.com/pgbovine/status/910182577767514113">September 19, 2017</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
   </div>
 
 </article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
       </div>
     </div>

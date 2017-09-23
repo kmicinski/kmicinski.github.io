@@ -80,12 +80,11 @@
 about how we should visualize program executions. For example, how
 should we visualize this program:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let id x = x in
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let id x = x in
 let g x = id x
 let check_zero y = if y = 0 then bad () else 1
 if (y &gt;= 0) check_zero (g y) else h y
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Let’s say we want to check whether or not <code class="highlighter-rouge">bad</code> is ever called: and if
 so under what circumstances The most intuitive way we could do this is
@@ -176,7 +175,7 @@ probably be meaningless until we really know what we want to look for.</p>
 
 <p>For example, here’s a program with an off by one error:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>void traverseList(Link *list) {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void traverseList(Link *list) {
   Link *x = list;
   Link *y;
   do {
@@ -185,21 +184,19 @@ probably be meaningless until we really know what we want to look for.</p>
   } while (x != null)           // Line 6
   // ...
 }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>As a high level view of the program, we might make our states function
 calls with line numbers into the function. A concrete execution would
 look like:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>x = ptr;      // x -&gt; &lt;1,2&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = ptr;      // x -&gt; &lt;1,2&gt;
 x = x-&gt;next   // x -&gt; &lt;1&gt;
 y = x-&gt;next   // y -&gt; null
 x != null
 x = x-&gt;next   // x -&gt; &lt;null&gt;
 y = x-&gt;next   // BAD!
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Once we isolate the bad thing, we can traverse back to the bad
 configuration that caused it to happen, perhaps with the aid of
@@ -246,11 +243,10 @@ program. Let’s say that our log is a list of transitions:
 whatever transitions are. In this example, my type transition would
 look like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>type transition =
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type transition =
   | Entry of name * value list
   | Return of value
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Then, formally, each transition would take us from some program state
 <code class="highlighter-rouge">Σ</code>, to a new state <code class="highlighter-rouge">Σ'</code>: <code class="highlighter-rouge">step : Σ → transition → Σ</code>. Typically, we
@@ -259,9 +255,8 @@ the program. If this is the case, then for any sequence of transitions
 <code class="highlighter-rouge">t₁,...,tᵢ</code>, we have that the transitive closure of the step relation
 with that set of transitions will reach some new program point:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
+</code></pre></div></div>
 
 <p>Now, so far I haven’t put any meaningful stipulations on what the
 transition function must look like. I have merely asserted that for it
@@ -294,12 +289,11 @@ course).</p>
 “most precise” graph for our semantics. Here we’ll assume that our
 transitions have a type like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>type transition = entry × line number × log number
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type transition = entry × line number × log number
 and entry =
   | Entry of name * value list
   | Exit of value
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Let’s first define our program states. Our states are literally just
 going to be mirrorings of the transitions, except for a special
@@ -307,11 +301,10 @@ initial state I designate as <code class="highlighter-rouge">Root</code> so that
 then just be the identity. This will give us a forest of possible
 configurations (one linear sequence of states for each log).</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Σ = log entry × line number × log number + Root
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = log entry × line number × log number + Root
 Σᵢ (log_number) = Root
 step (_,i,k) (entry) = (entry,i+1,k)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Here’s what it looks like for our two logs shown here:</p>
 
@@ -330,15 +323,14 @@ into the first one (that coalesces that behavior).</p>
 what”), it seems sensible to think about the control flow behavior of
 the runs.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>y = 0
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>y = 0
 &gt; g(0)
   &gt; id(0)
   &lt; id with 0
 &lt; g with 0
 &gt; check_zero 0
   &gt; bad()
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>To build up our graph, we’ll start in the “main” function, and then
 watch for transitions. For example, upon seeing the <code class="highlighter-rouge">&gt;g(0)</code>
@@ -351,10 +343,9 @@ return.</p>
 <p>The semantics of the program handles this by maintaining a stack of
 functions. We can do that here:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Σ = frame list
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = frame list
 frame = function name
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Here, we’re ignoring arguments to functions (our frames don’t maintain
 environments), but we do get arbitrary context sensitivity as long as
@@ -367,10 +358,9 @@ we see a return we pop a frame from the stack. We assume that calls
 and returns are balanced (which would be required by the semantic
 rules defining soundness I mentioned above).</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>step Σ (&gt; method)             = method :: Σ
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>step Σ (&gt; method)             = method :: Σ
 step (method :: Σ) (&lt; method) = Σ 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We then take the reflexitive transitive closure of this relation over
 both of our logs. This graph has as its nodes sequences of call frames
@@ -384,10 +374,9 @@ large permutations of method calling sequences, it allows the graph’s
 behavior to degrade to a pathological case we want to avoid. For
 example, consider the factorial function:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let fac n = 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let fac n = 
   if n = 0 then 1 else fac (n-1)*n
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In that graph, we’d see an arbitrarily long chain of <code class="highlighter-rouge">fac</code> calls when
 our log called the program for some large value of <code class="highlighter-rouge">n</code>. Instead of
@@ -411,7 +400,7 @@ function to put a new address in the store whenever we see a new stack
 frame. The notation <code class="highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> reads, “extend the store <code class="highlighter-rouge">σ</code>
 with a binding that makes <code class="highlighter-rouge">a</code> point to the continuation <code class="highlighter-rouge">(fn,k)</code>.”</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Σ = ⟨ fn, σ, c ⟩
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = ⟨ fn, σ, c ⟩
 σ : Address → Continuation
 Continution = fn , address | Done
 c : Address 
@@ -421,12 +410,11 @@ a = alloc (Σ)
 step ⟨ fn, σ, c ⟩ (&gt; f) = ⟨ f, σ ⊔ [ a ↦ (fn, k) ], a ⟩
 step ⟨ fn, σ, c ⟩ (&lt; f) =
   let fn', c' = σ(κ) in ⟨ fn', σ, c' ⟩
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>For our example program above, we’d get this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; g(0)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; g(0)
 ⟨ g, [a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
   &gt; id(0)
   ⟨ id, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₂ ⟩
@@ -439,8 +427,7 @@ step ⟨ fn, σ, c ⟩ (&lt; f) =
   &gt; bad()
   ⟨ bad, [a₄ ↦ (check_zero, a₁),
           a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₄ ⟩
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you haven’t guessed yet, this machine is an instance of the
 <a href="http://matt.might.net/papers/vanhorn2010abstract.pdf">abstracting abstract machines</a>
@@ -455,15 +442,14 @@ the last state from performing our last analysis, and we need to
 “reset” the analysis into the initial state. But it’s not quite the
 same initial state: we just want to reset to the start function:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>⟨ main, [a₄ ↦ (check_zero, a₁),
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⟨ main, [a₄ ↦ (check_zero, a₁),
          a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
 y = 1
 &gt; g(1)
   ⟨ g, [a₅, (main,a₀), a₄ ↦ (check_zero, a₁),
         a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₅ ⟩
   ...
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now here, our function <code class="highlighter-rouge">alloc</code> returns a fresh address <code class="highlighter-rouge">a₅</code>. To get
 the behavior, we actually want to <em>reallocate</em> <code class="highlighter-rouge">a₁</code>. This means that
@@ -471,19 +457,17 @@ our continuations have to be able to store <em>sets</em> of functions, and
 <em>sets</em> of next continuations. So instead of our store having the
 structure:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>σ : Address → Continution
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ : Address → Continution
 Continution = fn , address | Done
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We need to lift continuations to hold sets of functions and
 addresses. Because they actually represent <em>sets</em> of continuations,
 we’ll call them abstract continuations (or flow sets, in control flow
 terminology):</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Continution^ = ℘(fn) × ℘(address) | Done
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Continution^ = ℘(fn) × ℘(address) | Done
+</code></pre></div></div>
 
 <p>Now, we’re going to have to modify our <code class="highlighter-rouge">alloc</code> function to “smush
 together” things that come from the same function. We’re going to do
@@ -491,15 +475,13 @@ that by changing the structure of addresses (which I’ve so far been
 leaving as opaque). Instead, we’re going to make addresss simply
 function names:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Address = fn | Done
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Address = fn | Done
+</code></pre></div></div>
 
 <p>Now, our allocator is going to be this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>alloc (fn,σ,c) = fn
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alloc (fn,σ,c) = fn
+</code></pre></div></div>
 
 <p>Last, we have an operation <code class="highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> which we have to make
 sense of with our modified notion of continuations. First, we need to

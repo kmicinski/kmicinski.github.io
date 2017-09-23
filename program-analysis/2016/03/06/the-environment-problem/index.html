@@ -114,13 +114,12 @@ talking about environments is a separate issue.</p>
 
 <p>As always, let’s start with an example:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>(let ((f (lambda (x h)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let ((f (lambda (x h)
   (if x
     (h)                ; Line 3
     (lambda () x)))))
   (f #t (f #f nil)))
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Let’s say that we want to optimize the program. We’re going to do it
 as follows: we’re going to run a CFA and, if we see that there’s only
@@ -134,14 +133,13 @@ meaning that we could inline that function in place of <code class="highlighter-
 
 <p>The problem is that doing this changes the meaning of the program:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>(let ((f (lambda (x h)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let ((f (lambda (x h)
   (if x
     (lambda () x)
     (lambda () x)))))
   (f #t (f #f nil)))
  --&gt; #t
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The problem with the previous line of thought is that we didn’t take
 into account that the <em>first</em> invocation of <code class="highlighter-rouge">f</code> produces the closure

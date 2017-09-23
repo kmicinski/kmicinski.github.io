@@ -1,0 +1,6 @@
+jekyll build;
+cp -R _site/* ../kmicinski.github.io;
+cd ../kmicinski.github.io;
+git add .;
+git commit -m "update..";
+git push origin master;
