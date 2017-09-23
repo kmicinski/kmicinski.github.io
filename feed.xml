@@ -6,9 +6,232 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 22 Sep 2017 20:29:07 -0400</pubDate>
-    <lastBuildDate>Fri, 22 Sep 2017 20:29:07 -0400</lastBuildDate>
+    <pubDate>Sat, 23 Sep 2017 14:44:51 -0400</pubDate>
+    <lastBuildDate>Sat, 23 Sep 2017 14:44:51 -0400</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
+    
+      <item>
+        <title>My new cybersecurity course at Haverford (Spring 2017)</title>
+        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;http://kmicinski.com/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;computer-security-attacks-and-defenses&quot;&gt;Computer Security: Attacks and Defenses&lt;/h2&gt;
+&lt;p&gt;(&lt;em&gt;CMSC 323&lt;/em&gt; at Haverford)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Prerequisites&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Experience in C programming:
+    &lt;ul&gt;
+      &lt;li&gt;E.g., CMSC245 at Haverford or CMSC246 at Bryn Mawr&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Experience with or willingness to learn learn new language (Python, SQL, JavaScript, etc..)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Workload&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;3 lecture hours per week&lt;/li&gt;
+  &lt;li&gt;1 lab hour per week&lt;/li&gt;
+  &lt;li&gt;This will be a lab / project intensive class. Approximately 6-10
+hours per week &lt;em&gt;outside&lt;/em&gt; of class will be expected from
+students. I recommend against taking this course concurrent with
+other project-heavy courses.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Cap&lt;/strong&gt;: 25 (may be lifted to 35)&lt;/p&gt;
+
+&lt;h2 id=&quot;course-overview&quot;&gt;Course Overview&lt;/h2&gt;
+
+&lt;p&gt;This​ ​course​ ​will​ ​serve​ ​as​ ​a​ ​broad​ ​introduction​ ​to​ ​the​ ​field​ ​of​
+​computer​ ​security,​ ​from​ ​two concurrent​ ​perspectives:​ ​attacks​ ​on​
+​systems,​ ​and​ ​defenses​ ​against​ ​those​ ​attacks.​ ​The​ ​goal​ ​of this​ ​course​
+​will​ ​be​ ​to​ ​help​ ​build​ ​intuition​ ​so​ ​that–when​ ​designing​ ​your​ ​own​
+​systems–you​ ​can intelligently​ ​assess​ ​and​ ​mitigate​ ​security​ ​risks.&lt;/p&gt;
+
+&lt;p&gt;To​ ​understand​ ​how​ ​attackers​ ​think,​ ​we​ ​will​ ​learn​ ​about​ ​the​ ​attacks​
+​they​ ​employ.​ ​​ ​We​ ​will dissect​ ​a​ ​number​ ​of​ ​real-world​ ​attacks​ ​(such​ ​as​
+​Heartbleed​ ​or​ ​WannaCry)​ ​and​ ​reflect​ ​upon​ ​what could​ ​have​ ​been​ ​done​ ​to​
+​prevent​ ​them.​ ​But​ ​understanding​ ​a​ ​collection​ ​of​ ​attacks​ ​is​ ​not​ ​alone
+sufficient​ ​for​ ​helping​ ​us​ ​understand​ ​how​ ​to​ ​build​ ​secure​ ​systems.​ ​So​
+​alongside​ ​attacks,​ ​we​ ​will also​ ​learn​ ​the​ ​theoretical​ ​underpinnings​
+​of​ ​security,​ ​and​ ​use​ ​it​ ​to​ ​build​ ​defenses​ ​into​ ​our systems.&lt;/p&gt;
+
+&lt;p&gt;Labs​ ​will​ ​transition​ ​theory​ ​into​ ​practice.​ ​We​ ​will​ ​conclude​ ​with​ ​a​
+​group​ ​project​ ​exploring advanced​ ​topics​ ​relevant​ ​to​ ​the​ ​state​ ​of​ ​the​
+​art​ ​in​ ​computer​ ​security.​ ​The​ ​course​ ​will​ ​begin​ ​with a​ ​discussion​ ​on​
+​ethical​ ​application​ ​of​ ​techniques​ ​we​ ​learn.&lt;/p&gt;
+
+&lt;h2 id=&quot;topics&quot;&gt;Topics&lt;/h2&gt;
+
+&lt;p&gt;We​ ​will​ ​cover​ ​parts​ ​of​ ​the​ ​following​ ​topics,​ ​adjusted​ ​for​ ​time​ ​and​ ​pace​ ​of​ ​the​ ​course,​ ​along​ ​with
+student​ ​interest​ ​in​ ​each​ ​area.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Low-level​ ​memory​ ​attacks​ ​and​ ​defenses
+    &lt;ul&gt;
+      &lt;li&gt;Buffer​ ​overflows&lt;/li&gt;
+      &lt;li&gt;Stack​ ​canaries&lt;/li&gt;
+      &lt;li&gt;Access​ ​space​ ​randomization​ ​/​ ​derandomization&lt;/li&gt;
+      &lt;li&gt;Return​ ​to​ ​libc​ ​/​ ​return-oriented-programming&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Cryptography&lt;/li&gt;
+  &lt;li&gt;Symmetric​ ​and​ ​asymmetric-key​ ​cryptography&lt;/li&gt;
+  &lt;li&gt;Certificates,​ ​CAs,​ ​and​ ​PKI&lt;/li&gt;
+  &lt;li&gt;SSL​ ​/​ ​TLS&lt;/li&gt;
+  &lt;li&gt;Web​ ​security
+    &lt;ul&gt;
+      &lt;li&gt;SQL​ ​injections&lt;/li&gt;
+      &lt;li&gt;Cross-site​ ​scripting&lt;/li&gt;
+      &lt;li&gt;Cross-site​ ​request​ ​forgery&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Social​ ​engineering​ ​and​ ​security​ ​ethics&lt;/li&gt;
+  &lt;li&gt;UI​ ​design​ ​for​ ​security
+    &lt;ul&gt;
+      &lt;li&gt;App​ ​permissions​ ​design&lt;/li&gt;
+      &lt;li&gt;Best​ ​practices​ ​for​ ​security​ ​UI&lt;/li&gt;
+      &lt;li&gt;Permission​ ​lifetime​ ​and​ ​revocation&lt;/li&gt;
+      &lt;li&gt;Case​ ​study​ ​in​ ​privacy​ ​controls:
+        &lt;ul&gt;
+          &lt;li&gt;Facebook​ ​privacy​ ​controls&lt;/li&gt;
+          &lt;li&gt;Android​ ​permissions&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Information​ ​flow​ ​control​ ​in​ ​web​ ​apps&lt;/li&gt;
+  &lt;li&gt;Reverse​ ​engineering&lt;/li&gt;
+  &lt;li&gt;Theoretical​ ​underpinnings​ ​of​ ​security
+    &lt;ul&gt;
+      &lt;li&gt;Full​ ​abstraction&lt;/li&gt;
+      &lt;li&gt;Information​ ​flow&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;projects-and-labs&quot;&gt;Projects and Labs&lt;/h2&gt;
+
+&lt;p&gt;Projects​ ​will​ ​be​ ​started​ ​in​ ​labs,​ ​and​ ​then​ ​continued​ ​individually.​
+​Some​ ​labs​ ​are​ ​structured​ ​so​ ​that they​ ​begin​ ​with​ ​a​ ​concrete​
+​assignment​ ​to​ ​work​ ​on​ ​as​ ​an​ ​individual​ ​in​ ​the​ ​first​ ​week,​ ​and​ ​then
+move​ ​on​ ​to​ ​a​ ​group​ ​assignment​ ​to​ ​complete​ ​a​ ​larger​ ​task.&lt;/p&gt;
+
+&lt;h3 id=&quot;project-1-memory-attacks-weeks-1-4-inclusive-uses-c-programming&quot;&gt;Project 1: Memory attacks (Weeks 1-4 inclusive) (Uses C programming)&lt;/h3&gt;
+
+&lt;p&gt;This​ ​project​ ​will​ ​cover​ ​low-level​ ​memory​ ​attacks​ ​using​ ​the​ ​C​
+​programming​ ​language.​ ​The students​ ​will​ ​begin​ ​by​ ​executing​ ​an​ ​attack​
+​from​ ​starter​ ​code​ ​provided.​ ​They​ ​will​ ​then​ ​implement their​ ​own​ ​buffer​
+​overflow​ ​attack,​ ​and​ ​demonstrate​ ​a​ ​way​ ​to​ ​prevent​ ​the​ ​attack​ ​by​
+​intelligent programming,​ ​and​ ​also​ ​facilities​ ​provided​ ​by​ ​the​
+​compiler.​ ​After​ ​completing​ ​this​ ​task,​ ​students will​ ​form​ ​groups​ ​to​
+​complete​ ​a​ ​more​ ​advanced​ ​attack​ ​studying​ ​ASLR​ ​or​ ​ROP.​ ​1.5​ ​weeks​ ​will​
+​be allocated​ ​for​ ​independent​ ​programming,​ ​and​ ​1.5​ ​weeks​ ​will​ ​be​
+​allocated​ ​for​ ​group​ ​work.&lt;/p&gt;
+
+&lt;h3 id=&quot;project-2-cryptography-weeks-4-7-incl-uses-python-programming&quot;&gt;Project 2: Cryptography (weeks 4-7 incl.) (Uses Python programming)&lt;/h3&gt;
+
+&lt;p&gt;This​ ​project​ ​will​ ​involve​ ​creating​ ​a​ ​public​ ​/​ ​private​ ​key​ ​pair​ ​and​
+​manually​ ​exchanging​ ​keys​ ​to collaborate​ ​secretly​ ​communicate​ ​with​
+​group​ ​members.​ ​The​ ​next​ ​week,​ ​students​ ​will​ ​either implement​ ​a​ ​secure​
+​chat​ ​using​ ​cryptographic​ ​primitives​ ​provided,​ ​or​ ​explore​ ​an​ ​attack​ ​on​
+​an insecure​ ​cryptographic​ ​hash.&lt;/p&gt;
+
+&lt;h3 id=&quot;project-3-web-security-weeks-7-9-incl-uses-python-programming&quot;&gt;Project 3: Web security (weeks 7-9 incl.) (Uses Python programming)&lt;/h3&gt;
+
+&lt;p&gt;Students​ ​will​ ​be​ ​given​ ​an​ ​insecure​ ​web​ ​app​ ​written​ ​in​ ​Python​ ​which​ ​is​
+​vulnerable​ ​to​ ​an​ ​SQL injection​ ​attack.​ ​They​ ​will​ ​then​ ​craft​ ​an​ ​input​
+​which​ ​causes​ ​the​ ​app​ ​to​ ​leak​ ​secret​ ​information​ ​(in this​ ​case,​
+​student​ ​grades​ ​from​ ​a​ ​synthetic​ ​gradebook​ ​consisting​ ​of​ ​fictitious​
+​students).​ ​They​ ​will then​ ​fix​ ​this​ ​attack​ ​in​ ​the​ ​app.​ ​Finally,​
+​students​ ​will​ ​attempt​ ​to​ ​break​ ​other​ ​students’​ ​fixes.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-project-weeks-10-14&quot;&gt;Final project (weeks 10-14):&lt;/h3&gt;
+
+&lt;p&gt;This​ ​will​ ​be​ ​a​ ​final​ ​project,​ ​either​ ​in​ ​a​ ​group​ ​or​ ​alone.​ ​Students​ ​requesting​ ​to​ ​work​ ​alone​ ​need
+prior​ ​approval​ ​for​ ​a​ ​topic​ ​and​ ​expectations​ ​will​ ​be​ ​calibrated​ ​accordingly.​ ​Students​ ​will​ ​select
+one​ ​of​ ​the​ ​following​ ​projects,​ ​or​ ​propose​ ​their​ ​own​ ​project:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Information flow specification (uses Python/Jeeves)&lt;/p&gt;
+
+    &lt;p&gt;Implement​ ​privacy​ ​policies​ ​for​ ​a​ ​secure​ ​student​ ​grades​ ​database​
+​using​ ​Jeeves,​ ​an extension​ ​to​ ​the​ ​Python​ ​programming​ ​language.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Designing a privacy UI (uses Python / Javascript / etc..)&lt;/p&gt;
+
+    &lt;p&gt;Use​ ​best​ ​practices​ ​to​ ​propose​ ​and​ ​implement​ ​a​ ​new​ ​UI​ ​for​ ​some​ ​privacy-related
+mechanism,​ ​and​ ​perform​ ​a​ ​mock​ ​implementation.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Malware reverse engineering&lt;/p&gt;
+
+    &lt;p&gt;Use​ ​reverse​ ​engineering​ ​tools​ ​to​ ​understand​ ​and​ ​discuss​ ​how​ ​a​
+​particular​ ​piece​ ​of malware​ ​works.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Implement signature-based antivirus&lt;/p&gt;
+
+    &lt;p&gt;Students​ ​will​ ​read​ ​about​ ​and​ ​implement​ ​a​ ​variant​ ​of​ ​signature-based​
+​antivirus​ ​detection for​ ​a​ ​small​ ​sample​ ​of​ ​malware.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Students​ ​will​ ​check​ ​in​ ​with​ ​the​ ​professor​ ​regularly,​ ​and​
+collaboration​ ​will​ ​occur​ ​via​ ​Github.&lt;/p&gt;
+
+&lt;h2 id=&quot;grading&quot;&gt;Grading&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Labs and projects: 50%
+    &lt;ul&gt;
+      &lt;li&gt;Individual component: 30%&lt;/li&gt;
+      &lt;li&gt;Group component: 20%&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Two midterm exams: 30% (take home and open note)
+    &lt;ul&gt;
+      &lt;li&gt;Given 1/3rd and 2/3rd of the way through the course&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Final project: 20%&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Evaluation​ ​for​ ​group​ ​projects​ ​will​ ​be​ ​based​ ​on​ ​mutual​ ​student​
+feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ ​members.&lt;/p&gt;
+
+&lt;h2 id=&quot;books&quot;&gt;Books&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Required&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Security Engineering, Second Editing&lt;/strong&gt;, ​by ​Ross ​Anderson
+    &lt;ul&gt;
+      &lt;li&gt;This​ ​book​ ​is​ ​freely​ ​available​ ​online​ ​from​ ​the​ ​author&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Online​ ​resources​ ​will​ ​be​ ​distributed​ ​throughout​ ​the​ ​course.​ ​These​
+​include​ ​blog​ ​articles (e.g.,​ ​by​ ​the​ ​Facebook​ ​privacy​ ​group),​ ​academic​
+​papers,​ ​and​ ​websites​ ​(e.g.,​ ​the​ ​Android security​ ​internals).​ ​These​
+​will​ ​all​ ​be​ ​freely​ ​available.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;The Web Application Hacker’s Handbook&lt;/strong&gt;​,​ ​by​ ​Dafydd​ ​Stuttard​ ​&amp;amp;​ ​Marcus​ ​Pinto&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Applied Cryptography, Second Edition&lt;/strong&gt;, by​ ​Bruce​ ​Schneier&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Sat, 23 Sep 2017 00:00:00 -0400</pubDate>
+        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</guid>
+        
+        
+        <category>teaching</category>
+        
+      </item>
     
       <item>
         <title>Writing tip: say the text back to you</title>
@@ -1304,242 +1527,6 @@ to designing analyses in the AAM style.&lt;/p&gt;
         <category>algorithms</category>
         
         <category>sat</category>
-        
-      </item>
-    
-      <item>
-        <title>On Understanding Coinduction</title>
-        <description>&lt;p&gt;Here’s the basic story:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Induction is about finite data, co-induction is about infinite data.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The typical example of infinite data is the type of a lazy list (a
-stream). For example, lets say that we have the following object in
-memory:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let (pi : int list) = (* some function which computes the digits of pi. *)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The computer can’t hold all of pi, because it only has a finite amount
-of memory! But what it can do is hold a finite program, which will
-produce any arbitrarily long expansion of pi that you desire. As long
-as you only use finite pieces of the list, you can compute with that
-infinite list as much as you need. However, consider the following
-program:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let print_third_element (k : int list) =
-  match k with
-    | _ :: _ :: thd :: tl -&amp;gt; print thd
-
-print_third_element pi
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;What does this program do? Intuitively, this program should print the
-third digit of &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt;. In reality, the behavior differs between
-languages. In OCaml, any argument to a function is evaluated before
-being passed into a function (so called strict evaluation). If we use
-this reduction order, then our above program will run forever
-computing the digits of &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt; before it can be passed to our printer
-function (which never happens). Since the machine does not have
-infinite memory, the program will eventually run out of memory and
-crash. However, morally this might not be the best evaluation
-order. Our program does not use all of the sequence &lt;code class=&quot;highlighter-rouge&quot;&gt;pi&lt;/code&gt;, it uses only
-the third element. Other languages (most notably, Haskell) use a lazy
-evaluation order, in which functions are evaluated only as much as
-they need be so that further computation can be done.&lt;/p&gt;
-
-&lt;p&gt;There are other examples of infinite structures in computing as well: any program which runs forever (a so called, process) is typically defined in a similar manner. Operating systems, web servers, text editors, and most other interesting programs. The basic idea behind these processes is closely tied to the example given above: rather than being specified by recursive calls, these processes are modeled as co-recursive calls (with their associated co inductive types).&lt;/p&gt;
-
-&lt;p&gt;I’m not prepared to explain coinduction in it’s full generality, but I wanted to give some pointers to literature that introduces it. One basic story is clear:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Inductive structures form least fixed points, and coinductive structures form greatest fixed points.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;While this tag line is used all over the place, it’s not really clear
-in what sense (co)inductive form fixed points, and it’s really not
-clear how one fixed point would be “larger” than another. The answer,
-as it turns out, is somewhat involved and deals with a bit of algebra:
-specifically, treating inductive and coinductive types as forming
-algebras (sets with operations on those sets) with certain properties
-that you use to define recursive functions and inductive proof
-principles.&lt;/p&gt;
-
-&lt;p&gt;I’ll assume that you’re familiar with regular old induction, and
-recursive definitions of functions. The following definition suffices
-to think about corecursive functions:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Recursive functions break apart finite data, co-recursive functions build infinite data.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I think this seems strange to people who haven’t seen it before (it still seems strange to me):&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;The need for infinite data is not clear to those who have never used it. We wrote programs without using infinite data, why use it?&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;We can’t physically hold infinite objects in memory. By contrast, we can hold finite data in memory. It seems kind of crazy that we should be able to hold an infinite object in memory. Here’s something to alleviate your understandable discomfort: let’s say we have an infinite loop in a program which outputs a long sequence of (unknown) digits (say, pi). Can we keep the output of this program in memory? Not all of it. So what do we do instead? We keep the (finite) program (the code of the loop) which generates the object in memory.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;We don’t ever use all of the infinite object in our programs, we only ever use a finite prefix of an infinite object.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Coinduction is cool, however, because it opens the gateway to a whole different side of viewing datatypes and computation. Most datatypes that we work with also have an analogue that can be thought of as a “lazy” type, sometimes the silver bullet in implementing elegant algorithms, amortized bounds, or cute programming tricks (as in Chris Okasaki’s &lt;a href=&quot;http://www.amazon.com/Purely-Functional-Structures-Chris-Okasaki/dp/0521663504&quot;&gt;Purely Functional Data Structures&lt;/a&gt;).&lt;/p&gt;
-
-&lt;p&gt;Another thing which I’ve always been fascinated is the idea that we can represent computation over arbitrarily sized things with finite space. This is the whole notion underpinning loops, which desugar to fixed points, which desugar to similar interpretations to what I’ve been describing here. When the computation is meantf to terminate, these loops take finite data, do some computation over it in some computation time (complexity) parameterized by (typically) the size of the input. This is the idea of how we give semantics to loops, though in reality loops do not always terminate, and in reality many programming languages are given “big step” (coinductive) semantics! Here we can see a cute connection between a desugaring of a programming language’s semantics and the data structures that can live inside languages.&lt;/p&gt;
-
-&lt;p&gt;In what follows, I discuss various techniques that you might use to learn about coinduction. I would suggest that you take the following approach:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Learn a few common lazy data structures in different languages (say, Haskell, OCaml, and JavaScript). Enough to get the idea.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Spend some time thinking about what infinite data structures are, and then puzzle over what an infinite proof might look like and why you would use one.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Pull out a theorem prover and work through some exercises in Coq that deal with coinduction. Read the CPDT or the Coq’Art book and work the examples aside the text.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;After spending some time thinking over those, read the total functional programming paper.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;To go even lower level, sit down at a coffeeshop and transcribe the tutorial paper on coalgebras and coinduction.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Go back to the examples in Coq, rework all of them, and spend a while thinking about and implementing your own (I’m on this step :-).&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;the-data-structures-approach&quot;&gt;The data structures approach&lt;/h1&gt;
-
-&lt;p&gt;To actually learn about coinduction by analogy to familiar programming structures, you might learn about lazy data structures, or lazy languages:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Chris Okasaki’s Purely Functional Data Structures book contains a number of interesting data structures that rely heavily on the use of laziness to guarantee their amortized bounds.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The &lt;a href=&quot;http://en.wikibooks.org/wiki/Haskell&quot;&gt;Haskell wiki book&lt;/a&gt; always has interesting things to say about the language, as well as the archives of the actual Haskell wiki and mailing list.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Any other Haskell book or reference will surely have a lot to say..&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The implementation of the &lt;a href=&quot;http://research.microsoft.com/apps/pubs/default.aspx?id=67083&quot;&gt;Spineless Tagless G-machine&lt;/a&gt; gives a good perspective on how thunks are used to implement lazy evaluation within Haskell. (I have not read all of that, yet..)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;learning-with-a-theorem-prover&quot;&gt;Learning with a theorem prover&lt;/h1&gt;
-
-&lt;p&gt;The first time I encountered coinduction was some time ago in Adam Chlipala’s book &lt;a href=&quot;http://adam.chlipala.net/cpdt/&quot;&gt;Certified Programming with Dependent Types&lt;/a&gt;. It was introduced within the context of infite data and proofs:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;The CPDT’s &lt;a href=&quot;http://adam.chlipala.net/cpdt/html/Coinductive.html&quot;&gt;Coinductive.v&lt;/a&gt; chapter contains a number of good pragmatic examples of coinduction. I find it invaluable to actually play with examples of things before thinking about them more. (I would suspect this is the case with most others as well..)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://www.labri.fr/perso/casteran/CoqArt/index.html&quot;&gt;Coq’Art&lt;/a&gt; has an excellent chapter (chapter 13) on coinduction, which complements the CPDT quite well! I would recommend reading it multiple times. In general Coq’Art is an excellent book on not only Coq, but also serves as a great introduction to constructive logic as well!&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Play around with the examples, rinse and repeat.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;the-total-functional-programming-paper&quot;&gt;The Total Functional Programming paper&lt;/h1&gt;
-
-&lt;p&gt;Turner has a great paper:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Total Functional Programming, D.A.Turner. Journal of Universal
-Computer Science, vol. 10, no 7 (2004), 751-768.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I would &lt;em&gt;really, really&lt;/em&gt; recommend reading this paper. It’s quite easy to read, and gives some good perspective on why induction, coinduction, and totality matter. The paper also highlights some of the finer points dealing with termination of functional programming that might not have been immediately obvious to you.&lt;/p&gt;
-
-&lt;h1 id=&quot;reasoning-about-structure&quot;&gt;Reasoning about structure&lt;/h1&gt;
-
-&lt;p&gt;Undergrads in math typically take courses in abstract algebra: the study of the structure of mathematical objects. For example, we look at groups (structures where we can multiply things), rings (structures where we can multiply things and add things), etc… It turns out that this mirrors a very similar concept in programming languages:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;data Tree a =
-  | Leaf of a
-  | Node of Tree a * a * Tree a
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In this case, we define two constructors for the type (Leaf and `Node), which naturally generate two destructors:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let get_leaf = function
-  | Leaf a -&amp;gt; a
-
-let get_node = function
-  | Node n -&amp;gt; n
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;There’s one intricacy to note here: we have to be sure that we never try to use &lt;code class=&quot;highlighter-rouge&quot;&gt;get_leaf&lt;/code&gt; with something of the form &lt;code class=&quot;highlighter-rouge&quot;&gt;Node (...) 32 (...)&lt;/code&gt; (assuming we bind &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt;, for example).&lt;/p&gt;
-
-&lt;p&gt;So let’s take a step back here: when you define algebras in your abstract algebra class, you define a carrier set along with the operations on that set. (Perhaps more importantly, you also define certain laws those operations satisfy, but that’s a part of the story that’s not encoded in the simple structure, and another story.) This is the same thing we do in this case: defining a type by means of it’s constructors and destructors. This motivates the algebraic interpretation of the “regular types:” types formed from sums and products of other regular types. (I’m not sure on the terminology, it comes from one of &lt;a href=&quot;http://strictlypositive.org/&quot;&gt;Conor Mcbride’s&lt;/a&gt; papers though surely elsewhere.) These structures actually form algebras: with a carrier set and collection of operations over that set. All of this reason comes from a categorical interpretation of datatypes, but the following paper explains it quite nicely:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A Tutorial on (Co)Algebras and (Co)Induction, Bart Jacobs and Jan
-Rutten, EATCS Bulletin, v62, p62–222, 1997.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The paper presents the following:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Coinduction at a high level&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Examples of processes and coinductive data structures.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The categorial interpretation of regular data types as functors and their associated algebras.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Use of these to establish recursive definitions of functions.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Use of these to do inductive proofs of propositions about data of that type.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Using this to do that same stuff with coinductive and inductive types.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The thing I like most about the paper is that while the concepts it touches deal with slightly nontrivial category theory, they explain the concepts within the category of sets (the category of sets form one of the simpler examples of a &lt;a href=&quot;http://en.wikipedia.org/wiki/Category_(mathematics)&quot;&gt;category&lt;/a&gt;). This is great for actually understanding stuff, and if you want to jump up to more category theory later you always can.&lt;/p&gt;
-
-&lt;h1 id=&quot;about-bisimulation&quot;&gt;About Bisimulation&lt;/h1&gt;
-
-&lt;p&gt;One thing that you’ll see no matter what in your studies on coinductive types is the notion of a bisimulation. I won’t say exactly what this is, but I will offer a simple explanation of why we need it. Look at the definition of equality in Coq, it’s an &lt;code class=&quot;highlighter-rouge&quot;&gt;Inductive&lt;/code&gt; type &lt;code class=&quot;highlighter-rouge&quot;&gt;eq&lt;/code&gt; that (when instantiated properly) forms something in &lt;code class=&quot;highlighter-rouge&quot;&gt;Prop&lt;/code&gt; (a proof). It should make sense that, using only the standard rules of convertability within Coq, we cannot demonstrate two infinite objects are equal. To deal with this, we define a new (relaxed) notion of equality: the bisimulation. The basic story about a bisimulation is:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;If two (potentially infinite) objects are bisimilar, any two arbitrarily sized finite expansins of those objects will be identical.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;This mirrors the use of lazy datatypes. We can’t really speak about
-equality, because the objects are infintie in size, but we can say
-that, “well, for all intents and purposes, whenever we need to compute
-with this infinitely sized thing, it’s going to be all right.”&lt;/p&gt;
-
-&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;This is a somewhat shoddy write up on my thoughts on learning coinduction. It’s something I’ve wanted to share for a while, but also something I think may be helpful for others trying to learn about the couniverse. It’s an interesting area, and has applications to speeding up your data structures, cleaning up your implementation, understanding process calculi, defining programming language semantics, and so much more. For me, I tried most of these steps over and over, peeling back another onion layer, and still haven’t made it to the core yet. I suppose, as long as it happens inside the constructor of the peel, that may just (perhaps ironically) be the sate of things.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 04 Sep 2012 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/coinduction/functional-programming/2012/09/04/on-understanding-coinduction/</guid>
-        
-        
-        <category>coinduction</category>
-        
-        <category>functional-programming</category>
         
       </item>
     
