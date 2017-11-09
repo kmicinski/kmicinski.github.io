@@ -6,9 +6,28 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Nov 2017 11:31:05 -0500</pubDate>
-    <lastBuildDate>Thu, 09 Nov 2017 11:31:05 -0500</lastBuildDate>
+    <pubDate>Thu, 09 Nov 2017 11:31:58 -0500</pubDate>
+    <lastBuildDate>Thu, 09 Nov 2017 11:31:58 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
+    
+      <item>
+        <title>All About Git</title>
+        <description>&lt;p&gt;I’m giving a college-wide talk for FIG (Fig is Good) tonight. FIG is a
+student computing group. I’m hoping to record the talk, but for now
+I’ll just put the slides here.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://www.icloud.com/keynote/0dhlSy84VggwTIhJdxjvGiTOQ?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
+        <link>http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/11/09/git-tutorial/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/11/09/git-tutorial/</guid>
+        
+        
+        <category>talks</category>
+        
+        <category>grad-school</category>
+        
+      </item>
     
       <item>
         <title>My new cybersecurity course at Haverford (Spring 2017)</title>
@@ -323,25 +342,6 @@ systems.&lt;/p&gt;
         
         
         <category>writing</category>
-        
-      </item>
-    
-      <item>
-        <title>All About Git</title>
-        <description>&lt;p&gt;I’m giving a college-wide talk for FIG (Fig is Good) tonight. FIG is a
-student computing group. I’m hoping to record the talk, but for now
-I’ll just put the slides here.&lt;/p&gt;
-
-&lt;iframe src=&quot;https://www.icloud.com/keynote/0dhlSy84VggwTIhJdxjvGiTOQ?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
-</description>
-        <pubDate>Fri, 01 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/git-tutorial/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/git-tutorial/</guid>
-        
-        
-        <category>talks</category>
-        
-        <category>grad-school</category>
         
       </item>
     
