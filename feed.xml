@@ -6,9 +6,46 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 09 Nov 2017 17:19:13 -0500</pubDate>
-    <lastBuildDate>Thu, 09 Nov 2017 17:19:13 -0500</lastBuildDate>
+    <pubDate>Fri, 10 Nov 2017 20:23:09 -0500</pubDate>
+    <lastBuildDate>Fri, 10 Nov 2017 20:23:09 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
+    
+      <item>
+        <title></title>
+        <description>&lt;p&gt;&lt;em&gt;Obligatory: I must point out that my inspiration for this post was a
+&lt;a href=&quot;https://www.youtube.com/watch?v=ZHghwsTRyzQ&quot;&gt;really nice video on
+YouTube&lt;/a&gt;. I don’t claim
+to have invented this idea, I just wanted to explain it in a way that
+makes sense to me (although the YouTuber likely does a better job than
+I).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Today in my class we talked a bit about memory safety and
+allocation. We’ve talked a decent amount about pointers, but haven’t
+had any projects where students are required to use
+allocation. Instead, we’re (so far) relying on RAII from library
+classes to get students through their programming. My suspcion is that
+students are probably too eager to use pointers without understandign
+their vagaries, because that’s what I did when I started programming
+in C.&lt;/p&gt;
+
+&lt;p&gt;So as a bit of fun (and preparation for my course next semester), I
+made a video showing how these vulnerabilities work.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Here’s a &lt;a href=&quot;https://github.com/kmicinski/cmsc245examples/blob/master/c%2B%2B/uaf.cc&quot;&gt;link to the code&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Here’s a &lt;a href=&quot;https://hc.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6a2b42fb-4e24-4837-8220-97935db6a53b&quot;&gt;link to the video&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 10 Nov 2017 20:23:09 -0500</pubDate>
+        <link>http://kmicinski.comhttp://kmicinski.com/2017/11/10/2017-09-10-uaf/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/2017/11/10/2017-09-10-uaf/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Job materials for 2017</title>
@@ -1095,199 +1132,6 @@ out in the future.&lt;/p&gt;
         <category>program-analysis</category>
         
         <category>abstract-interpretation</category>
-        
-      </item>
-    
-      <item>
-        <title>Half-Baked Ideas on The Future of Static Analysis and Security</title>
-        <description>&lt;p&gt;It is well known that security policies for programs (such as
-&lt;a href=&quot;https://en.wikipedia.org/wiki/Non-interference_(security)&quot;&gt;noninterference&lt;/a&gt;) are not properties of a single run, but rather of
-properties about sets of runs. For example, the following program uses
-a so-called &lt;em&gt;implicit&lt;/em&gt; flow to exfiltrate the value of its secret
-input:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input(secret)
-if (secret == 0) then
-    output(1)
-else
-    output(0)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This program is bad because it leaks something (one bit of knowledge)
-about its input: whether or not it is zero. Informally, a program that
-consumes a secret output and produces a publicly observable output is
-only secure if that ouput is a constant. Because most programs that
-produce constant outputs are not useful, this definition is often
-upgraded to a program that takes a public and private input. The
-program is then secure if — for any &lt;em&gt;fixed&lt;/em&gt; public input iᵖ
-— and all secret inputs iˢ, the program produces a fixed output
-o. Simple batch programs are boring and unrealistic, so there are a
-number of ways in which we can upgrade these definitions to more
-realistic programs. This is called noninterference, and it is not a
-property of single executions, but rather a property of a &lt;em&gt;set&lt;/em&gt; of
-executions.&lt;/p&gt;
-
-&lt;p&gt;My intention with this post is to make the argument that we are not
-being as systematic as we could be about constructing program analyses
-based on our security definitions.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.cs.cornell.edu/fbs/publications/Hyperproperties.pdf&quot;&gt;Hyperproperties&lt;/a&gt; offer a general framework for discussing these
-properties on sets of program exectuions.  But hyperproperties only
-give us the means to define what it means for a program to be secure,
-they don’t give us a tractable mechanism for checking program
-security. It’s also worth noting that hyperproperties do have some
-applications beyond merely security properties. They can reason about,
-e.g., properties of concurrent executions or program
-refinement. Clearly, the idea of checking sets of program executions
-is not radical, but doing so has proved difficult and impractical.&lt;/p&gt;
-
-&lt;p&gt;To check programs for security definitions like noninterference, a
-variety of mechanisms have been proposed. Perhaps the most popular in
-the literature has been security-typed languages, where types encode
-which information can flow to which sources and whose type systems
-enforce the security gaurentee. &lt;a href=&quot;http://www.cs.cornell.edu/jif/&quot;&gt;Jif&lt;/a&gt; and &lt;a href=&quot;https://hackage.haskell.org/package/lio&quot;&gt;lio&lt;/a&gt; are notable examples
-that fall into this category.&lt;/p&gt;
-
-&lt;p&gt;Checking properties about programs has a rich history in programming
-languages, that have established a variety of fields: static analysis,
-type theory, and model checking to name a few. Most of these
-techniques were originally developed with the intention of checking
-facts about single-run program properties (e.g., pointer analysis,
-taint analysis, etc..). Applying them to security is often nonobvious,
-because they have to be adapted to talk about &lt;em&gt;sets&lt;/em&gt; of program runs.&lt;/p&gt;
-
-&lt;p&gt;Figuring out how to upgrade our single-run techniques to reason about
-sets of runs has been the theme of a lot of security research:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Security type systems (like the ones in Jif) use type-based
-techniques to give a composable way to reason about security of a
-program from smaller components, just as type systems have done for
-traditional properties like type correctness and resource usage
-(linear logic).&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://users.soe.ucsc.edu/~cormac/papers/popl12b.pdf&quot;&gt;Faceted execution&lt;/a&gt;
-(as seen in languages like
-&lt;a href=&quot;https://projects.csail.mit.edu/jeeves/&quot;&gt;Jeeves&lt;/a&gt;) is a method of
-enforcing program security dynamically. It uses an upgraded form of
-taint tracking to reason about what information has influenced
-computation of variables. Then it uses this to show observers a view
-of the computation that ensures they don’t learn secret inputs. This
-is analogous to inline reference monitors for policies like “the
-network can never be accessed after the file is read.”&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Relational program verifiection reasons about pairs of program
-components (like functions that manipulate heaps) in isolation and
-glues them together using composition. An example of this is
-&lt;a href=&quot;http://research.microsoft.com/apps/pubs/default.aspx?id=204802&quot;&gt;Relational F*&lt;/a&gt;,
-which uses dependent types to specify program behavior on pairs of
-input states and relates their output states.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://www.cs.cornell.edu/~clarkson/papers/clarkson_hyper_tl.pdf&quot;&gt;Hyper temporal logics&lt;/a&gt;
-levels up standard notions of model checking to apply them to
-checking temporal logic hyperproperties. That work includes a notion
-of model checking that begins by taking the program and modeling it
-as a state space of a single execution, and then runs a product
-semantics for it, showing how to systematically use this semantics
-to check hyper properties about temporal assertions on state
-sets. This allows a rich encoding for many trace-based
-hyperoproperties such as generalized noninterference and
-observational determinism.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;the-future-push-button-security-checking&quot;&gt;The Future: Push Button Security Checking&lt;/h2&gt;
-
-&lt;p&gt;One thing that I think is lacking in security currently is that our
-analyses are only tenuously tied to the properties we want to
-check. There’s no systematic way to go from a semantics and fact to a
-way to check facts about those properties for programs. Instead, we
-see lots of one-off security definitions, and lots of tools for
-checking definitions, but we rarely see security statements along with
-a systematically derived mechanism to check facts about those
-programs. This is an area I think we as a field could improve on.&lt;/p&gt;
-
-&lt;p&gt;Within PL, the
-&lt;a href=&quot;http://matt.might.net/papers/vanhorn2010abstract.pdf&quot;&gt;abstracting abstracting machines&lt;/a&gt;
-technique to deriving abstract interpreters has this flavor. You find
-the semantics you want to check, bake in the facts you want to check,
-and then systematically derive an abstract interpreter in a cookbook
-style. But we have no such bushbutton methodology for checking
-security properties of programs. As a designer of a system for
-security today, you have to read the vast literature on the set of
-security properties you might want to check, find one that suits you,
-and &lt;em&gt;then&lt;/em&gt; dream up an enforcement technique for whatever language you
-want to work with.&lt;/p&gt;
-
-&lt;p&gt;I’m not sure exactly what this would look like. But I think it’s going
-to be something like this: write down the semantics for the program
-you want, and then manipulate the semantics in some way to get a state
-space representing what you want. Then, perform a simple abstraction
-over that state space to get the properties you want to check.&lt;/p&gt;
-
-&lt;p&gt;Here’s how I think this might work. First, you could imagine taking
-your semantics and simply running it in parallel with another version
-of the program, so that the concrete state space is now a product
-space. Hyperproperties that rely on program pairs can be specified
-using sets of concrete runs. Now abstract the program using our AAM
-trick and get an abstract state space that is lifted to each component
-of the pair. Abstract states concretize to pairs of concrete runs, and
-now checking properties of executions means extending these properties
-to work on our abstract domain, however they are represented. E.g., if
-they are represented as symbolic states in a symbolic executor, you
-would write symbolic formulas asserting noninterference, though
-certainly other forms are possible. It’s also worth noting that this
-works for more than just pairs, you could also imagine doing it for
-triples to check properties like generalized noninterference.&lt;/p&gt;
-
-&lt;p&gt;The abstraction technique I proposed is running a product program and
-then doing the abstraction pointwise over each pair component. I think
-this is a good first cut because it is easier to see how it relates to
-the extensional property we want to check: simply check the property
-by concretizing each point in the abstract state product and running
-it through the formula. I’m not sure whether or not this technique
-will scale to larger programs.&lt;/p&gt;
-
-&lt;p&gt;One thing that’s missing from this technique is that the abstraction
-doesn’t know anything about the property we want to check, the
-abstraction is simply pointwise and the abstract domain hasn’t been
-efficiently engineered to be tailored to semantic knowlege about the
-program. But I think this is the right place to start, because it
-gives us an intuitive baseline for our abstraction.&lt;/p&gt;
-
-&lt;p&gt;Let’s say that we want to level this technique up. We would want an
-abstraction that &lt;em&gt;does&lt;/em&gt; know things about how the program is
-operating. Here’s how I think we might do that for the specific case
-of noninterference checking: run the original program under a faceted
-execution semantics with faceted values for the inputs we care
-about. The faceted semantics is implicitly unrolling this product
-program when it needs to to gaurentee that our security needs are
-met. If we want to check whether the program is secure, we simply need
-to look at the output and ask whether or not it is a faceted value. If
-it is, we still might be able to do something. Let’s say, for example,
-that we can prove the faceted value produces the same result no matter
-what the principle. If we can do this, we can still gaurentee the
-program doesn’t leak any information.&lt;/p&gt;
-
-&lt;p&gt;I’m not sure why this intuition holds, but I have a feeling that it’s
-because the facet refines the “dumb” product semantics so that it does
-the product behavior only when necessary. Frankly, I’m not sure if
-this single case generalizes to the intuition about other sorts of
-hyperproperties. But I this story of systematically deriving abstract
-interpreters for security properties is very appealing, and one that
-we should continue to push on.&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 10 Mar 2016 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/security/2016/03/10/some-half-baked-ideas-on-absinterp-sec/</guid>
-        
-        
-        <category>security</category>
         
       </item>
     
