@@ -6,8 +6,8 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Jan 2018 17:11:57 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2018 17:11:57 -0500</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2018 17:12:30 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 17:12:30 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
@@ -154,7 +154,7 @@ apps. They also go a step further and show you this nice dialog when
 apps have been using data in the background (I’m honestly not sure how
 this occurs on iOS these days):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/ios-bg-loc.png&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/ios-bg-loc.jpg&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is nice because it helps the user “audit” which apps have been
 using their data. In our paper, we found that one concrete way to help
