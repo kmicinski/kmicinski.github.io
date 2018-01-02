@@ -4,11 +4,42 @@
     <title>Kristopher Micinski</title>
     <description>Kris Micinski's personal website. Visiting CS Prof at Haverford.
 </description>
-    <link>http://kmicinski.comhttp://kmicinski.com/</link>
-    <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 16 Nov 2017 15:10:45 -0500</pubDate>
-    <lastBuildDate>Thu, 16 Nov 2017 15:10:45 -0500</lastBuildDate>
+    <link>http://localhost:4000/http://localhost:4000//</link>
+    <atom:link href="http://localhost:4000/http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 02 Jan 2018 17:05:30 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 17:05:30 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
+    
+      <item>
+        <title>Closures Versus Objects By Example</title>
+        <description>
+&lt;hr /&gt;
+&lt;p&gt;layout: post
+title:  “Closures vs. Objects by Example”
+date:   2012-12-12
+categories: closures, programming-languages, teaching
+—&lt;/p&gt;
+
+&lt;p&gt;Objects seem to be relatively intuitive to understand: there are
+member variables and methods that act on those member
+variables. Simple. When I was a student, closures always seemed a bit
+more nebuolous to me. There was some hazy notion that they were kind
+of the same thing, which didn’t really make sense to me until I
+thought about it a bit more. So let’s see a concrete example
+demonstrating the difference between closures and objects.&lt;/p&gt;
+
+&lt;p&gt;The high-level story here is that closures and objects are both a way
+to represent code plus data:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000//assets/closures-objects-1.png&quot; alt=&quot;A pictoral representation of a closure (on the left) versus data (on the right)&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 11 Dec 2017 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/http://localhost:4000//2017/12/11/closures-versus-objects-by-example/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//2017/12/11/closures-versus-objects-by-example/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Video: Exploiting Use After Free (UAF) vulnerabilities</title>
@@ -41,8 +72,8 @@ made a video showing how these vulnerabilities work.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 10 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</guid>
+        <link>http://localhost:4000/http://localhost:4000//security/videos/memory-safety/use-after-free/2017/11/10/uaf/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//security/videos/memory-safety/use-after-free/2017/11/10/uaf/</guid>
         
         
         <category>security</category>
@@ -64,17 +95,17 @@ same way I’m feeling right now:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://kmicinski.com/assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000//assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://kmicinski.com/assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://localhost:4000//assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/application</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/application</guid>
+        <link>http://localhost:4000/http://localhost:4000//application</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//application</guid>
         
         
         <category>git</category>
@@ -92,8 +123,8 @@ I’ll just put the slides here.&lt;/p&gt;
 &lt;iframe src=&quot;https://www.icloud.com/keynote/0dhlSy84VggwTIhJdxjvGiTOQ?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/git/talks/2017/11/09/git-tutorial/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/git/talks/2017/11/09/git-tutorial/</guid>
+        <link>http://localhost:4000/http://localhost:4000//git/talks/2017/11/09/git-tutorial/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//git/talks/2017/11/09/git-tutorial/</guid>
         
         
         <category>git</category>
@@ -104,7 +135,7 @@ I’ll just put the slides here.&lt;/p&gt;
     
       <item>
         <title>My new cybersecurity course at Haverford (Spring 2017)</title>
-        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;http://kmicinski.com/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
+        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;http://localhost:4000//assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;computer-security-attacks-and-defenses&quot;&gt;Computer Security: Attacks and Defenses&lt;/h2&gt;
 &lt;p&gt;(&lt;em&gt;CMSC 323&lt;/em&gt; at Haverford)&lt;/p&gt;
@@ -321,8 +352,8 @@ feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ �
 
 </description>
         <pubDate>Sat, 23 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</guid>
+        <link>http://localhost:4000/http://localhost:4000//teaching/2017/09/23/my-cybersecurity-course/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//teaching/2017/09/23/my-cybersecurity-course/</guid>
         
         
         <category>teaching</category>
@@ -410,8 +441,8 @@ systems.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 22 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</guid>
+        <link>http://localhost:4000/http://localhost:4000//writing/2017/09/22/reading-text-back/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//writing/2017/09/22/reading-text-back/</guid>
         
         
         <category>writing</category>
@@ -427,8 +458,8 @@ University of Maryland, College Park.  Full slides available
 &lt;iframe src=&quot;https://www.icloud.com/keynote/021F6CUaWtKuou6byPrV-aYvg?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Fri, 01 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
+        <link>http://localhost:4000/http://localhost:4000//talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
         
         
         <category>talks</category>
@@ -498,8 +529,8 @@ group dynamic to name a few.&lt;/p&gt;
 &lt;p&gt;Maybe you could try suggesting this to your advisor&lt;/p&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/research/2016/10/23/here-have-some-plum-scrum/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/research/2016/10/23/here-have-some-plum-scrum/</guid>
+        <link>http://localhost:4000/http://localhost:4000//research/2016/10/23/here-have-some-plum-scrum/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//research/2016/10/23/here-have-some-plum-scrum/</guid>
         
         
         <category>research</category>
@@ -583,8 +614,8 @@ the set of problems I care about.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 15 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/research/2016/10/15/appreciating-research/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/research/2016/10/15/appreciating-research/</guid>
+        <link>http://localhost:4000/http://localhost:4000//research/2016/10/15/appreciating-research/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//research/2016/10/15/appreciating-research/</guid>
         
         
         <category>research</category>
@@ -634,513 +665,11 @@ was heard.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 11 Sep 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</guid>
+        <link>http://localhost:4000/http://localhost:4000//teaching/2016/09/11/teaching-observations/</link>
+        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//teaching/2016/09/11/teaching-observations/</guid>
         
         
         <category>teaching</category>
-        
-      </item>
-    
-      <item>
-        <title>Program Visualization as Abstract Interpretation</title>
-        <description>&lt;p&gt;For this past semester, I’ve been thinking in a semi-principaled way
-about how we should visualize program executions. For example, how
-should we visualize this program:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let id x = x in
-let g x = id x
-let check_zero y = if y = 0 then bad () else 1
-if (y &amp;gt;= 0) check_zero (g y) else h y
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s say we want to check whether or not &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; is ever called: and if
-so under what circumstances The most intuitive way we could do this is
-obviously to just sit and think about the program: the program will
-call &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; exactly when &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is zero.&lt;/p&gt;
-
-&lt;p&gt;For small programs like these, checking things like this are easy
-enough, even if the control flow is a little convoluted. As programs
-get larger, it’s harder and harder to convince ourselves that these
-properties are correct: so we build tools to do it for us. One of the
-most basic tools we can use is a test-suite and a debugger. The
-programmer will provide a set of sample inputs to test these inputs
-on, and will visualize them as they go.&lt;/p&gt;
-
-&lt;p&gt;With a debugger, we can see exactly when the call to bad happens by
-“focusing” in on a single run of the program where &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is zero. But
-what if we have a &lt;em&gt;bunch&lt;/em&gt; of runs of the program and we want to see
-what sorts of functions are called by it, perhaps because we’d like to
-get some understanding of what the program does? For example, let’s
-say that we wanted to see what happens to the program when &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;
-and when &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;We could use our debugger for each of those paths, but clearly as the
-programs get large, introspecting program behavior like is going to
-start to become very tedious. And this is the crux of my post:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;We can use tools from abstract interpretation to guide us in
-constructing program visualizations.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Namely: we’re going to think about a debugger as something that
-produces “steps” of the program execution, and then we’re going to
-construct a graph of the program that will summarize what the program
-is doing to a viewer. Because we want this graph to summarize a bunch
-of executions, we’re going to collapose certain parts of the graph
-(perhaps each invocation of &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; in this program, perhaps) so that they
-can be more easily viewable by a user. Then, we’re going to make it
-interactive, so that when the user wants more information they can
-click on a node and disambiguate that node based on its context.&lt;/p&gt;
-
-&lt;p&gt;For example, here’s a mockup of what this might look like after we’re
-done:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/viz-abs-1.png&quot; alt=&quot;Shot 1&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;On the left are two runs of the program. In the first, we start with
-&lt;code class=&quot;highlighter-rouge&quot;&gt;y = 1&lt;/code&gt;, we then call (the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; designate entries) &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;, which
-subsequently calls &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;, returns to &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; (with &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; as the return
-value), and then calls &lt;code class=&quot;highlighter-rouge&quot;&gt;check_zero&lt;/code&gt;. In the other run, we see the same
-thing, except with the bad behavior.&lt;/p&gt;
-
-&lt;p&gt;In this case, the logs we see on the left represent a subset of the
-actual program behavior, so the facts we get to check are up to the
-granularity of the information given in these logs. What I want to do
-in this blog post is to convince you that visualizing dynamic runs in
-this way can be aided by coalescing this dynamic information into a
-graph-based representation, and then be disambiguated by interacting
-with that graph.&lt;/p&gt;
-
-&lt;p&gt;This summary seems like a nice idea, but it doesn’t actually allow us
-to see what really happened in the program: it just shows us a control
-flow graph. We know that &lt;code class=&quot;highlighter-rouge&quot;&gt;bad&lt;/code&gt; was called, but not under what
-condtiions. Similarly, we might like to find out under what conditions
-our various functions (like &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;) were called. To do this,
-we’re going to have this behavior: whenever you click on a various
-node, you’re going to be able to see (in another view) which points in
-each run correspond to that node. For example, let’s say you want to
-know all of he possible places that &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was called from. You click on
-it, and then our visualizer will tell you which lines in the program
-actually corresponded to that invocation. Like so:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/viz-abs-2.png&quot; alt=&quot;Shot 2&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Let’s say that you want to introspect here, you might want to just
-“focus in” on the bad log. To do that, you’ll just project out the
-operation of building the graph. You can even build a more finely
-grained graph which shows precise call / return structure:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/viz-abs-3.png&quot; alt=&quot;Shot 3&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The last execution graph is obviously the most precise. It shows exact
-call/return sequences in a finely grained way. If we were to formalize
-it, the concrete states would differ: the first &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; represents the
-entry while the second represents something like the exit. But this
-precision comes at a cost: it shows us a lot of information that will
-probably be meaningless until we really know what we want to look for.&lt;/p&gt;
-
-&lt;p&gt;For example, here’s a program with an off by one error:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void traverseList(Link *list) {
-  Link *x = list;
-  Link *y;
-  do {
-    x = x-&amp;gt;next;                // Line 4
-    y = x-&amp;gt;next;                // Line 5
-  } while (x != null)           // Line 6
-  // ...
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;As a high level view of the program, we might make our states function
-calls with line numbers into the function. A concrete execution would
-look like:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;x = ptr;      // x -&amp;gt; &amp;lt;1,2&amp;gt;
-x = x-&amp;gt;next   // x -&amp;gt; &amp;lt;1&amp;gt;
-y = x-&amp;gt;next   // y -&amp;gt; null
-x != null
-x = x-&amp;gt;next   // x -&amp;gt; &amp;lt;null&amp;gt;
-y = x-&amp;gt;next   // BAD!
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Once we isolate the bad thing, we can traverse back to the bad
-configuration that caused it to happen, perhaps with the aid of
-(e.g.,) a time traveling debugger such as that in OCaml.&lt;/p&gt;
-
-&lt;p&gt;I haven’t yet said how we get these logs, or what the concrete
-structure of the logs looks like. In this case, we wanted to know
-about the program’s control flow behavior: when did bad states get
-reached, or which functions called which others. Because I only cared
-about the control flow behavior of the program under various
-circumstances, it was sufficient to include function entries and
-exits. If I had instead wanted to talk about something more general,
-I’d have to change what the log looks like. For example, say I wanted
-to talk about the structure of the heap. I’d have to instead include
-information in the log about how the heap evolves over time. I’m not
-particularly concerned with how we get the information here at a
-technical level, but I’m currently simply instrumenting the program to
-log method-call sequences. I’m sure you could get useful information
-via a similar program instrumentation framework like Valgrind or a
-debugger.&lt;/p&gt;
-
-&lt;h2 id=&quot;getting-more-formal-with-it&quot;&gt;Getting more formal with it&lt;/h2&gt;
-
-&lt;p&gt;So now that I’ve presented some of this, I’d like to make the case
-that we can use machinery from abstract interpretation to help us draw
-these cool graphs. To start off developing the machinery we’ll need
-for graph, and abstraction, let’s first develop the “most precise” one
-I discussed above.&lt;/p&gt;
-
-&lt;p&gt;First, we need to define a little bit formally what our log looks
-like. In this example, the method call sequnce gives us an idea about
-the evolution of the program’s control flow. We can think about this
-as having our semantics running in an abstract machine, and our log
-entries (each individual line of the logs) showing us deltas that
-generate new machine states. In other words, log entries represent
-transitions from machine states to new machine states. Now, if our log
-contains all of the possible information we could need to recover the
-concrete execution of the program, we’d end up being able to use our
-log entries to perfectly recover the concrete execution of the
-program. Let’s say that our log is a list of transitions:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;t₁,t₂,...,tᵢ&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Let’s assume that we have some type &lt;code class=&quot;highlighter-rouge&quot;&gt;transition&lt;/code&gt; that stands for
-whatever transitions are. In this example, my type transition would
-look like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition =
-  | Entry of name * value list
-  | Return of value
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then, formally, each transition would take us from some program state
-&lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt;, to a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ'&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;step : Σ → transition → Σ&lt;/code&gt;. Typically, we
-designate some initial state &lt;code class=&quot;highlighter-rouge&quot;&gt;Σι&lt;/code&gt; that acts as the initial state of
-the program. If this is the case, then for any sequence of transitions
-&lt;code class=&quot;highlighter-rouge&quot;&gt;t₁,...,tᵢ&lt;/code&gt;, we have that the transitive closure of the step relation
-with that set of transitions will reach some new program point:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, so far I haven’t put any meaningful stipulations on what the
-transition function must look like. I have merely asserted that for it
-to be meaningful, we have that there be some definition of program
-states &lt;code class=&quot;highlighter-rouge&quot;&gt;Σ&lt;/code&gt; and a step relation that operates on states and
-transitions. But how do we know that the transition function we have
-in mind is actually meaningful? I haven’t worked out all the details,
-but I think you basically want some correspondence between derivations
-of new states via the &lt;code class=&quot;highlighter-rouge&quot;&gt;step&lt;/code&gt; function and the actual semantics for
-your program. In other words, you want this to hold: “whenever I
-observe that &lt;code class=&quot;highlighter-rouge&quot;&gt;Σι →ᵗ¹⁻ᵗⁱ Σᵢ&lt;/code&gt;, I can come up with a derivation in the
-semantics that mirrors that set of transitions.”&lt;/p&gt;
-
-&lt;p&gt;Now, notice that my transitions here are only giving us &lt;em&gt;partial&lt;/em&gt;
-information about program states. In reality, this is fine, as long as
-they’re giving us enough information to ascertain what we care
-about. But formally, it means that our transition relation won’t talk
-about the concrete program semantics, it’ll actually be talking about
-an abstract semantics. To make this idea more concrete, in my example
-logs here, I’ve included the function parameters and return
-values. But let’s say I &lt;em&gt;didn’t&lt;/em&gt;. Then, when we looked at a line in
-the log, say &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;g&lt;/code&gt;, we wouldn’t know what actual parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; was
-called with. Instead, we’d be forced to think that &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt; could have been
-called with anything (that the program could have called it with, of
-course).&lt;/p&gt;
-
-&lt;h3 id=&quot;producing-the-most-precise-graph&quot;&gt;Producing the “most precise” graph&lt;/h3&gt;
-
-&lt;p&gt;Now that I’ve set up all this machinery, what is the version of this
-“most precise” graph for our semantics. Here we’ll assume that our
-transitions have a type like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type transition = entry × line number × log number
-and entry =
-  | Entry of name * value list
-  | Exit of value
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s first define our program states. Our states are literally just
-going to be mirrorings of the transitions, except for a special
-initial state I designate as &lt;code class=&quot;highlighter-rouge&quot;&gt;Root&lt;/code&gt; so that our step function will
-then just be the identity. This will give us a forest of possible
-configurations (one linear sequence of states for each log).&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = log entry × line number × log number + Root
-Σᵢ (log_number) = Root
-step (_,i,k) (entry) = (entry,i+1,k)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here’s what it looks like for our two logs shown here:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/viz-abs-4.png&quot; alt=&quot;Shot 5&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;a-control-flow-analogue&quot;&gt;A control flow analogue&lt;/h3&gt;
-
-&lt;p&gt;Let’s say that we want to make the first graph above: in that setting
-we wanted to give a high level view of the program’s control flow,
-while still allowing the user to disambiguate points in the chart. In
-other words, we’re trying to find a way to compress the most recent
-picture – where we show all of the possible “unrolled” behavior –
-into the first one (that coalesces that behavior).&lt;/p&gt;
-
-&lt;p&gt;Since we’re trying to think about control flow problems (“who called
-what”), it seems sensible to think about the control flow behavior of
-the runs.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;y = 0
-&amp;gt; g(0)
-  &amp;gt; id(0)
-  &amp;lt; id with 0
-&amp;lt; g with 0
-&amp;gt; check_zero 0
-  &amp;gt; bad()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To build up our graph, we’ll start in the “main” function, and then
-watch for transitions. For example, upon seeing the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;g(0)&lt;/code&gt;
-transition, we’ll draw a new state &lt;code class=&quot;highlighter-rouge&quot;&gt;g&lt;/code&gt;. And then, upon seeing the
-&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;id(0)&lt;/code&gt; transition, we’ll draw another new state &lt;code class=&quot;highlighter-rouge&quot;&gt;id&lt;/code&gt;. How do we know
-where to go when we see the &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;id&lt;/code&gt; transition, however? We want to
-return to the caller, but don’t have the information to know where to
-return.&lt;/p&gt;
-
-&lt;p&gt;The semantics of the program handles this by maintaining a stack of
-functions. We can do that here:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = frame list
-frame = function name
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Here, we’re ignoring arguments to functions (our frames don’t maintain
-environments), but we do get arbitrary context sensitivity as long as
-we set things up correctly.&lt;/p&gt;
-
-&lt;p&gt;Now, we need to define the step function for a single log, and then
-lift that up to a set of logs. This is pretty simple: when we see an
-entry we add generate a new state that adds it to the stack, and when
-we see a return we pop a frame from the stack. We assume that calls
-and returns are balanced (which would be required by the semantic
-rules defining soundness I mentioned above).&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;step Σ (&amp;gt; method)             = method :: Σ
-step (method :: Σ) (&amp;lt; method) = Σ 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;We then take the reflexitive transitive closure of this relation over
-both of our logs. This graph has as its nodes sequences of call frames
-(without their arguments / returns), and is isomorphic to the graph in
-the first example:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/viz-abs-5.png&quot; alt=&quot;Abs screenshot one&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Unfortunately, because this style of analysis allows an arbitrarily
-large permutations of method calling sequences, it allows the graph’s
-behavior to degrade to a pathological case we want to avoid. For
-example, consider the factorial function:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;let fac n = 
-  if n = 0 then 1 else fac (n-1)*n
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;In that graph, we’d see an arbitrarily long chain of &lt;code class=&quot;highlighter-rouge&quot;&gt;fac&lt;/code&gt; calls when
-our log called the program for some large value of &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt;. Instead of
-showing that, let’s say we wanted to only have one occurrence of each
-method in the program, and then show arrows between method calls when
-there could potentially be control flow between them.&lt;/p&gt;
-
-&lt;p&gt;To set this up, we’ll change our state space slightly to mirror a
-little bit more of a traditional abstract machine. We’ll get an
-isomorphic state space, but we’ll massage the machine a bit so that
-it’s easier to abstract things later. Just as before, our state space
-will keep track of the current function &lt;code class=&quot;highlighter-rouge&quot;&gt;fn&lt;/code&gt;, but now we’ll keep a
-&lt;em&gt;pointer&lt;/em&gt; to the continuation. That pointer is going to be an address
-into a store &lt;code class=&quot;highlighter-rouge&quot;&gt;σ&lt;/code&gt;, which has the type &lt;code class=&quot;highlighter-rouge&quot;&gt;Address → Continuation&lt;/code&gt;. The
-store is just a place through which we thread continuations (in a
-linked-list style structure). Continuations are either function names
-and addresses, or the special &lt;code class=&quot;highlighter-rouge&quot;&gt;Done&lt;/code&gt; continuation (which says there is
-nothing else to do). We also need an auxiliary function &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt;, which
-gives us a fresh address for the store. We will define the step
-function to put a new address in the store whenever we see a new stack
-frame. The notation &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ (fn,k) ]&lt;/code&gt; reads, “extend the store &lt;code class=&quot;highlighter-rouge&quot;&gt;σ&lt;/code&gt;
-with a binding that makes &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; point to the continuation &lt;code class=&quot;highlighter-rouge&quot;&gt;(fn,k)&lt;/code&gt;.”&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Σ = ⟨ fn, σ, c ⟩
-σ : Address → Continuation
-Continution = fn , address | Done
-c : Address 
-Σι = ⟨ main, [a₀ ↦ Done], a₀ ⟩
-
-a = alloc (Σ)
-step ⟨ fn, σ, c ⟩ (&amp;gt; f) = ⟨ f, σ ⊔ [ a ↦ (fn, k) ], a ⟩
-step ⟨ fn, σ, c ⟩ (&amp;lt; f) =
-  let fn', c' = σ(κ) in ⟨ fn', σ, c' ⟩
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For our example program above, we’d get this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; g(0)
-⟨ g, [a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
-  &amp;gt; id(0)
-  ⟨ id, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₂ ⟩
-  &amp;lt; id with 0
-  ⟨ g, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
-&amp;lt; g with 0
-⟨ main, [a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
-&amp;gt; check_zero 0
-  ⟨ check_zero, [a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
-  &amp;gt; bad()
-  ⟨ bad, [a₄ ↦ (check_zero, a₁),
-          a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₄ ⟩
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you haven’t guessed yet, this machine is an instance of the
-&lt;a href=&quot;http://matt.might.net/papers/vanhorn2010abstract.pdf&quot;&gt;abstracting abstract machines&lt;/a&gt;
-formulation, and my approach follows theirs.&lt;/p&gt;
-
-&lt;h3 id=&quot;the-last-step-abstraction&quot;&gt;The last step: abstraction&lt;/h3&gt;
-
-&lt;p&gt;Now that we’ve rearranged our visualization to use an abstract machine
-structure, we need to exploit it. Let’s think about what happens to
-our state space as we add the next log. First, we need to start with
-the last state from performing our last analysis, and we need to
-“reset” the analysis into the initial state. But it’s not quite the
-same initial state: we just want to reset to the start function:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;⟨ main, [a₄ ↦ (check_zero, a₁),
-         a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
-y = 1
-&amp;gt; g(1)
-  ⟨ g, [a₅, (main,a₀), a₄ ↦ (check_zero, a₁),
-        a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₅ ⟩
-  ...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now here, our function &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt; returns a fresh address &lt;code class=&quot;highlighter-rouge&quot;&gt;a₅&lt;/code&gt;. To get
-the behavior, we actually want to &lt;em&gt;reallocate&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;a₁&lt;/code&gt;. This means that
-our continuations have to be able to store &lt;em&gt;sets&lt;/em&gt; of functions, and
-&lt;em&gt;sets&lt;/em&gt; of next continuations. So instead of our store having the
-structure:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;σ : Address → Continution
-Continution = fn , address | Done
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;We need to lift continuations to hold sets of functions and
-addresses. Because they actually represent &lt;em&gt;sets&lt;/em&gt; of continuations,
-we’ll call them abstract continuations (or flow sets, in control flow
-terminology):&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Continution^ = ℘(fn) × ℘(address) | Done
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, we’re going to have to modify our &lt;code class=&quot;highlighter-rouge&quot;&gt;alloc&lt;/code&gt; function to “smush
-together” things that come from the same function. We’re going to do
-that by changing the structure of addresses (which I’ve so far been
-leaving as opaque). Instead, we’re going to make addresss simply
-function names:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Address = fn | Done
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, our allocator is going to be this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;alloc (fn,σ,c) = fn
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Last, we have an operation &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ (fn,k) ]&lt;/code&gt; which we have to make
-sense of with our modified notion of continuations. First, we need to
-note that it must really be &lt;code class=&quot;highlighter-rouge&quot;&gt;σ ⊔ [ a ↦ {(fn,k)} ]&lt;/code&gt;. Then, the join
-operator &lt;code class=&quot;highlighter-rouge&quot;&gt;⊔&lt;/code&gt; will be the natural elementwise distribution over the
-sets of functions and continuations.&lt;/p&gt;
-
-&lt;h2 id=&quot;mapping-between-different-analyses-insertions&quot;&gt;Mapping between different analyses: insertions&lt;/h2&gt;
-
-&lt;p&gt;(This is the most hand-wavy section because I haven’t really figured
-it out yet..)&lt;/p&gt;
-
-&lt;p&gt;Alright, so now we have a few different kind of analyses, and I’m
-convinced that we can generate many, many more. But when we’re
-visualizing programs, we don’t just want one analysis, we want to mix
-a few of them together and map between them.&lt;/p&gt;
-
-&lt;p&gt;Let’s say that you want to map this 0CFA-continuation-allocator
-semantics to the “fully unrolled” visualization, like I showed in the
-second picture. What you do is to run both step functions in sequence,
-and recognize when you’re coalescing the fine grained states into the
-abstract states. Doing that, you establish a mapping between the 0CFA
-thing and the fully precise thing. But in general, I imagine a big
-interactive tool that allows you to take a set of logs (equivalently:
-one really big log) and imbue any sort of visualization (or analysis)
-you want onto it. I think this trick of running the different analyses
-in parallel can be formalized as Galois insertions, but I haven’t
-fully worked out the details yet.&lt;/p&gt;
-
-&lt;p&gt;For measure, I’m doing this right now in ongoing research: where I map
-function entries down to the set of concrete points in a “fully
-precise” (linear) log. The visualizer allows the user to click on
-function entries and disambiguate based on the places in the log that
-are being coalesced into that high level node.&lt;/p&gt;
-
-&lt;h2 id=&quot;closing-notes&quot;&gt;Closing notes&lt;/h2&gt;
-
-&lt;p&gt;The fact that we can use the machinery of abstract machines to think
-about visualizing program executions is probably unsurprising to many
-people: concrete executions are, of course, simply instances of
-abstract executions. However, I think there are a few powerful things
-that we can take away from this exercise.&lt;/p&gt;
-
-&lt;p&gt;First, there are situations in which building an abstract interpreter
-might be too difficult to do with sufficient precision. Perhaps it’s a
-new programming language, toolchain, etc.. In these cases, I would
-guess that it’s easier to dynamically instrument the program to
-capture the facts you want, and then write a visualization for it
-post-hoc.&lt;/p&gt;
-
-&lt;p&gt;Next, real program runs allow us to “focus in” on the interesting
-behavior in our program. Concrete executions allow infinite precision
-(at the cost of soundness). In this post, I’ve set things up so that
-we can use abstract interpretation machinery to view and understand
-concrete runs. But I think there’s also room to be able to use these
-insights to design patterns that allow mixing the concrete and
-abstract worlds, or even turning the knobs on various
-analyses. Specifically, I think these ideas could immediately be used
-to visualize runs of a symbolic executor. Expanding on that, I think a
-good way to interact with a program analysis is to gradually “peel
-away” and “focus in” on various parts of the exeuction, in the way
-that I’ve tried to do here.&lt;/p&gt;
-
-&lt;p&gt;Last, thinking about this was interesting for me in that it helped
-further connect abstract interpretation to something tangible that
-makes sense to me (debugging a program). When I first learned about
-abstract interpretation (and still), I was tempted to think about it
-as something separate from a metaphor that I can easily comprehend:
-tracking concrete executions.&lt;/p&gt;
-
-&lt;p&gt;The upshot of this post is this question: to what extent can we use
-the abstractions we design for program &lt;em&gt;analysis&lt;/em&gt; to also &lt;em&gt;visualize&lt;/em&gt;
-executions of those programs. This is one of the first posts I hope to
-make on this topic. It came out of wanting to generalize some of the
-work I’d been doing in visualizing security properties for
-programs. That being said, I think there’s still a long way to go:
-defining more concretely what an “instrumentation” is, trying it out
-for a lot more examples, and applying it to popular program
-visualization tools (like &lt;a href=&quot;http://pythontutor.com/&quot;&gt;Python Tutor&lt;/a&gt;!). I
-hope I get a chance to work on this more and flesh some of these ideas
-out in the future.&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 11 May 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/program-analysis/abstract-interpretation/2016/05/11/program-viz-galois/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/program-analysis/abstract-interpretation/2016/05/11/program-viz-galois/</guid>
-        
-        
-        <category>program-analysis</category>
-        
-        <category>abstract-interpretation</category>
         
       </item>
     
