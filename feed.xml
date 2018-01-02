@@ -6,38 +6,197 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Jan 2018 17:06:22 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2018 17:06:22 -0500</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2018 17:07:39 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 17:07:39 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
-        <title>Closures Versus Objects By Example</title>
-        <description>
-&lt;hr /&gt;
-&lt;p&gt;layout: post
-title:  “Closures vs. Objects by Example”
-date:   2012-12-12
-categories: closures, programming-languages, teaching
-—&lt;/p&gt;
+        <title>Why Does Netflix See my Facebook Picture (and Other Adventures with Informed Consent in Privacy Policies)</title>
+        <description>&lt;p&gt;The other day I updated my Facebook profile picture. The thing I
+didn’t realize was that when I changed it, Netflix also got it:&lt;/p&gt;
 
-&lt;p&gt;Objects seem to be relatively intuitive to understand: there are
-member variables and methods that act on those member
-variables. Simple. When I was a student, closures always seemed a bit
-more nebuolous to me. There was some hazy notion that they were kind
-of the same thing, which didn’t really make sense to me until I
-thought about it a bit more. So let’s see a concrete example
-demonstrating the difference between closures and objects.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-netflix.png&quot; alt=&quot;A figure showing my Facebook profile picture on the left with an arrow pointing towards Netflix (getting my updated Facebook photo) on the right with a question mark over it (asking why)&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The high-level story here is that closures and objects are both a way
-to represent code plus data:&lt;/p&gt;
+&lt;p&gt;This is pretty jarring. Where was the “share this with Netflix” button
+that I pressed? Of course, the answer is that it’s right here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/closures-objects-1.png&quot; alt=&quot;A pictoral representation of a closure (on the left) versus data (on the right)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/netflix-privacy-dialog.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;It’s buried right there under “Public profile (required).” But there’s
+also a lot of other stuff I gave it access to too, I guess I forgot
+about that.&lt;/p&gt;
+
+&lt;p&gt;But why does it need access to my Facebook account at all? I just
+wanted to use Facebook so that I wouldn’t have to login to Netflix
+using an email. It’s so easy to just click in with my Facebook
+account, it’s everywhere!&lt;/p&gt;
+
+&lt;p&gt;The answer, of course, is twofold: Netflix wants to give me a more
+personalized experience (so they can beat out other video services)
+and because they want to filter it into giant machine learning
+algorithms to sell me ads and learn stuff about me.&lt;/p&gt;
+
+&lt;p&gt;So I knew all of that, but I &lt;em&gt;still&lt;/em&gt; didn’t stop and think about
+Netflix getting my new profile picture whenever I changed it. Wow. I
+wonder what else does that!&lt;/p&gt;
+
+&lt;p&gt;Turns out it’s &lt;em&gt;hundreds&lt;/em&gt; of things! Facebook even has a tool for
+this, called their “Privacy Checkup”:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook's privacy checkup tool&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is useful for helping you audit which apps have access to do
+things like post on your feed and things like that. But it doesn’t
+show you more nuanced things.&lt;/p&gt;
+
+&lt;p&gt;Here’s the big problem with all of this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;There’s a gap between what Netflix is actually &lt;strong&gt;using&lt;/strong&gt;, and what I
+think it &lt;strong&gt;needs&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When I think about Netflix using my Facebook, I think it’s just
+because I’m logging on. But what I don’t see is that Netflix is using
+so much more! It’s connecting me with my friends, looking at my likes,
+and using that information to improve my experience.&lt;/p&gt;
+
+&lt;p&gt;And what’s more, Netflix probably thinks that it’s okay to do this,
+because after all, I agreed to it! And to be honest, they’re not
+totally wrong.&lt;/p&gt;
+
+&lt;p&gt;But I build my mental model of what Netflix is accessing based on what
+I &lt;em&gt;see&lt;/em&gt; it doing, not the policy that I have to go read in a dark
+corner of Facebook’s privacy section (no offense to Facebook).&lt;/p&gt;
+
+&lt;h2 id=&quot;background-uses-are-tricky&quot;&gt;Background Uses Are Tricky&lt;/h2&gt;
+
+&lt;p&gt;I contend that the main problem here is that humans are very poor at
+envisioning how apps will use our information in the “background.” The
+background is a hazy thing, but by the background I basically mean,
+“during a time at which I haven’t directly instructed the app to use
+my information by an explicit interaction (e.g., pressing a button)”&lt;/p&gt;
+
+&lt;p&gt;Humans are very &lt;em&gt;good&lt;/em&gt; at understanding that their information will be
+used after taking some direct action. For example, after I click
+“share location” it’s extremely obvious that my location will be
+used. But we’re really bad at predicting (or remembering) what might
+happen when it’s been six months since we installed the app.&lt;/p&gt;
+
+&lt;p&gt;Here’s another example I noticed just today. I added some new contacts
+to the phone book on my iPhone. Later, I went to use Skype. I’m not a
+big fan of Skype: every other week it seems like someone’s Skype
+account has been hacked, so I can’t say I have a huge amount of trust
+in it. Of course, when Skype installed it basically forced me to allow
+it to access my contacts. Okay, that seems sensible, so I let it. But
+I didn’t realize that it would &lt;em&gt;constantly&lt;/em&gt; get my contacts whenever I
+changed them. I allowed access, of course, but I didn’t really “see”
+Skype accessing my contacts, so why would I be surprised.&lt;/p&gt;
+
+&lt;p&gt;We found the same result in &lt;a href=&quot;http://kmicinski.com/assets/apptracer.pdf&quot;&gt;my CHI ‘17
+paper&lt;/a&gt;, where we measured
+user expectations of permission usage within a set of vignette Android
+apps. Users were overwhelmingly more likely to expect access to
+permissions after they took a direct action, but were much less likely
+to expect that data was being accessed when that data was used in the
+background. (I’ll be giving this talk again at &lt;a href=&quot;https://www.ftc.gov/news-events/events-calendar/2018/02/privacycon-2018&quot;&gt;PrivacyCon
+2018&lt;/a&gt;
+later this year!)&lt;/p&gt;
+
+&lt;p&gt;And that was just for apps! Imagine how complicated it is when you’re
+not just on your phone, you’re using some nebulous cloud-based
+service. What’s worse: most apps have many different components,
+interact with several different APIs (Facebook, Google, Twitter,
+etc…), each of them using their own privacy GUIs that constantly
+update and change.&lt;/p&gt;
+
+&lt;p&gt;My frank guess is that users don’t really have any idea what’s
+happening until they see it. In fact, in our CHI ‘17 paper we also
+found that users are more likely to expect access when they see some
+indication of it (e.g., a banner on the top of the screen associated
+with the use of that permission, like a “free coffee at your local
+MegaCoffee” coupon). But that’s not very satisfying: what about all of
+the other data access they never even see?&lt;/p&gt;
+
+&lt;h2 id=&quot;possible-solutions-better-defaults-reminders-and-audits&quot;&gt;Possible Solutions: Better Defaults, Reminders, and Audits&lt;/h2&gt;
+
+&lt;p&gt;I’m not sure what all of the answers are, but I have a few high-level
+points that I take away from it:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Users are very poor at reasoning about data access when the access
+is far removed from the authorization decision.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;They are even &lt;em&gt;worse&lt;/em&gt; when there’s no apparent &lt;em&gt;reason&lt;/em&gt; why the
+access occurs. In fact, this is almost downright
+malicious. Permissions are only so coarse, and while Netflix has
+access to a bunch of things in my “public profile”, I’d never expect
+it to use all of them (even though I know it does).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We should educate users on how / why background uses occur, and
+explain their relevance to app behavior if possible.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When we’re using coarse permissions, like “Public Profile”, we
+should realize that users will only expect a subset of that data to
+be used and act accordingly.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So the first thing I think we can do is better defaults. For example,
+Apple seems to have taken this hint. Apps can now simply request data
+never and “when in use”. This is a pretty intuitive thing, since users
+are pretty poor at conceptualizing the computational models of
+apps. They also go a step further and show you this nice dialog when
+apps have been using data in the background (I’m honestly not sure how
+this occurs on iOS these days):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/ios-bg-loc.png&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is nice because it helps the user “audit” which apps have been
+using their data. In our paper, we found that one concrete way to help
+users understand background usage on Android was to ask for permission
+right on startup before any other app functionality appeared. My
+hypothesis is that users said “well the app hasn’t done anything yet,
+so it must just need this all the time.” Still, I think that’s not a
+very good compromise: users will tend to associate that the
+information is only being used when the app appears to be using it. So
+we should really confine data access to when users can observe it
+happening.&lt;/p&gt;
+
+&lt;p&gt;Another concrete way I see this improving is better auditing tools to
+help users understand where their data will go. For example, I could
+imagine implementing a tool that goes through your various social
+networks and plays something like 20-questions with you: “do you know
+that when you change your Facebook picture your FindMeSingles apps is
+going to see it?” or something of the like. We’d need to do research
+to help understand the best examples to present, but I think this
+would be a cool idea since users reason well about examples and bad
+about very general policies.&lt;/p&gt;
+
+&lt;p&gt;Long-term, I’m interested in driving my research to understand how
+users conceptualize these permissions, and what that says about how we
+can visualize and enforce them. I’m specifically interested in
+cross-app policies: where the data goes from the camera app on your
+phone, to Instagram, to your friend’s parents after your friend clicks
+“like” on the image (and their parents then see it in their
+feed). These decisions are nuanced, and seem especially hard to
+explain to users. But as we have more and more apps, I think getting a
+handle on these things will be essential. And once we do that, we can
+(hopefully) start using cool language-based techniques to help enforce
+these policies!&lt;/p&gt;
 </description>
-        <pubDate>Mon, 11 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/2017/12/11/closures-versus-objects-by-example/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/2017/12/11/closures-versus-objects-by-example/</guid>
+        <pubDate>Tue, 02 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://kmicinski.comhttp://kmicinski.com/privacy/research/2018/01/02/privacy-user-understanding/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/privacy/research/2018/01/02/privacy-user-understanding/</guid>
         
+        
+        <category>privacy</category>
+        
+        <category>research</category>
         
       </item>
     
