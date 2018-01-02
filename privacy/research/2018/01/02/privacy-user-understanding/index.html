@@ -262,9 +262,22 @@ enable (unsound) program analyses to scale to very large apps
 used. We do this by using <em>logs</em> from those programs to guide the
 analysis.</p>
   </li>
+  <li>
+    <p>Analysis-based support for lowering the performance overhead of
+dynamic information-flow analyses. Since many web systems are
+written using dynamic languages (e.g., Python), I’m excited about
+the possibilities of using off-the-shelf tools (like
+<a href="https://github.com/jeanqasaur/jeeves">Jeeves</a>) to specify
+information-flow policies that connect up to the GUI in a principled
+way (similar to what I did in <a href="http://kmicinski.com/assets/clickrelease.pdf">my ESORICS ‘15
+paper</a>). The problem
+with these systems is that they do induce some runtime overhead, but
+we’re hoping to eliminate much of that by using intelligent program
+analysis techniques.</p>
+  </li>
 </ul>
 
-<p>Long-term, I’m interested in driving my research to understand how
+<p>Longer-term, I’m interested in driving my research to understand how
 users conceptualize these permissions, and what that says about how we
 can visualize and enforce them. I’m specifically interested in
 cross-app policies: where the data goes from the camera app on your
