@@ -241,6 +241,29 @@ to help understand the best examples to present, but I think this
 would be a cool idea since users reason well about examples and bad
 about very general policies.</p>
 
+<p>My research right now works on a few different facets of this problem:</p>
+
+<ul>
+  <li>
+    <p>Using dynamic analysis to measure when social media permissions are
+being used in apps. We’re in the early stages of this (still
+scraping apps from Google Play, let me know if you know of a better
+way / a good way to get a bunch of apps!), but I think this will
+provide some good ground truth on how apps are using these social
+media permissions. Of course, there are limitations here. For
+example, apps could pair with a web service to do the dirty work,
+but I think this is a good first step.</p>
+  </li>
+  <li>
+    <p>Log-guided program analysis that helps analysts understand <em>why</em>
+apps use permissions. Our tools use relatively cheap tricks to
+enable (unsound) program analyses to scale to very large apps
+(Bumble, Tinder, Slack) and precisely explain why permissions are
+used. We do this by using <em>logs</em> from those programs to guide the
+analysis.</p>
+  </li>
+</ul>
+
 <p>Long-term, I’m interested in driving my research to understand how
 users conceptualize these permissions, and what that says about how we
 can visualize and enforce them. I’m specifically interested in
