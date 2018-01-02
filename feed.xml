@@ -6,8 +6,8 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Jan 2018 17:13:13 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2018 17:13:13 -0500</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2018 17:14:01 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 17:14:01 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
@@ -20,7 +20,7 @@ didn’t realize was that when I changed it, Netflix also got it:&lt;/p&gt;
 &lt;p&gt;This is pretty jarring. Where was the “share this with Netflix” button
 that I pressed? Of course, the answer is that it’s right here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/netflix-privacy-dialog.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s buried right there under “Public profile (required).” But there’s
 also a lot of other stuff I gave it access to too, I guess I forgot
