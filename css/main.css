@@ -603,7 +603,7 @@ ul p {
   position: relative;
   text-align: center;
   background-color: black;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 45%, black 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 80%, black 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 80%, black 100%), url("http://localhost:4000//assets/img/haverfordpic.jpg");
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 45%, black 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 80%, black 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 80%, black 100%), url("http://kmicinski.com/assets/img/haverfordpic.jpg");
   background-size: 999px 400px;
   height: 400px;
   background-repeat: no-repeat;

@@ -4,10 +4,10 @@
     <title>Kristopher Micinski</title>
     <description>Kris Micinski's personal website. Visiting CS Prof at Haverford.
 </description>
-    <link>http://localhost:4000/http://localhost:4000//</link>
-    <atom:link href="http://localhost:4000/http://localhost:4000//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Jan 2018 17:05:30 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2018 17:05:30 -0500</lastBuildDate>
+    <link>http://kmicinski.comhttp://kmicinski.com/</link>
+    <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 02 Jan 2018 17:06:22 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 17:06:22 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
@@ -31,12 +31,12 @@ demonstrating the difference between closures and objects.&lt;/p&gt;
 &lt;p&gt;The high-level story here is that closures and objects are both a way
 to represent code plus data:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000//assets/closures-objects-1.png&quot; alt=&quot;A pictoral representation of a closure (on the left) versus data (on the right)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/closures-objects-1.png&quot; alt=&quot;A pictoral representation of a closure (on the left) versus data (on the right)&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 11 Dec 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//2017/12/11/closures-versus-objects-by-example/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//2017/12/11/closures-versus-objects-by-example/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/2017/12/11/closures-versus-objects-by-example/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/2017/12/11/closures-versus-objects-by-example/</guid>
         
         
       </item>
@@ -72,8 +72,8 @@ made a video showing how these vulnerabilities work.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 10 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//security/videos/memory-safety/use-after-free/2017/11/10/uaf/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//security/videos/memory-safety/use-after-free/2017/11/10/uaf/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</guid>
         
         
         <category>security</category>
@@ -95,17 +95,17 @@ same way I’m feeling right now:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000//assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://kmicinski.com/assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://localhost:4000//assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;http://kmicinski.com/assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//application</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//application</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/application</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/application</guid>
         
         
         <category>git</category>
@@ -123,8 +123,8 @@ I’ll just put the slides here.&lt;/p&gt;
 &lt;iframe src=&quot;https://www.icloud.com/keynote/0dhlSy84VggwTIhJdxjvGiTOQ?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//git/talks/2017/11/09/git-tutorial/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//git/talks/2017/11/09/git-tutorial/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/git/talks/2017/11/09/git-tutorial/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/git/talks/2017/11/09/git-tutorial/</guid>
         
         
         <category>git</category>
@@ -135,7 +135,7 @@ I’ll just put the slides here.&lt;/p&gt;
     
       <item>
         <title>My new cybersecurity course at Haverford (Spring 2017)</title>
-        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;http://localhost:4000//assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
+        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;http://kmicinski.com/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;computer-security-attacks-and-defenses&quot;&gt;Computer Security: Attacks and Defenses&lt;/h2&gt;
 &lt;p&gt;(&lt;em&gt;CMSC 323&lt;/em&gt; at Haverford)&lt;/p&gt;
@@ -352,8 +352,8 @@ feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ �
 
 </description>
         <pubDate>Sat, 23 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//teaching/2017/09/23/my-cybersecurity-course/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//teaching/2017/09/23/my-cybersecurity-course/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</guid>
         
         
         <category>teaching</category>
@@ -441,8 +441,8 @@ systems.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 22 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//writing/2017/09/22/reading-text-back/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//writing/2017/09/22/reading-text-back/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</guid>
         
         
         <category>writing</category>
@@ -458,8 +458,8 @@ University of Maryland, College Park.  Full slides available
 &lt;iframe src=&quot;https://www.icloud.com/keynote/021F6CUaWtKuou6byPrV-aYvg?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Fri, 01 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
         
         
         <category>talks</category>
@@ -529,8 +529,8 @@ group dynamic to name a few.&lt;/p&gt;
 &lt;p&gt;Maybe you could try suggesting this to your advisor&lt;/p&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//research/2016/10/23/here-have-some-plum-scrum/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//research/2016/10/23/here-have-some-plum-scrum/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/research/2016/10/23/here-have-some-plum-scrum/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/research/2016/10/23/here-have-some-plum-scrum/</guid>
         
         
         <category>research</category>
@@ -614,8 +614,8 @@ the set of problems I care about.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 15 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//research/2016/10/15/appreciating-research/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//research/2016/10/15/appreciating-research/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/research/2016/10/15/appreciating-research/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/research/2016/10/15/appreciating-research/</guid>
         
         
         <category>research</category>
@@ -665,8 +665,8 @@ was heard.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 11 Sep 2016 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000/http://localhost:4000//teaching/2016/09/11/teaching-observations/</link>
-        <guid isPermaLink="true">http://localhost:4000/http://localhost:4000//teaching/2016/09/11/teaching-observations/</guid>
+        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</guid>
         
         
         <category>teaching</category>

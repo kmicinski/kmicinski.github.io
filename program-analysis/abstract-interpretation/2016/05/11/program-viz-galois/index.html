@@ -8,10 +8,10 @@
 
   <title>Program Visualization as Abstract Interpretation</title>
   <meta name="description" content="For this past semester, I’ve been thinking in a semi-principaled wayabout how we should visualize program executions. For example, howshould we visualize thi...">
-  <link rel="shortcut icon" type="image/png" href="http://localhost:4000//assets/img/favicon.png">
-  <link rel="stylesheet" href="http://localhost:4000//css/main.css">
-  <link rel="canonical" href="http://localhost:4000/http://localhost:4000//program-analysis/abstract-interpretation/2016/05/11/program-viz-galois/">
-  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="http://localhost:4000/http://localhost:4000//feed.xml">
+  <link rel="shortcut icon" type="image/png" href="http://kmicinski.com/assets/img/favicon.png">
+  <link rel="stylesheet" href="http://kmicinski.com/css/main.css">
+  <link rel="canonical" href="http://kmicinski.comhttp://kmicinski.com/program-analysis/abstract-interpretation/2016/05/11/program-viz-galois/">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="http://kmicinski.comhttp://kmicinski.com/feed.xml">
 </head>
 
 
@@ -21,7 +21,7 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="http://localhost:4000//">Kristopher Micinski</a>
+    <a class="site-title" href="http://kmicinski.com/">Kristopher Micinski</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -35,7 +35,7 @@
       <div class="trigger">
         
           
-          <a class="page-link" href="http://localhost:4000//blog/">Blog</a>
+          <a class="page-link" href="http://kmicinski.com/blog/">Blog</a>
           
         
           
@@ -45,7 +45,7 @@
           
         
           
-          <a class="page-link" href="http://localhost:4000//publications/">Publications</a>
+          <a class="page-link" href="http://kmicinski.com/publications/">Publications</a>
           
         
           
@@ -53,7 +53,7 @@
           
         
           
-          <a class="page-link" href="http://localhost:4000//teaching/">Teaching</a>
+          <a class="page-link" href="http://kmicinski.com/teaching/">Teaching</a>
           
         
           
@@ -129,7 +129,7 @@ click on a node and disambiguate that node based on its context.</p>
 <p>For example, here’s a mockup of what this might look like after we’re
 done:</p>
 
-<p><img src="http://localhost:4000//assets/viz-abs-1.png" alt="Shot 1" /></p>
+<p><img src="http://kmicinski.com/assets/viz-abs-1.png" alt="Shot 1" /></p>
 
 <p>On the left are two runs of the program. In the first, we start with
 <code class="highlighter-rouge">y = 1</code>, we then call (the <code class="highlighter-rouge">&gt;</code> designate entries) <code class="highlighter-rouge">g</code>, which
@@ -157,14 +157,14 @@ know all of he possible places that <code class="highlighter-rouge">g</code> was
 it, and then our visualizer will tell you which lines in the program
 actually corresponded to that invocation. Like so:</p>
 
-<p><img src="http://localhost:4000//assets/viz-abs-2.png" alt="Shot 2" /></p>
+<p><img src="http://kmicinski.com/assets/viz-abs-2.png" alt="Shot 2" /></p>
 
 <p>Let’s say that you want to introspect here, you might want to just
 “focus in” on the bad log. To do that, you’ll just project out the
 operation of building the graph. You can even build a more finely
 grained graph which shows precise call / return structure:</p>
 
-<p><img src="http://localhost:4000//assets/viz-abs-3.png" alt="Shot 3" /></p>
+<p><img src="http://kmicinski.com/assets/viz-abs-3.png" alt="Shot 3" /></p>
 
 <p>The last execution graph is obviously the most precise. It shows exact
 call/return sequences in a finely grained way. If we were to formalize
@@ -308,7 +308,7 @@ step (_,i,k) (entry) = (entry,i+1,k)
 
 <p>Here’s what it looks like for our two logs shown here:</p>
 
-<p><img src="http://localhost:4000//assets/viz-abs-4.png" alt="Shot 5" /></p>
+<p><img src="http://kmicinski.com/assets/viz-abs-4.png" alt="Shot 5" /></p>
 
 <h3 id="a-control-flow-analogue">A control flow analogue</h3>
 
@@ -367,7 +367,7 @@ both of our logs. This graph has as its nodes sequences of call frames
 (without their arguments / returns), and is isomorphic to the graph in
 the first example:</p>
 
-<p><img src="http://localhost:4000//assets/viz-abs-5.png" alt="Abs screenshot one" /></p>
+<p><img src="http://kmicinski.com/assets/viz-abs-5.png" alt="Abs screenshot one" /></p>
 
 <p>Unfortunately, because this style of analysis allows an arbitrarily
 large permutations of method calling sequences, it allows the graph’s
@@ -631,9 +631,9 @@ out in the future.</p>
 
 </footer>
 
-<script src="http://localhost:4000//bower_components/jquery/dist/jquery.min.js"></script>
-<script src="http://localhost:4000//bower_components/jquery-ui/jquery-ui.min.js"></script>
-<script src="http://localhost:4000//bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+<script src="http://kmicinski.com/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="http://kmicinski.com/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="http://kmicinski.com/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
 
 
   </body>
