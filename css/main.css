@@ -623,6 +623,10 @@ ul p {
 .tagbox {
   font-size: 11pt; }
 
+.post-image {
+  margin: auto;
+  display: block; }
+
 /* .post-preview { */
 /*     position: relative; */
 /* } */

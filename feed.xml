@@ -6,21 +6,21 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Jan 2018 17:26:46 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2018 17:26:46 -0500</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2018 20:16:38 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 20:16:38 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
-        <title>Why Does Netflix See my Facebook Picture (and Other Adventures with Informed Consent in Privacy Policies)</title>
+        <title>Why Does Netflix See my Facebook Picture?</title>
         <description>&lt;p&gt;The other day I updated my Facebook profile picture. The thing I
 didn’t realize was that when I changed it, Netflix also got it:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-netflix.png&quot; alt=&quot;A figure showing my Facebook profile picture on the left with an arrow pointing towards Netflix (getting my updated Facebook photo) on the right with a question mark over it (asking why)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-netflix.png&quot; alt=&quot;A figure showing my Facebook profile picture on the left with an arrow pointing towards Netflix (getting my updated Facebook photo) on the right with a question mark over it (asking why)&quot; style=&quot;width:450px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is pretty jarring. Where was the “share this with Netflix” button
 that I pressed? Of course, the answer is that it’s right here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; style=&quot;width:350px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s buried right there under “Public profile (required).” But there’s
 also a lot of other stuff I gave it access to too, I guess I forgot
@@ -43,7 +43,7 @@ wonder what else does that!&lt;/p&gt;
 &lt;p&gt;Turns out it’s &lt;em&gt;hundreds&lt;/em&gt; of things! Facebook even has a tool for
 this, called their “Privacy Checkup”:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook's privacy checkup tool&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook's privacy checkup tool&quot; style=&quot;width:400px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is useful for helping you audit which apps have access to do
 things like post on your feed and things like that. But it doesn’t
@@ -154,7 +154,7 @@ apps. They also go a step further and show you this nice dialog when
 apps have been using data in the background (I’m honestly not sure how
 this occurs on iOS these days):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/ios-bg-loc.jpg&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/ios-bg-loc.jpg&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; style=&quot;width:200px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is nice because it helps the user “audit” which apps have been
 using their data. In our paper, we found that one concrete way to help
