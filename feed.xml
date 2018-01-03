@@ -6,8 +6,8 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Jan 2018 20:16:38 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Jan 2018 20:16:38 -0500</lastBuildDate>
+    <pubDate>Tue, 02 Jan 2018 20:18:46 -0500</pubDate>
+    <lastBuildDate>Tue, 02 Jan 2018 20:18:46 -0500</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
     
       <item>
@@ -177,7 +177,8 @@ to help understand the best examples to present, but I think this
 would be a cool idea since users reason well about examples and bad
 about very general policies.&lt;/p&gt;
 
-&lt;p&gt;My research right now works on a few different facets of this problem:&lt;/p&gt;
+&lt;p&gt;A few research-y things I’m working on right now address this in a few
+ways:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -214,8 +215,8 @@ analysis techniques.&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Longer-term, I’m interested in driving my research to understand how
-users conceptualize these permissions, and what that says about how we
-can visualize and enforce them. I’m specifically interested in
+users conceptualize these permissions. What does that say about how we
+can visualize and enforce them? I’m specifically interested in
 cross-app policies: where the data goes from the camera app on your
 phone, to Instagram, to your friend’s parents after your friend clicks
 “like” on the image (and their parents then see it in their
