@@ -6,64 +6,9 @@
 </description>
     <link>http://kmicinski.comhttp://kmicinski.com/</link>
     <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 Jul 2018 14:50:27 -0400</pubDate>
-    <lastBuildDate>Wed, 18 Jul 2018 14:50:27 -0400</lastBuildDate>
+    <pubDate>Wed, 18 Jul 2018 14:51:20 -0400</pubDate>
+    <lastBuildDate>Wed, 18 Jul 2018 14:51:20 -0400</lastBuildDate>
     <generator>Jekyll v3.6.0</generator>
-    
-      <item>
-        <title>A Retrospective on Teaching Security at a SLAC</title>
-        <description>&lt;p&gt;During this semester, I taught &lt;a href=&quot;http://kmicinski.com/cybersecurity-course/&quot;&gt;CMSC
-311&lt;/a&gt; at Haverford
-College. This course was notable for several reasons:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;It’s the first time that I designed a whole course from scratch. I
-was lucky to borrow a good deal of starter material from others
-(mostly pieces of lectures), but I designed the syllabus wrote all
-of the course projects.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;It’s the first time that a security course has been offered at
-Haverford.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;the-big-idea&quot;&gt;The Big Idea&lt;/h1&gt;
-
-&lt;p&gt;From the start, my goal was to teach a challenging upper-level
-security course that would rival those taught at top universities. But
-Haverford &lt;em&gt;isn’t&lt;/em&gt; a big university. So one major question in my mind
-was how to capitalize on a small-school environment to have students
-get the most out of the course.&lt;/p&gt;
-
-&lt;p&gt;Luckily, I didn’t have to make too many compromises.&lt;/p&gt;
-
-&lt;h1 id=&quot;the-hidden-idea&quot;&gt;The Hidden Idea&lt;/h1&gt;
-
-&lt;p&gt;One difference between many small colleges and big universities is
-that our students take fewer CS courses in preference of a more
-diverse cirriculum. Instead of&lt;/p&gt;
-
-&lt;h1 id=&quot;what-worked&quot;&gt;What Worked&lt;/h1&gt;
-
-&lt;h1 id=&quot;what-didnt-work&quot;&gt;What Didn’t Work&lt;/h1&gt;
-
-&lt;h1 id=&quot;what-i-would-change&quot;&gt;What I Would Change&lt;/h1&gt;
-
-&lt;h1 id=&quot;student-response-and-thoughts&quot;&gt;Student Response and Thoughts&lt;/h1&gt;
-</description>
-        <pubDate>Mon, 14 May 2018 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/teaching/security/2018/05/14/ugrad-security-course/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/security/2018/05/14/ugrad-security-course/</guid>
-        
-        
-        <category>teaching</category>
-        
-        <category>security</category>
-        
-      </item>
     
       <item>
         <title>Why Does Netflix See my Facebook Picture?</title>
@@ -870,6 +815,57 @@ the set of problems I care about.&lt;/p&gt;
         
         
         <category>research</category>
+        
+      </item>
+    
+      <item>
+        <title>The nonobvious -- but important -- aspects of teaching (for me)</title>
+        <description>&lt;p&gt;I recently got motivated to look up teaching reviews for members of our department (and myself) on various websites our students frequent. Something occurred to me that I had previously suspected but hadn’t clearly articulated in my head: the parts of teaching that I enjoyed most weren’t necessarily the most important to students.&lt;/p&gt;
+
+&lt;p&gt;These are just a few of the things I’ve seen so far. I might add some more as I continue to think about them.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-productive-learning-environment-for-all&quot;&gt;A productive learning environment for all&lt;/h2&gt;
+
+&lt;p&gt;It’s easy to orient my course material to the students I can connect with most easily: people who were like I was as a student. Unfortunately, this has the effect of potentially creating an insular environment that can make certain groups of students feeling left out.&lt;/p&gt;
+
+&lt;p&gt;This shows up in many forms: implicitly giving preference to the student who sits in the front row and answers all the questions, or making offhand remarks that promulgate gender norms, and more. Throughout teaching, I gradually learned to systematically examine and correct for all the biases I could measure that could potentially give students the impression that this class wasn’t meant for them. This is challenging, especially in a field like CS where there are such predefined societal biases about who should be a good student.&lt;/p&gt;
+
+&lt;p&gt;This idea isn’t new (for example, see &lt;a href=&quot;http://www.npr.org/sections/alltechconsidered/2013/05/01/178810710/How-One-College-Is-Closing-The-Tech-Gender-Gap&quot;&gt;Harvey Mudd’s move to get more women involved in CS&lt;/a&gt;), but thinking about it routinely throughout teaching my course made me realize that it was easy to alienate students if I didn’t think carefully about the fact that my experience was not generalizable to everyone. For example, it seemed reasonable to give students a few extra minutes on exam (that’s what &lt;em&gt;I&lt;/em&gt; would have wanted as a student, after all). But thinking about this more, I realized this negatively affected students that had to work directly after class. Indeed, one of my students later told me that they had to go to work directly after class, and giving extra time would have punished them.&lt;/p&gt;
+
+&lt;p&gt;One thing I’m not sure how to change is students interactions with each other.  For example, when I walk by the student offices, I see groups of boys talking to each other, studying together and forming a natural community. While it’s great to see students working together to learn and build community, I can’t help but feel like these groups can easily lead to a “no girls allowed” feeling between students. I’m not sure what the answer is here, but I assume the answer is multifaceted: attacking perceptions head on by further encouraging minority groups to have representation within the department.&lt;/p&gt;
+
+&lt;h2 id=&quot;engaging-classes-actively&quot;&gt;Engaging classes actively&lt;/h2&gt;
+
+&lt;p&gt;Breaking the ice with classes was huge. I universally found that when I had students participate at the beginning of class, the rest of the class was a lot more interactive. To this end, I would frequently ask questions at the beginning of the class to orient the rest of the discussion.&lt;/p&gt;
+
+&lt;p&gt;In doing so, I wanted to create an environment for students to feel like they could ask questions without facing retribution from myself or others in the class. This is challenging, and I’m not fully sure how to address it yet. One thing I’m convinced does &lt;em&gt;not&lt;/em&gt; work is merely pausing after speaking at students for ten to fiveteen minutes and saying “does all this make sense so far?”&lt;/p&gt;
+
+&lt;p&gt;Instead, something I tried doing a few times was to incorporate inter-student interaction throughout the class. For example, after we covered a new aspect of the material, I might modify a running example and ask students to come up with a simple solution based on what we had just learned. I frequently utilized techniques like think-pair-share to get students talking to each other so that they were forced to actively engage with the material rather than just sit and attempt to absorb it by osmosis. I wasn’t so concerned that students understood everything perfectly: but I wanted a simple social nudge that made them feel encouraged to pay attention.&lt;/p&gt;
+
+&lt;h2 id=&quot;dedicating-time-to-student-interaction&quot;&gt;Dedicating time to student interaction&lt;/h2&gt;
+
+&lt;p&gt;This one was a big boon. Early in the semester I dedicated time to teaching material, but slowly shifted so that more of my time was spent giving detailed feedback to students. As academics, it feels natural to spend time on writing comprehensive lecture notes and pointing people at them. After all, learning how to do this kind of thing is basically what grad school is all about.&lt;/p&gt;
+
+&lt;p&gt;I noticed that a slight shift to paying more attention to being plugged into the student environment paid huge returns in class participation and morale. The best student reviews (in official and unofficial forums) about our classes talked not just about the content and comprehensibility of course material, but the perceived work put in by the instructor to connect with their classes.&lt;/p&gt;
+
+&lt;p&gt;Teaching can be stressful. It’s easy to be bombarded by questions and revert to treating students with a slight feeling of contempt when they haven’t read material or complain about things that I felt had been covered clearly. In times like these, I reminded myself that the way students perceive the material is vastly different than the way I see it. Instead of taking student complaints personally, I attempted to view them as feedback that I could have structured things better.&lt;/p&gt;
+
+&lt;h2 id=&quot;honest-assessment-of-my-performance&quot;&gt;Honest assessment of my performance&lt;/h2&gt;
+
+&lt;p&gt;I found that being honest and upfront with students about my performance helped make an environment where they felt their concerns were met. Throughout my time as both a student and instructor, I frequently witnessed frustration from both sides as students and faculty miscommunicated. From an instructor’s perspective this is easy to perceive as “why don’t they just get it?” And from a student’s, it frequently leaves them feeling like their frustration at not understanding the material isn’t taken seriously.&lt;/p&gt;
+
+&lt;p&gt;By contrast, I tried to be honest with students about places where I had explained something badly or had flat out made a mistake. For example, when I made a mistake outlining the requirements for an assignment, I would explain why I had done so, what needed to be fixed, and how the project grading would change to account for my error.&lt;/p&gt;
+
+&lt;p&gt;The potential downside to this approach is that students may lose their trust in me as an instructor if I made too many mistakes. But instead I found the opposite happened: by being honest about my shortcomings, I showed students that I cared about running a fair course, and they subsequently felt more secure knowing that I would not capriciously change my expectations to hide my mistakes. Overall, I believe this led to an environment where students felt their voice
+was heard.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 11 Sep 2016 00:00:00 -0400</pubDate>
+        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</link>
+        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</guid>
+        
+        
+        <category>teaching</category>
         
       </item>
     
