@@ -471,6 +471,7 @@ pre {
     color: #099; }
 
 .krispic {
+  margin-left: 5px;
   width: 200px;
   height: 200px;
   overflow: auto;
