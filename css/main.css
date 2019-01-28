@@ -501,7 +501,8 @@ blockquote {
 
 .smallright {
   float: right;
-  width: 350px; }
+  width: 300px;
+  padding-left: 20px; }
 
 article img {
   margin: auto;
