@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kristopher Micinski</title>
-    <description>Kris Micinski's personal website. Visiting CS Prof at Haverford.
+    <description>Kris Micinski's Website. Love the lambda.
 </description>
-    <link>http://kmicinski.comhttp://kmicinski.com/</link>
-    <atom:link href="http://kmicinski.comhttp://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 27 Jan 2019 20:23:09 -0500</pubDate>
-    <lastBuildDate>Sun, 27 Jan 2019 20:23:09 -0500</lastBuildDate>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 09 Apr 2019 23:44:49 -0400</pubDate>
+    <lastBuildDate>Tue, 09 Apr 2019 23:44:49 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -15,12 +15,12 @@
         <description>&lt;p&gt;The other day I updated my Facebook profile picture. The thing I
 didn’t realize was that when I changed it, Netflix also got it:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-netflix.png&quot; alt=&quot;A figure showing my Facebook profile picture on the left with an arrow pointing towards Netflix (getting my updated Facebook photo) on the right with a question mark over it (asking why)&quot; style=&quot;width:450px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/facebook-netflix.png&quot; alt=&quot;A figure showing my Facebook profile picture on the left with an arrow pointing towards Netflix (getting my updated Facebook photo) on the right with a question mark over it (asking why)&quot; style=&quot;width:450px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is pretty jarring. Where was the “share this with Netflix” button
 that I pressed? Of course, the answer is that it’s right here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; style=&quot;width:350px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; style=&quot;width:350px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s buried right there under “Public profile (required).” But there’s
 also a lot of other stuff I gave it access to too, I guess I forgot
@@ -43,7 +43,7 @@ wonder what else does that!&lt;/p&gt;
 &lt;p&gt;Turns out it’s &lt;em&gt;hundreds&lt;/em&gt; of things! Facebook even has a tool for
 this, called their “Privacy Checkup”:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook's privacy checkup tool&quot; style=&quot;width:400px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook's privacy checkup tool&quot; style=&quot;width:400px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is useful for helping you audit which apps have access to do
 things like post on your feed and things like that. But it doesn’t
@@ -154,7 +154,7 @@ apps. They also go a step further and show you this nice dialog when
 apps have been using data in the background (I’m honestly not sure how
 this occurs on iOS these days):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://kmicinski.com/assets/ios-bg-loc.jpg&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; style=&quot;width:200px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/ios-bg-loc.jpg&quot; alt=&quot;A picture showing how iOS alerts users to background location usage&quot; style=&quot;width:200px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is nice because it helps the user “audit” which apps have been
 using their data. In our paper, we found that one concrete way to help
@@ -227,8 +227,8 @@ handle on these things will be essential. And once we do that, we can
 these policies!&lt;/p&gt;
 </description>
         <pubDate>Tue, 02 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/privacy/research/2018/01/02/privacy-user-understanding/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/privacy/research/2018/01/02/privacy-user-understanding/</guid>
+        <link>/privacy/research/2018/01/02/privacy-user-understanding/</link>
+        <guid isPermaLink="true">/privacy/research/2018/01/02/privacy-user-understanding/</guid>
         
         
         <category>privacy</category>
@@ -268,8 +268,8 @@ made a video showing how these vulnerabilities work.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 10 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</guid>
+        <link>/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</link>
+        <guid isPermaLink="true">/security/videos/memory-safety/use-after-free/2017/11/10/uaf/</guid>
         
         
         <category>security</category>
@@ -291,17 +291,17 @@ same way I’m feeling right now:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://kmicinski.com/assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://kmicinski.com/assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;/assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 </description>
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/application</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/application</guid>
+        <link>/application</link>
+        <guid isPermaLink="true">/application</guid>
         
         
         <category>git</category>
@@ -319,8 +319,8 @@ I’ll just put the slides here.&lt;/p&gt;
 &lt;iframe src=&quot;https://www.icloud.com/keynote/0dhlSy84VggwTIhJdxjvGiTOQ?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/git/talks/2017/11/09/git-tutorial/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/git/talks/2017/11/09/git-tutorial/</guid>
+        <link>/git/talks/2017/11/09/git-tutorial/</link>
+        <guid isPermaLink="true">/git/talks/2017/11/09/git-tutorial/</guid>
         
         
         <category>git</category>
@@ -331,7 +331,7 @@ I’ll just put the slides here.&lt;/p&gt;
     
       <item>
         <title>My new cybersecurity course at Haverford (Spring 2017)</title>
-        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;http://kmicinski.com/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
+        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;computer-security-attacks-and-defenses&quot;&gt;Computer Security: Attacks and Defenses&lt;/h2&gt;
 &lt;p&gt;(&lt;em&gt;CMSC 323&lt;/em&gt; at Haverford)&lt;/p&gt;
@@ -548,8 +548,8 @@ feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ �
 
 </description>
         <pubDate>Sat, 23 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2017/09/23/my-cybersecurity-course/</guid>
+        <link>/teaching/2017/09/23/my-cybersecurity-course/</link>
+        <guid isPermaLink="true">/teaching/2017/09/23/my-cybersecurity-course/</guid>
         
         
         <category>teaching</category>
@@ -637,8 +637,8 @@ systems.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 22 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/writing/2017/09/22/reading-text-back/</guid>
+        <link>/writing/2017/09/22/reading-text-back/</link>
+        <guid isPermaLink="true">/writing/2017/09/22/reading-text-back/</guid>
         
         
         <category>writing</category>
@@ -654,8 +654,8 @@ University of Maryland, College Park.  Full slides available
 &lt;iframe src=&quot;https://www.icloud.com/keynote/021F6CUaWtKuou6byPrV-aYvg?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Fri, 01 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
+        <link>/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
+        <guid isPermaLink="true">/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
         
         
         <category>talks</category>
@@ -725,8 +725,8 @@ group dynamic to name a few.&lt;/p&gt;
 &lt;p&gt;Maybe you could try suggesting this to your advisor&lt;/p&gt;
 </description>
         <pubDate>Sun, 23 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/research/2016/10/23/here-have-some-plum-scrum/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/research/2016/10/23/here-have-some-plum-scrum/</guid>
+        <link>/research/2016/10/23/here-have-some-plum-scrum/</link>
+        <guid isPermaLink="true">/research/2016/10/23/here-have-some-plum-scrum/</guid>
         
         
         <category>research</category>
@@ -810,8 +810,8 @@ the set of problems I care about.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 15 Oct 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/research/2016/10/15/appreciating-research/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/research/2016/10/15/appreciating-research/</guid>
+        <link>/research/2016/10/15/appreciating-research/</link>
+        <guid isPermaLink="true">/research/2016/10/15/appreciating-research/</guid>
         
         
         <category>research</category>
@@ -861,8 +861,8 @@ was heard.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 11 Sep 2016 00:00:00 -0400</pubDate>
-        <link>http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</link>
-        <guid isPermaLink="true">http://kmicinski.comhttp://kmicinski.com/teaching/2016/09/11/teaching-observations/</guid>
+        <link>/teaching/2016/09/11/teaching-observations/</link>
+        <guid isPermaLink="true">/teaching/2016/09/11/teaching-observations/</guid>
         
         
         <category>teaching</category>
