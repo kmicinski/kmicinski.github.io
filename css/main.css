@@ -116,7 +116,6 @@ pre {
  */
 .wrapper {
   max-width: 800px;
-  max-width: calc(800px - (30px * 2));
   margin-right: auto;
   margin-left: auto; }
   @media screen and (max-width: 800px) {
