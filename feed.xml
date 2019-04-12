@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 05:46:42 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 05:46:42 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 05:48:56 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 05:48:56 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -196,7 +196,7 @@ with the linguistic abstraction mechanisms afforded by Scheme.&lt;/p&gt;
     &lt;p&gt;&lt;a href=&quot;http://users.cs.northwestern.edu/~robby/pubs/papers/scheme2007-wf.pdf&quot;&gt;Well-typed programs can’t be
 blamed&lt;/a&gt;
 by Philip Wadler and Robby Findler. This paper from 2007 appears to
-be an earlier copy of the highly influential 2009 ESOP paper of the
+be an earlier version of the highly influential 2009 ESOP paper of the
 same name.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
