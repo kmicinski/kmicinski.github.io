@@ -608,8 +608,7 @@ ul p {
   color: black; }
 
 #topblurb {
-  margin-top: 25px;
-  color: black; }
+  margin-top: 25px; }
 
 .introtext a {
   color: #D44500; }
@@ -651,10 +650,10 @@ ul p {
 .post {
   font: 17px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
-.mainwrapper {
+#mainwrapper {
   font: 17px/1.8 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
-.mainwrapper p {
+#mainwrapper p {
   color: #444; }
 
 /* .post-preview { */
