@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 04:00:36 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 04:00:36 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 04:05:11 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 04:05:11 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -117,7 +117,7 @@ is often limited to students.&lt;/p&gt;
 &lt;p&gt;The language isn’t what’s important, it’s the idea. We want the
 workshop to be filled with exciting talks that broaden our horizons
 and challenge us to think about programming in a way we wouldn’t have
-before. I could easily imagine relevant papers about template
+before. I could easily imagine relevant papers dealing with template
 metaprogramming in C++, hygiene in OCaml, or domain-specific languages
 in Clojure.&lt;/p&gt;
 
