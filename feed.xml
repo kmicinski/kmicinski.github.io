@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 05:53:42 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 05:53:42 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 06:00:31 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 06:00:31 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -161,8 +161,8 @@ Barzilay. This paper discusses how–when you’re implementing a
 Scheme interpreter in Scheme–you can avoid implementing
 substitution by reflecting lambdas from the source language into the
 metalangauge (which still gives you means of abstracting, e.g.,
-control structure). This is a neat idea that wouldn’t have been big
-enough for POPL, but is perfect for Scheme Workshop.&lt;/p&gt;
+control structure). This is a neat idea that is the perfect size for
+Scheme Workshop.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;a href=&quot;http://scheme2006.cs.uchicago.edu/03-mccarthy.pdf&quot;&gt;Interaction-Safe State for the
