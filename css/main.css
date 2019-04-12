@@ -166,8 +166,7 @@ pre {
  * Site header
  */
 .site-header {
-  border-top: 5px solid #333739;
-  border-bottom: 1px solid #dadcde;
+  border-top: 5px solid #6F777D;
   min-height: 56px;
   position: relative; }
 
@@ -212,7 +211,7 @@ pre {
           width: 18px;
           height: 15px; }
           .site-nav .menu-icon > svg path {
-            fill: #333739; }
+            fill: #6F777D; }
       .site-nav .trigger {
         clear: both;
         display: none; }
