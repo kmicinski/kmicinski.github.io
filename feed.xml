@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 06:00:31 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 06:00:31 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 06:01:09 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 06:01:09 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -184,7 +184,7 @@ same name.&lt;/p&gt;
     &lt;p&gt;&lt;a href=&quot;http://www.ccs.neu.edu/home/dherman/research/papers/scheme08-stack-marks.pdf&quot;&gt;Implementing Continuations Marks in
 JavaScript&lt;/a&gt;
 by John Clements, Ayswarya Sundaram, and David Herman. This paper
-discusses how continuation marks can be implmented in JavaScript. I
+discusses how continuation marks can be implemented in JavaScript. I
 see this as an exciting paper exploring a novel idea in a new space,
 and the authors mention some foundational challenges in scaling up
 to languages that allow tail calls with conventional “return”-style
