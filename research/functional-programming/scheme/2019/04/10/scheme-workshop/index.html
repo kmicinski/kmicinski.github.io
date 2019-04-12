@@ -231,6 +231,62 @@ Scheme community.</p>
   </li>
 </ul>
 
+<h4 id="some-random-scheme-workshop-papers-i-liked">Some random Scheme Workshop papers I liked</h4>
+
+<p>There’s truly been some amazing work at Scheme Workshop over the
+years.  I can’t hope to summarize it all here. Instead, I picked a
+random collection of papers to help you get an idea of the workshop’s
+direction.</p>
+
+<ul>
+  <li>
+    <p><a href="http://schemeworkshop.org/2006/15-barzilay.pdf">A Self-Hosting Evaluator using
+HOAS</a>, by Eli
+Barzilay. This paper discusses how–when you’re implementing a
+Scheme interpreter in Scheme–you can avoid implementing
+substitution by reflecting lambdas from the source language into the
+metalangauge (which still gives you means of abstracting, e.g.,
+control structure). This is a neat idea that wouldn’t have been big
+enough for POPL, but is perfect for Scheme Workshop.</p>
+  </li>
+  <li>
+    <p><a href="http://scheme2006.cs.uchicago.edu/03-mccarthy.pdf">Interaction-Safe State for the
+Web</a> by Jay
+McCarthy and Shriram Krishnamurthi. This paper discusses new
+linguistic mechanisms for building abstractions for how we
+understand navigation within web applications. I think this idea
+nicely combines the practice of building web applications correctly
+with the linguistic abstraction mechanisms afforded by Scheme.</p>
+  </li>
+  <li>
+    <p><a href="http://users.cs.northwestern.edu/~robby/pubs/papers/scheme2007-wf.pdf">Well-typed programs can’t be
+blamed</a>
+by Philip Wadler and Robby Findler. This paper from 2007 appears to
+be an earlier copy of the highly influential 2009 ESOP paper of the
+same name.</p>
+  </li>
+  <li>
+    <p><a href="http://www.ccs.neu.edu/home/dherman/research/papers/scheme08-stack-marks.pdf">Implementing Continuations Marks in
+JavaScript</a>
+by John Clements, Ayswarya Sundaram, and David Herman. This paper
+discusses how continuation marks can be implmented in JavaScript. I
+see this as an exciting paper exploring a novel idea in a new space,
+and the authors mention some foundational challenges in scaling up
+to languages that allow tail calls with conventional “return”-style
+semantics.</p>
+  </li>
+  <li>
+    <p><a href="https://users.soe.ucsc.edu/~lkuper/papers/lambdae.pdf">A pattern matcher for miniKanren–or–How to get into trouble with
+CPS macros</a>
+by Andy Keep, Michael Adams, Lindsey Kuper, Will Byrd, and Dan
+Friedman. This paper reveals an interesting ramification of writing
+macros in a CPS-based style alongside conditional macro
+expansion. They build a pattern matcher for the miniKanren
+programming language, demonstrating the issue along the way. I like
+that this paper reveals a foundational problem in macro engineering.</p>
+  </li>
+</ul>
+
 <h4 id="help-us-build-a-community">Help us build a community</h4>
 
 <p>The goal of Scheme Workshop is to build a community that celebrates

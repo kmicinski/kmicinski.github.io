@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 05:00:22 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 05:00:22 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 05:46:42 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 05:46:42 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -162,6 +162,62 @@ insightful talks from key contributors to the Scheme ethos. These
 community members shape our vision, and guide newcomers (such as
 myself!) by helping us understand the key principles that embody the
 Scheme community.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;some-random-scheme-workshop-papers-i-liked&quot;&gt;Some random Scheme Workshop papers I liked&lt;/h4&gt;
+
+&lt;p&gt;There’s truly been some amazing work at Scheme Workshop over the
+years.  I can’t hope to summarize it all here. Instead, I picked a
+random collection of papers to help you get an idea of the workshop’s
+direction.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://schemeworkshop.org/2006/15-barzilay.pdf&quot;&gt;A Self-Hosting Evaluator using
+HOAS&lt;/a&gt;, by Eli
+Barzilay. This paper discusses how–when you’re implementing a
+Scheme interpreter in Scheme–you can avoid implementing
+substitution by reflecting lambdas from the source language into the
+metalangauge (which still gives you means of abstracting, e.g.,
+control structure). This is a neat idea that wouldn’t have been big
+enough for POPL, but is perfect for Scheme Workshop.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://scheme2006.cs.uchicago.edu/03-mccarthy.pdf&quot;&gt;Interaction-Safe State for the
+Web&lt;/a&gt; by Jay
+McCarthy and Shriram Krishnamurthi. This paper discusses new
+linguistic mechanisms for building abstractions for how we
+understand navigation within web applications. I think this idea
+nicely combines the practice of building web applications correctly
+with the linguistic abstraction mechanisms afforded by Scheme.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://users.cs.northwestern.edu/~robby/pubs/papers/scheme2007-wf.pdf&quot;&gt;Well-typed programs can’t be
+blamed&lt;/a&gt;
+by Philip Wadler and Robby Findler. This paper from 2007 appears to
+be an earlier copy of the highly influential 2009 ESOP paper of the
+same name.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;http://www.ccs.neu.edu/home/dherman/research/papers/scheme08-stack-marks.pdf&quot;&gt;Implementing Continuations Marks in
+JavaScript&lt;/a&gt;
+by John Clements, Ayswarya Sundaram, and David Herman. This paper
+discusses how continuation marks can be implmented in JavaScript. I
+see this as an exciting paper exploring a novel idea in a new space,
+and the authors mention some foundational challenges in scaling up
+to languages that allow tail calls with conventional “return”-style
+semantics.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://users.soe.ucsc.edu/~lkuper/papers/lambdae.pdf&quot;&gt;A pattern matcher for miniKanren–or–How to get into trouble with
+CPS macros&lt;/a&gt;
+by Andy Keep, Michael Adams, Lindsey Kuper, Will Byrd, and Dan
+Friedman. This paper reveals an interesting ramification of writing
+macros in a CPS-based style alongside conditional macro
+expansion. They build a pattern matcher for the miniKanren
+programming language, demonstrating the issue along the way. I like
+that this paper reveals a foundational problem in macro engineering.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
