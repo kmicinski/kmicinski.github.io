@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 19:21:04 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 19:21:04 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 19:24:04 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 19:24:04 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -105,7 +105,7 @@ metaprogramming in C++, hygiene in OCaml, or domain-specific languages
 in Clojure.&lt;/p&gt;
 
 &lt;p&gt;If you think your idea &lt;em&gt;might&lt;/em&gt; be relevant to the workshop, please
-don’t hesitate to contact the workshop chairs. We’ll gladly give you
+don’t hesitate to contact Tom and myself. We’ll gladly give you
 an honest assessment of whether your idea would be a good fit. If not,
 we’ll do our best to direct you towards an appropriate venue for your
 ideas.&lt;/p&gt;
