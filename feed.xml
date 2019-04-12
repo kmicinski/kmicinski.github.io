@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 04:58:05 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 04:58:05 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 05:00:22 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 05:00:22 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -20,8 +20,7 @@ experience, and technical developments of and within the Scheme family
 of programming languages. Rather than focus on a specific
 implementation or community, workshop attendees are united by an
 appreciation for succinct expression of novel ideas realized via
-programming. I’m writing this to encourage you to help us celebrate by
-submitting a paper!&lt;/p&gt;
+programming. I hope you’ll help us celebrate by submitting a paper!&lt;/p&gt;
 
 &lt;h4 id=&quot;what-is-scheme-workshop&quot;&gt;What is Scheme Workshop?&lt;/h4&gt;
 
