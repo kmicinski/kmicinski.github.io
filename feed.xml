@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 19:24:04 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 19:24:04 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 19:26:41 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 19:26:41 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -139,7 +139,7 @@ process works.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Seasoned Scheme wizards. Scheme Workshop has a long history of
-insightful talks from key contributors to the Scheme ethos. These
+insightful talks from key contributors to the Scheme community. These
 community members shape our vision, and guide newcomers (such as
 myself!) by helping us understand the key principles that embody the
 Scheme community.&lt;/p&gt;
