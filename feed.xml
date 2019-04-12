@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 12 Apr 2019 06:28:52 -0400</pubDate>
-    <lastBuildDate>Fri, 12 Apr 2019 06:28:52 -0400</lastBuildDate>
+    <pubDate>Fri, 12 Apr 2019 06:32:51 -0400</pubDate>
+    <lastBuildDate>Fri, 12 Apr 2019 06:32:51 -0400</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -55,7 +55,7 @@ education, and support each other in pursuit of these ideals.&lt;/p&gt;
    Workshop centers around thoughtful discussions relating to unique
    ideas that embody the ethos of Scheme. You don’t have to be an
    academic to attend; in fact, we have a rich history of
-   participation from hobbyists and industrial atendees.&lt;/p&gt;
+   participation from hobbyists and industrial attendees.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Non-archival&lt;/strong&gt;. We aim to support and foster unique
@@ -63,7 +63,7 @@ education, and support each other in pursuit of these ideals.&lt;/p&gt;
   eventually submitted to research conferences. Scheme Workshop
   provides a platform for researchers to get perspective from the
   Scheme community on their work at all stages of development. While
-  we publish a technical report of submitted papers, submision to
+  we publish a technical report of submitted papers, submission to
   Scheme Workshop does not preclude subsequent submission to
   archival research conferences. In fact, we see Scheme Workshop as
   an ideal proving ground for groundbreaking research ideas. We hope
