@@ -1,6 +1,22 @@
 @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css");
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
 @import url("//fonts.googleapis.com/css?family=Open+Sans");
+/* Sherman Sans Book */
+/* Sherman Sans Book */
+@font-face {
+  font-family: "ShermanSans";
+  src: url("https://assets.syracuse.edu/fonts/shermansans-book.woff2") format("woff2"), url("https://assets.syracuse.edu/fonts/shermansans-book.woff") format("woff"), url("https://assets.syracuse.edu/fonts/shermansans-book.eot") format("embedded-opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007F, U+00A9, U+00AE, U+2013-201D; }
+@font-face {
+  font-family: "ShermanSans";
+  src: url("https://assets.syracuse.edu/fonts/shermansans-book-intl.woff2") format("woff2"), url("https://assets.syracuse.edu/fonts/shermansans-book-intl.woff") format("woff"), url("https://assets.syracuse.edu/fonts/shermansans-book-intl.eot") format("embedded-opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+00A0-00A8, U+00C0-024F, U+201E-2026; }
 /**
  * Reset some basic elements
  */
@@ -14,7 +30,7 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-  font: 300 16px/1.5 "Open Sans", sans-serif;
+  font: 17px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif;
   color: #111;
   background-color: #fdfdfd;
   -webkit-text-size-adjust: 100%;
@@ -47,7 +63,7 @@ figure > img {
   display: block; }
 
 figcaption {
-  font-size: 14px; }
+  font-size: 14.875px; }
 
 /**
  * Lists
@@ -63,7 +79,8 @@ li > ol {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 300; }
+  font-family: ShermanSans, "Trebuchet MS", Tahoma, sans-serif;
+  font-weight: 100; }
 
 /**
  * Links
@@ -81,8 +98,8 @@ a {
  * Blockquotes
  */
 blockquote {
-  color: #ADB3B8;
-  border-left: 4px solid white;
+  color: #6F777D;
+  border-left: 4px solid #dadcde;
   padding-left: 15px;
   font-size: 18px;
   letter-spacing: -1px;
@@ -96,7 +113,7 @@ blockquote {
 pre,
 code {
   font-size: 15px;
-  border: 1px solid white;
+  border: 1px solid #dadcde;
   border-radius: 3px;
   background-color: #eef; }
 
@@ -140,17 +157,17 @@ pre {
   height: 16px;
   vertical-align: middle; }
   .icon > svg path {
-    fill: #ADB3B8; }
+    fill: #6F777D; }
 
 .masthead .icon path {
-  fill: #ADB3B8; }
+  fill: #6F777D; }
 
 /**
  * Site header
  */
 .site-header {
-  border-top: 5px solid #6b747b;
-  border-bottom: 1px solid white;
+  border-top: 5px solid #333739;
+  border-bottom: 1px solid #dadcde;
   min-height: 56px;
   position: relative; }
 
@@ -180,7 +197,7 @@ pre {
       top: 9px;
       right: 15px;
       background-color: #fdfdfd;
-      border: 1px solid white;
+      border: 1px solid #dadcde;
       border-radius: 5px;
       text-align: right; }
       .site-nav .menu-icon {
@@ -195,7 +212,7 @@ pre {
           width: 18px;
           height: 15px; }
           .site-nav .menu-icon > svg path {
-            fill: #6b747b; }
+            fill: #333739; }
       .site-nav .trigger {
         clear: both;
         display: none; }
@@ -213,7 +230,7 @@ pre {
  * Site footer
  */
 .site-footer {
-  border-top: 1px solid white;
+  border-top: 1px solid #dadcde;
   padding: 30px 0; }
 
 .footer-heading {
@@ -227,7 +244,7 @@ pre {
 
 .footer-col-wrapper {
   font-size: 15px;
-  color: #ADB3B8;
+  color: #6F777D;
   margin-left: -15px; }
 
 .footer-col {
@@ -277,8 +294,8 @@ pre {
     margin-bottom: 30px; }
 
 .post-meta {
-  font-size: 14px;
-  color: #ADB3B8; }
+  font-size: 14.875px;
+  color: #6F777D; }
 
 .post-link {
   display: block;
@@ -288,7 +305,7 @@ pre {
  * Posts
  */
 .post-header {
-  margin-bottom: 30px; }
+  margin-bottom: 10px; }
 
 .post-title {
   font-size: 36px;
@@ -299,7 +316,7 @@ pre {
       font-size: 36px; } }
 
 .writeup-content {
-  font-size: 14.4px; }
+  font-size: 15.3px; }
 
 .post-content {
   margin-bottom: 30px; }
@@ -492,8 +509,8 @@ pre {
 blockquote {
   margin-top: 10px;
   margin-left: 20px;
-  background-color: #f6ebc1;
-  border-left: 5px solid #fce27c;
+  background-color: #faece5;
+  border-left: 5px solid #edb499;
   padding: .5em 1em; }
 
 .smallright {
@@ -516,6 +533,9 @@ article img {
   margin-top: .7em;
   margin-bottom: .3em; }
 
+article p {
+  font-family: "Open Sans"; }
+
 ul p {
   text-indent: 0px; }
 
@@ -523,7 +543,7 @@ ul p {
   height: 100px; }
 
 .introtext h1, h2, h3, h4 {
-  margin-bottom: 2px; }
+  margin-bottom: 10px; }
 
 .introtext ul li {
   display: inline; }
@@ -625,6 +645,9 @@ ul p {
 .post-image {
   margin: auto;
   display: block; }
+
+.post {
+  font: 17px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
 /* .post-preview { */
 /*     position: relative; */
