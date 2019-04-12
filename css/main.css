@@ -649,6 +649,12 @@ ul p {
 .post {
   font: 17px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
+.mainwrapper {
+  font: 17px/1.8 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
+
+.mainwrapper p {
+  color: #444; }
+
 /* .post-preview { */
 /*     position: relative; */
 /* } */
