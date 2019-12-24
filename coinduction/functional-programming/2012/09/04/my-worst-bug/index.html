@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Job materials for 2017</title>
-  <meta name="description" content="I’m applying to colleges and universities again in 2017. I’m veryhappy at Haverford, but I’m on the lookout for a tenure-track spot ata place that has studen...">
+  <title>My Worst Bug Ever---or---Control-Flow Hygiene in Binary Instrumentation</title>
+  <meta name="description" content="I was doing some fixes recently on a tool I developed during myPhD. It was a complicated tool—and it deserved to be—but I havesuch unique memories of that ti...">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/application">
+  <link rel="canonical" href="/coinduction/functional-programming/2012/09/04/my-worst-bug/">
   <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
 </head>
 
@@ -71,26 +71,100 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Job materials for 2017</h1>
+    <h1 class="post-title" itemprop="name headline">My Worst Bug Ever---or---Control-Flow Hygiene in Binary Instrumentation</h1>
     
 
-    <p class="post-meta"><time datetime="2017-11-09T00:00:00-05:00" itemprop="datePublished">Nov 9, 2017</time></p>
+    <p class="post-meta"><time datetime="2012-09-04T00:00:00-04:00" itemprop="datePublished">Sep 4, 2012</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>I’m applying to colleges and universities again in 2017. I’m very
-happy at Haverford, but I’m on the lookout for a tenure-track spot at
-a place that has students and colleagues that will excite me in the
-same way I’m feeling right now:</p>
+    <p>I was doing some fixes recently on a tool I developed during my
+PhD. It was a complicated tool—and it deserved to be—but I have
+such unique memories of that time in my life; weeks filled with hours
+upon hours of writing up pretty-printing infrastructure. Often this
+was written in such a hacky way as to cripple the maintainability of
+the entire codebase to such an extent that I had to spend hours
+sitting and pulling back git diffs once I’d finally made the critical
+insight.</p>
 
-<ul>
-  <li>
-    <p><a href="/assets/research.pdf">My research statement (4 12-point pages)</a></p>
-  </li>
-  <li>
-    <p><a href="/assets/teaching.pdf">My teaching statement (2 12-point pages)</a></p>
-  </li>
-</ul>
+<p>The tool was binary rewriter for Android. A binary rewriter is a tool
+that lets you take random binaries you find and do whatever you want
+to them. This sounds only moderately hard, but surprisingly, it’s a
+little harder than that. And not in the kind of way that lets you feel
+like you did something meaningful, but in the kind of way that just
+makes you feel like you did a really giant crossword.</p>
+
+<p>This post is about one of those debugging sprees. I was thinking about
+this recently and I thought to myself “well, maybe you just built this
+bug up in your head to make it seem like all that time you wasted was
+worth it.” I decided no; I didn’t build it up.</p>
+
+<p>If you don’t believe me I even have a picture. At one point I had
+tracked down this bug to such a degree that it was basically rock
+solid. And then I ran the tool on a particuarly big app and I found a
+particuarly… challenging… method in the app on which the tool was
+epically failing. Here’s a picture of the method. Not even the whole
+method, just a half of its control-flow graph (produced by, you
+guessed it, my debugging output):</p>
+
+<p>Now ask yourself: how are you feeling right now if you’re supposed to
+graudate in three months and you see this crap on a Monday morning?
+See those tiny lines? No, not the boxes, the lines. Yes, the lines are
+the code. This was from some rendering engine.</p>
+
+<h2 id="redexer">Redexer</h2>
+
+<p>The tool is <a href="https://github.com/plum-umd/redexer">Redexer</a>, it’s a
+giant blob of OCaml code that reads in Dalvik binaries, builds an IR,
+allows you to mess with the IR, and then spits it back out. This is
+useful for a few reasons. For example, you can take any app on your
+phone and bolt on some extra security checks (but you have to be
+careful because of things like reflection). Or you could log what the
+app was doing. Or whatever else you wanted to do.</p>
+
+<p>The challenge is that it’s actually pretty hard to just add random
+code into the middle of a method without making the app crash. This is
+because the code is making certain assumptions about things like the
+state of registers, and if you just plow over those values it’s easy
+to break these invariants. Mostly we want to just add behavior to the
+code (say, logging) and otherwise leave the code alone. This is harder
+than something like shellcode because there the whole point is to
+change the behavior and it’s okay if the program would crash.</p>
+
+<p>The natural question to ask right now is something like this: if the
+code uses registers 0-N, why don’t you just use registers N+1 onward?
+If you do that, you can get “fresh” registers. And yeah, this is
+essentially what you do: we provide an API that allows you to “shift”
+the registers used by a method to give yourself some number of free
+ones. This means our API provides a notion of “hygiene” in terms of
+its <em>data</em> use. And based around this, you can insert some code that,
+for example, calls out to some method you statically link against the
+app.</p>
+
+<p>But unfortunately you hit a bit of a wall. The problem is a stupid
+technicality: the instructions for moving registers are “typed”. For
+instance, here are a few different <code class="highlighter-rouge">move</code> instructions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>move $r1, $r3
+move-object $r2, $r7
+move-object/16 $r18, $r35
+</code></pre></div></div>
+
+<p>There are three “types” of registers: single (ints and floats), double
+(register pairs or doubles), and object (references to
+objects). There’s also an untyped <code class="highlighter-rouge">mov</code> instruction (of course this
+isn’t easy). So let’s say you needed to shift registers by 10 in the
+following code:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+const $r15, $2355
+mov $r10, $r20
+...
+</code></pre></div></div>
+
+<p>Handling <code class="highlighter-rouge">$r15</code> here is easy: we can shift up to $r25 and use
+<code class="highlighter-rouge">const/16</code> which allows us to load into a register beyond the range
+<code class="highlighter-rouge">0-15</code>. But unfortunately,</p>
 
 
   </div>

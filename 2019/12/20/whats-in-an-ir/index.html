@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Job materials for 2017</title>
-  <meta name="description" content="I’m applying to colleges and universities again in 2017. I’m veryhappy at Haverford, but I’m on the lookout for a tenure-track spot ata place that has studen...">
+  <title>What's in an IR? (λ vs. ANF vs. CPS)</title>
+  <meta name="description" content="Compilers are fundamentally about transformations. We start with aprogram in some source langauge and gradually massage it into a targetprogram via a series ...">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/application">
-  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/2019/12/20/whats-in-an-ir/">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="http://localhost:4000/feed.xml">
 </head>
 
 
@@ -71,26 +71,53 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Job materials for 2017</h1>
+    <h1 class="post-title" itemprop="name headline">What's in an IR? (λ vs. ANF vs. CPS)</h1>
     
 
-    <p class="post-meta"><time datetime="2017-11-09T00:00:00-05:00" itemprop="datePublished">Nov 9, 2017</time></p>
+    <p class="post-meta"><time datetime="2019-12-20T00:00:00-05:00" itemprop="datePublished">Dec 20, 2019</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>I’m applying to colleges and universities again in 2017. I’m very
-happy at Haverford, but I’m on the lookout for a tenure-track spot at
-a place that has students and colleagues that will excite me in the
-same way I’m feeling right now:</p>
+    <p>Compilers are fundamentally about transformations. We start with a
+program in some source langauge and gradually massage it into a target
+program via a series of transformations. Each of these transformations
+produces an intermediate representation, or IR. The purpose of an IR
+is to distill high-level language features into a format over which
+some analysis or transformation can be readily applied. Well-written
+compilers make judicious choices about the IRs they use—each pass is
+performed over an IR which exposes necessary language features but
+with no added fluff. This allows us to concentrate on the semantic
+correctness of each pass.</p>
 
-<ul>
-  <li>
-    <p><a href="/assets/research.pdf">My research statement (4 12-point pages)</a></p>
-  </li>
-  <li>
-    <p><a href="/assets/teaching.pdf">My teaching statement (2 12-point pages)</a></p>
-  </li>
-</ul>
+<p>Compilers for functional languages are often based on a variant of the
+lambda calculus:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e ::= (λ (x) e)
+    | (e₀ e₁)
+    | x
+</code></pre></div></div>
+
+<p>The lambda calculus is the assembly language of functional
+programming. Everything higher-level (algebraic types, conditionals,
+control operators, etc…) has been elided to focus on the core of
+functional programming: function abstraction and application.</p>
+
+<p>It is of course possible to compile these higher-level features into
+the lambda calculus (for example, via a <a href="http://kmicinski.com//cs245/assets/slides/church-encoding.pdf">Church
+encoding</a>). When
+I first began to think about programming languages, I found it deeply
+jarring to read papers which focused solely on the lambda
+calculus—how could I take a paper seriously if it couldn’t even
+(succinctly) express the most popular functional program ever,
+<code class="highlighter-rouge">factorial</code>? Eventually, however, I came to realize just how poorly I
+understood even the lambda calculus.</p>
+
+<h2 id="direct-style">Direct Style</h2>
+
+<p>While the lambda calculus certainly feels like the assembly language
+of functional programming, it lacks a property common to most assembly
+languages–atomicity. If we look at a lambda calculus term, we can’t
+immediately tell</p>
 
 
   </div>

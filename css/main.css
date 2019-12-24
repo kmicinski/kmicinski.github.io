@@ -30,7 +30,7 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-  font: 17px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif;
+  font: 20px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif;
   color: #111;
   background-color: #fdfdfd;
   -webkit-text-size-adjust: 100%;
@@ -63,7 +63,7 @@ figure > img {
   display: block; }
 
 figcaption {
-  font-size: 14.875px; }
+  font-size: 17.5px; }
 
 /**
  * Lists
@@ -294,7 +294,7 @@ pre {
     margin-bottom: 30px; }
 
 .post-meta {
-  font-size: 14.875px;
+  font-size: 17.5px;
   color: #6F777D; }
 
 .post-link {
@@ -316,7 +316,7 @@ pre {
       font-size: 36px; } }
 
 .writeup-content {
-  font-size: 15.3px; }
+  font-size: 18px; }
 
 .post-content {
   margin-bottom: 30px; }
@@ -648,10 +648,10 @@ ul p {
   display: block; }
 
 .post {
-  font: 17px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
+  font: 20px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
 #mainwrapper {
-  font: 17px/1.8 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
+  font: 20px/1.8 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
 #mainwrapper p {
   color: #444; }
