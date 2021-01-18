@@ -82,16 +82,16 @@
 about how we should visualize program executions. For example, how
 should we visualize this program:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let id x = x in
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let id x = x in
 let g x = id x
 let check_zero y = if y = 0 then bad () else 1
 if (y &gt;= 0) check_zero (g y) else h y
 </code></pre></div></div>
 
-<p>Let’s say we want to check whether or not <code class="highlighter-rouge">bad</code> is ever called: and if
+<p>Let’s say we want to check whether or not <code class="language-plaintext highlighter-rouge">bad</code> is ever called: and if
 so under what circumstances The most intuitive way we could do this is
 obviously to just sit and think about the program: the program will
-call <code class="highlighter-rouge">bad</code> exactly when <code class="highlighter-rouge">y</code> is zero.</p>
+call <code class="language-plaintext highlighter-rouge">bad</code> exactly when <code class="language-plaintext highlighter-rouge">y</code> is zero.</p>
 
 <p>For small programs like these, checking things like this are easy
 enough, even if the control flow is a little convoluted. As programs
@@ -102,12 +102,12 @@ programmer will provide a set of sample inputs to test these inputs
 on, and will visualize them as they go.</p>
 
 <p>With a debugger, we can see exactly when the call to bad happens by
-“focusing” in on a single run of the program where <code class="highlighter-rouge">y</code> is zero. But
+“focusing” in on a single run of the program where <code class="language-plaintext highlighter-rouge">y</code> is zero. But
 what if we have a <em>bunch</em> of runs of the program and we want to see
 what sorts of functions are called by it, perhaps because we’d like to
 get some understanding of what the program does? For example, let’s
-say that we wanted to see what happens to the program when <code class="highlighter-rouge">y</code> is <code class="highlighter-rouge">0</code>
-and when <code class="highlighter-rouge">y</code> is <code class="highlighter-rouge">1</code>.</p>
+say that we wanted to see what happens to the program when <code class="language-plaintext highlighter-rouge">y</code> is <code class="language-plaintext highlighter-rouge">0</code>
+and when <code class="language-plaintext highlighter-rouge">y</code> is <code class="language-plaintext highlighter-rouge">1</code>.</p>
 
 <p>We could use our debugger for each of those paths, but clearly as the
 programs get large, introspecting program behavior like is going to
@@ -123,7 +123,7 @@ produces “steps” of the program execution, and then we’re going to
 construct a graph of the program that will summarize what the program
 is doing to a viewer. Because we want this graph to summarize a bunch
 of executions, we’re going to collapose certain parts of the graph
-(perhaps each invocation of <code class="highlighter-rouge">f</code> in this program, perhaps) so that they
+(perhaps each invocation of <code class="language-plaintext highlighter-rouge">f</code> in this program, perhaps) so that they
 can be more easily viewable by a user. Then, we’re going to make it
 interactive, so that when the user wants more information they can
 click on a node and disambiguate that node based on its context.</p>
@@ -134,9 +134,9 @@ done:</p>
 <p><img src="/assets/viz-abs-1.png" alt="Shot 1" /></p>
 
 <p>On the left are two runs of the program. In the first, we start with
-<code class="highlighter-rouge">y = 1</code>, we then call (the <code class="highlighter-rouge">&gt;</code> designate entries) <code class="highlighter-rouge">g</code>, which
-subsequently calls <code class="highlighter-rouge">id</code>, returns to <code class="highlighter-rouge">g</code> (with <code class="highlighter-rouge">1</code> as the return
-value), and then calls <code class="highlighter-rouge">check_zero</code>. In the other run, we see the same
+<code class="language-plaintext highlighter-rouge">y = 1</code>, we then call (the <code class="language-plaintext highlighter-rouge">&gt;</code> designate entries) <code class="language-plaintext highlighter-rouge">g</code>, which
+subsequently calls <code class="language-plaintext highlighter-rouge">id</code>, returns to <code class="language-plaintext highlighter-rouge">g</code> (with <code class="language-plaintext highlighter-rouge">1</code> as the return
+value), and then calls <code class="language-plaintext highlighter-rouge">check_zero</code>. In the other run, we see the same
 thing, except with the bad behavior.</p>
 
 <p>In this case, the logs we see on the left represent a subset of the
@@ -149,13 +149,13 @@ with that graph.</p>
 
 <p>This summary seems like a nice idea, but it doesn’t actually allow us
 to see what really happened in the program: it just shows us a control
-flow graph. We know that <code class="highlighter-rouge">bad</code> was called, but not under what
+flow graph. We know that <code class="language-plaintext highlighter-rouge">bad</code> was called, but not under what
 condtiions. Similarly, we might like to find out under what conditions
-our various functions (like <code class="highlighter-rouge">g</code> and <code class="highlighter-rouge">id</code>) were called. To do this,
+our various functions (like <code class="language-plaintext highlighter-rouge">g</code> and <code class="language-plaintext highlighter-rouge">id</code>) were called. To do this,
 we’re going to have this behavior: whenever you click on a various
 node, you’re going to be able to see (in another view) which points in
 each run correspond to that node. For example, let’s say you want to
-know all of he possible places that <code class="highlighter-rouge">g</code> was called from. You click on
+know all of he possible places that <code class="language-plaintext highlighter-rouge">g</code> was called from. You click on
 it, and then our visualizer will tell you which lines in the program
 actually corresponded to that invocation. Like so:</p>
 
@@ -170,14 +170,14 @@ grained graph which shows precise call / return structure:</p>
 
 <p>The last execution graph is obviously the most precise. It shows exact
 call/return sequences in a finely grained way. If we were to formalize
-it, the concrete states would differ: the first <code class="highlighter-rouge">g</code> represents the
+it, the concrete states would differ: the first <code class="language-plaintext highlighter-rouge">g</code> represents the
 entry while the second represents something like the exit. But this
 precision comes at a cost: it shows us a lot of information that will
 probably be meaningless until we really know what we want to look for.</p>
 
 <p>For example, here’s a program with an off by one error:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void traverseList(Link *list) {
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void traverseList(Link *list) {
   Link *x = list;
   Link *y;
   do {
@@ -192,7 +192,7 @@ probably be meaningless until we really know what we want to look for.</p>
 calls with line numbers into the function. A concrete execution would
 look like:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = ptr;      // x -&gt; &lt;1,2&gt;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x = ptr;      // x -&gt; &lt;1,2&gt;
 x = x-&gt;next   // x -&gt; &lt;1&gt;
 y = x-&gt;next   // y -&gt; null
 x != null
@@ -239,37 +239,37 @@ contains all of the possible information we could need to recover the
 concrete execution of the program, we’d end up being able to use our
 log entries to perfectly recover the concrete execution of the
 program. Let’s say that our log is a list of transitions:
-<code class="highlighter-rouge">t₁,t₂,...,tᵢ</code></p>
+<code class="language-plaintext highlighter-rouge">t₁,t₂,...,tᵢ</code></p>
 
-<p>Let’s assume that we have some type <code class="highlighter-rouge">transition</code> that stands for
+<p>Let’s assume that we have some type <code class="language-plaintext highlighter-rouge">transition</code> that stands for
 whatever transitions are. In this example, my type transition would
 look like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type transition =
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type transition =
   | Entry of name * value list
   | Return of value
 </code></pre></div></div>
 
 <p>Then, formally, each transition would take us from some program state
-<code class="highlighter-rouge">Σ</code>, to a new state <code class="highlighter-rouge">Σ'</code>: <code class="highlighter-rouge">step : Σ → transition → Σ</code>. Typically, we
-designate some initial state <code class="highlighter-rouge">Σι</code> that acts as the initial state of
+<code class="language-plaintext highlighter-rouge">Σ</code>, to a new state <code class="language-plaintext highlighter-rouge">Σ'</code>: <code class="language-plaintext highlighter-rouge">step : Σ → transition → Σ</code>. Typically, we
+designate some initial state <code class="language-plaintext highlighter-rouge">Σι</code> that acts as the initial state of
 the program. If this is the case, then for any sequence of transitions
-<code class="highlighter-rouge">t₁,...,tᵢ</code>, we have that the transitive closure of the step relation
+<code class="language-plaintext highlighter-rouge">t₁,...,tᵢ</code>, we have that the transitive closure of the step relation
 with that set of transitions will reach some new program point:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σι →ᵗ₁ Σ₁ →ᵗ₂ ... → Σᵢ
 </code></pre></div></div>
 
 <p>Now, so far I haven’t put any meaningful stipulations on what the
 transition function must look like. I have merely asserted that for it
 to be meaningful, we have that there be some definition of program
-states <code class="highlighter-rouge">Σ</code> and a step relation that operates on states and
+states <code class="language-plaintext highlighter-rouge">Σ</code> and a step relation that operates on states and
 transitions. But how do we know that the transition function we have
 in mind is actually meaningful? I haven’t worked out all the details,
 but I think you basically want some correspondence between derivations
-of new states via the <code class="highlighter-rouge">step</code> function and the actual semantics for
+of new states via the <code class="language-plaintext highlighter-rouge">step</code> function and the actual semantics for
 your program. In other words, you want this to hold: “whenever I
-observe that <code class="highlighter-rouge">Σι →ᵗ¹⁻ᵗⁱ Σᵢ</code>, I can come up with a derivation in the
+observe that <code class="language-plaintext highlighter-rouge">Σι →ᵗ¹⁻ᵗⁱ Σᵢ</code>, I can come up with a derivation in the
 semantics that mirrors that set of transitions.”</p>
 
 <p>Now, notice that my transitions here are only giving us <em>partial</em>
@@ -280,8 +280,8 @@ about the concrete program semantics, it’ll actually be talking about
 an abstract semantics. To make this idea more concrete, in my example
 logs here, I’ve included the function parameters and return
 values. But let’s say I <em>didn’t</em>. Then, when we looked at a line in
-the log, say <code class="highlighter-rouge">&gt;g</code>, we wouldn’t know what actual parameter <code class="highlighter-rouge">g</code> was
-called with. Instead, we’d be forced to think that <code class="highlighter-rouge">g</code> could have been
+the log, say <code class="language-plaintext highlighter-rouge">&gt;g</code>, we wouldn’t know what actual parameter <code class="language-plaintext highlighter-rouge">g</code> was
+called with. Instead, we’d be forced to think that <code class="language-plaintext highlighter-rouge">g</code> could have been
 called with anything (that the program could have called it with, of
 course).</p>
 
@@ -291,7 +291,7 @@ course).</p>
 “most precise” graph for our semantics. Here we’ll assume that our
 transitions have a type like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type transition = entry × line number × log number
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type transition = entry × line number × log number
 and entry =
   | Entry of name * value list
   | Exit of value
@@ -299,11 +299,11 @@ and entry =
 
 <p>Let’s first define our program states. Our states are literally just
 going to be mirrorings of the transitions, except for a special
-initial state I designate as <code class="highlighter-rouge">Root</code> so that our step function will
+initial state I designate as <code class="language-plaintext highlighter-rouge">Root</code> so that our step function will
 then just be the identity. This will give us a forest of possible
 configurations (one linear sequence of states for each log).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = log entry × line number × log number + Root
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = log entry × line number × log number + Root
 Σᵢ (log_number) = Root
 step (_,i,k) (entry) = (entry,i+1,k)
 </code></pre></div></div>
@@ -325,7 +325,7 @@ into the first one (that coalesces that behavior).</p>
 what”), it seems sensible to think about the control flow behavior of
 the runs.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>y = 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>y = 0
 &gt; g(0)
   &gt; id(0)
   &lt; id with 0
@@ -335,17 +335,17 @@ the runs.</p>
 </code></pre></div></div>
 
 <p>To build up our graph, we’ll start in the “main” function, and then
-watch for transitions. For example, upon seeing the <code class="highlighter-rouge">&gt;g(0)</code>
-transition, we’ll draw a new state <code class="highlighter-rouge">g</code>. And then, upon seeing the
-<code class="highlighter-rouge">&gt;id(0)</code> transition, we’ll draw another new state <code class="highlighter-rouge">id</code>. How do we know
-where to go when we see the <code class="highlighter-rouge">&lt;id</code> transition, however? We want to
+watch for transitions. For example, upon seeing the <code class="language-plaintext highlighter-rouge">&gt;g(0)</code>
+transition, we’ll draw a new state <code class="language-plaintext highlighter-rouge">g</code>. And then, upon seeing the
+<code class="language-plaintext highlighter-rouge">&gt;id(0)</code> transition, we’ll draw another new state <code class="language-plaintext highlighter-rouge">id</code>. How do we know
+where to go when we see the <code class="language-plaintext highlighter-rouge">&lt;id</code> transition, however? We want to
 return to the caller, but don’t have the information to know where to
 return.</p>
 
 <p>The semantics of the program handles this by maintaining a stack of
 functions. We can do that here:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = frame list
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = frame list
 frame = function name
 </code></pre></div></div>
 
@@ -360,7 +360,7 @@ we see a return we pop a frame from the stack. We assume that calls
 and returns are balanced (which would be required by the semantic
 rules defining soundness I mentioned above).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>step Σ (&gt; method)             = method :: Σ
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>step Σ (&gt; method)             = method :: Σ
 step (method :: Σ) (&lt; method) = Σ 
 </code></pre></div></div>
 
@@ -376,12 +376,12 @@ large permutations of method calling sequences, it allows the graph’s
 behavior to degrade to a pathological case we want to avoid. For
 example, consider the factorial function:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let fac n = 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let fac n = 
   if n = 0 then 1 else fac (n-1)*n
 </code></pre></div></div>
 
-<p>In that graph, we’d see an arbitrarily long chain of <code class="highlighter-rouge">fac</code> calls when
-our log called the program for some large value of <code class="highlighter-rouge">n</code>. Instead of
+<p>In that graph, we’d see an arbitrarily long chain of <code class="language-plaintext highlighter-rouge">fac</code> calls when
+our log called the program for some large value of <code class="language-plaintext highlighter-rouge">n</code>. Instead of
 showing that, let’s say we wanted to only have one occurrence of each
 method in the program, and then show arrows between method calls when
 there could potentially be control flow between them.</p>
@@ -390,19 +390,19 @@ there could potentially be control flow between them.</p>
 little bit more of a traditional abstract machine. We’ll get an
 isomorphic state space, but we’ll massage the machine a bit so that
 it’s easier to abstract things later. Just as before, our state space
-will keep track of the current function <code class="highlighter-rouge">fn</code>, but now we’ll keep a
+will keep track of the current function <code class="language-plaintext highlighter-rouge">fn</code>, but now we’ll keep a
 <em>pointer</em> to the continuation. That pointer is going to be an address
-into a store <code class="highlighter-rouge">σ</code>, which has the type <code class="highlighter-rouge">Address → Continuation</code>. The
+into a store <code class="language-plaintext highlighter-rouge">σ</code>, which has the type <code class="language-plaintext highlighter-rouge">Address → Continuation</code>. The
 store is just a place through which we thread continuations (in a
 linked-list style structure). Continuations are either function names
-and addresses, or the special <code class="highlighter-rouge">Done</code> continuation (which says there is
-nothing else to do). We also need an auxiliary function <code class="highlighter-rouge">alloc</code>, which
+and addresses, or the special <code class="language-plaintext highlighter-rouge">Done</code> continuation (which says there is
+nothing else to do). We also need an auxiliary function <code class="language-plaintext highlighter-rouge">alloc</code>, which
 gives us a fresh address for the store. We will define the step
 function to put a new address in the store whenever we see a new stack
-frame. The notation <code class="highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> reads, “extend the store <code class="highlighter-rouge">σ</code>
-with a binding that makes <code class="highlighter-rouge">a</code> point to the continuation <code class="highlighter-rouge">(fn,k)</code>.”</p>
+frame. The notation <code class="language-plaintext highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> reads, “extend the store <code class="language-plaintext highlighter-rouge">σ</code>
+with a binding that makes <code class="language-plaintext highlighter-rouge">a</code> point to the continuation <code class="language-plaintext highlighter-rouge">(fn,k)</code>.”</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = ⟨ fn, σ, c ⟩
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Σ = ⟨ fn, σ, c ⟩
 σ : Address → Continuation
 Continution = fn , address | Done
 c : Address 
@@ -416,7 +416,7 @@ step ⟨ fn, σ, c ⟩ (&lt; f) =
 
 <p>For our example program above, we’d get this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; g(0)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; g(0)
 ⟨ g, [a₁ ↦ (main,a₀), a₀ ↦ Done], a₁ ⟩
   &gt; id(0)
   ⟨ id, [a₂ ↦ (g, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₂ ⟩
@@ -444,7 +444,7 @@ the last state from performing our last analysis, and we need to
 “reset” the analysis into the initial state. But it’s not quite the
 same initial state: we just want to reset to the start function:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⟨ main, [a₄ ↦ (check_zero, a₁),
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⟨ main, [a₄ ↦ (check_zero, a₁),
          a₃ ↦ (main, a₀, a₂ ↦ (id, a₁), a₁ ↦ (main,a₀), a₀ ↦ Done], a₀ ⟩
 y = 1
 &gt; g(1)
@@ -453,13 +453,13 @@ y = 1
   ...
 </code></pre></div></div>
 
-<p>Now here, our function <code class="highlighter-rouge">alloc</code> returns a fresh address <code class="highlighter-rouge">a₅</code>. To get
-the behavior, we actually want to <em>reallocate</em> <code class="highlighter-rouge">a₁</code>. This means that
+<p>Now here, our function <code class="language-plaintext highlighter-rouge">alloc</code> returns a fresh address <code class="language-plaintext highlighter-rouge">a₅</code>. To get
+the behavior, we actually want to <em>reallocate</em> <code class="language-plaintext highlighter-rouge">a₁</code>. This means that
 our continuations have to be able to store <em>sets</em> of functions, and
 <em>sets</em> of next continuations. So instead of our store having the
 structure:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ : Address → Continution
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>σ : Address → Continution
 Continution = fn , address | Done
 </code></pre></div></div>
 
@@ -468,27 +468,27 @@ addresses. Because they actually represent <em>sets</em> of continuations,
 we’ll call them abstract continuations (or flow sets, in control flow
 terminology):</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Continution^ = ℘(fn) × ℘(address) | Done
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Continution^ = ℘(fn) × ℘(address) | Done
 </code></pre></div></div>
 
-<p>Now, we’re going to have to modify our <code class="highlighter-rouge">alloc</code> function to “smush
+<p>Now, we’re going to have to modify our <code class="language-plaintext highlighter-rouge">alloc</code> function to “smush
 together” things that come from the same function. We’re going to do
 that by changing the structure of addresses (which I’ve so far been
 leaving as opaque). Instead, we’re going to make addresss simply
 function names:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Address = fn | Done
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Address = fn | Done
 </code></pre></div></div>
 
 <p>Now, our allocator is going to be this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alloc (fn,σ,c) = fn
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alloc (fn,σ,c) = fn
 </code></pre></div></div>
 
-<p>Last, we have an operation <code class="highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> which we have to make
+<p>Last, we have an operation <code class="language-plaintext highlighter-rouge">σ ⊔ [ a ↦ (fn,k) ]</code> which we have to make
 sense of with our modified notion of continuations. First, we need to
-note that it must really be <code class="highlighter-rouge">σ ⊔ [ a ↦ {(fn,k)} ]</code>. Then, the join
-operator <code class="highlighter-rouge">⊔</code> will be the natural elementwise distribution over the
+note that it must really be <code class="language-plaintext highlighter-rouge">σ ⊔ [ a ↦ {(fn,k)} ]</code>. Then, the join
+operator <code class="language-plaintext highlighter-rouge">⊔</code> will be the natural elementwise distribution over the
 sets of functions and continuations.</p>
 
 <h2 id="mapping-between-different-analyses-insertions">Mapping between different analyses: insertions</h2>

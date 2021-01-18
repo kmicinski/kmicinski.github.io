@@ -88,7 +88,7 @@
 stream). For example, lets say that we have the following object in
 memory:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let (pi : int list) = (* some function which computes the digits of pi. *)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let (pi : int list) = (* some function which computes the digits of pi. *)
 </code></pre></div></div>
 
 <p>The computer can’t hold all of pi, because it only has a finite amount
@@ -98,7 +98,7 @@ as you only use finite pieces of the list, you can compute with that
 infinite list as much as you need. However, consider the following
 program:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let print_third_element (k : int list) =
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let print_third_element (k : int list) =
   match k with
     | _ :: _ :: thd :: tl -&gt; print thd
 
@@ -106,15 +106,15 @@ print_third_element pi
 </code></pre></div></div>
 
 <p>What does this program do? Intuitively, this program should print the
-third digit of <code class="highlighter-rouge">pi</code>. In reality, the behavior differs between
+third digit of <code class="language-plaintext highlighter-rouge">pi</code>. In reality, the behavior differs between
 languages. In OCaml, any argument to a function is evaluated before
 being passed into a function (so called strict evaluation). If we use
 this reduction order, then our above program will run forever
-computing the digits of <code class="highlighter-rouge">pi</code> before it can be passed to our printer
+computing the digits of <code class="language-plaintext highlighter-rouge">pi</code> before it can be passed to our printer
 function (which never happens). Since the machine does not have
 infinite memory, the program will eventually run out of memory and
 crash. However, morally this might not be the best evaluation
-order. Our program does not use all of the sequence <code class="highlighter-rouge">pi</code>, it uses only
+order. Our program does not use all of the sequence <code class="language-plaintext highlighter-rouge">pi</code>, it uses only
 the third element. Other languages (most notably, Haskell) use a lazy
 evaluation order, in which functions are evaluated only as much as
 they need be so that further computation can be done.</p>
@@ -235,21 +235,21 @@ Computer Science, vol. 10, no 7 (2004), 751-768.</p>
 
 <p>Undergrads in math typically take courses in abstract algebra: the study of the structure of mathematical objects. For example, we look at groups (structures where we can multiply things), rings (structures where we can multiply things and add things), etc… It turns out that this mirrors a very similar concept in programming languages:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data Tree a =
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data Tree a =
   | Leaf of a
   | Node of Tree a * a * Tree a
 </code></pre></div></div>
 
 <p>In this case, we define two constructors for the type (Leaf and `Node), which naturally generate two destructors:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let get_leaf = function
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let get_leaf = function
   | Leaf a -&gt; a
 
 let get_node = function
   | Node n -&gt; n
 </code></pre></div></div>
 
-<p>There’s one intricacy to note here: we have to be sure that we never try to use <code class="highlighter-rouge">get_leaf</code> with something of the form <code class="highlighter-rouge">Node (...) 32 (...)</code> (assuming we bind <code class="highlighter-rouge">a</code> to <code class="highlighter-rouge">int</code>, for example).</p>
+<p>There’s one intricacy to note here: we have to be sure that we never try to use <code class="language-plaintext highlighter-rouge">get_leaf</code> with something of the form <code class="language-plaintext highlighter-rouge">Node (...) 32 (...)</code> (assuming we bind <code class="language-plaintext highlighter-rouge">a</code> to <code class="language-plaintext highlighter-rouge">int</code>, for example).</p>
 
 <p>So let’s take a step back here: when you define algebras in your abstract algebra class, you define a carrier set along with the operations on that set. (Perhaps more importantly, you also define certain laws those operations satisfy, but that’s a part of the story that’s not encoded in the simple structure, and another story.) This is the same thing we do in this case: defining a type by means of it’s constructors and destructors. This motivates the algebraic interpretation of the “regular types:” types formed from sums and products of other regular types. (I’m not sure on the terminology, it comes from one of <a href="http://strictlypositive.org/">Conor Mcbride’s</a> papers though surely elsewhere.) These structures actually form algebras: with a carrier set and collection of operations over that set. All of this reason comes from a categorical interpretation of datatypes, but the following paper explains it quite nicely:</p>
 
@@ -285,7 +285,7 @@ Rutten, EATCS Bulletin, v62, p62–222, 1997.</p>
 
 <h1 id="about-bisimulation">About Bisimulation</h1>
 
-<p>One thing that you’ll see no matter what in your studies on coinductive types is the notion of a bisimulation. I won’t say exactly what this is, but I will offer a simple explanation of why we need it. Look at the definition of equality in Coq, it’s an <code class="highlighter-rouge">Inductive</code> type <code class="highlighter-rouge">eq</code> that (when instantiated properly) forms something in <code class="highlighter-rouge">Prop</code> (a proof). It should make sense that, using only the standard rules of convertability within Coq, we cannot demonstrate two infinite objects are equal. To deal with this, we define a new (relaxed) notion of equality: the bisimulation. The basic story about a bisimulation is:</p>
+<p>One thing that you’ll see no matter what in your studies on coinductive types is the notion of a bisimulation. I won’t say exactly what this is, but I will offer a simple explanation of why we need it. Look at the definition of equality in Coq, it’s an <code class="language-plaintext highlighter-rouge">Inductive</code> type <code class="language-plaintext highlighter-rouge">eq</code> that (when instantiated properly) forms something in <code class="language-plaintext highlighter-rouge">Prop</code> (a proof). It should make sense that, using only the standard rules of convertability within Coq, we cannot demonstrate two infinite objects are equal. To deal with this, we define a new (relaxed) notion of equality: the bisimulation. The basic story about a bisimulation is:</p>
 
 <blockquote>
   <p>If two (potentially infinite) objects are bisimilar, any two arbitrarily sized finite expansins of those objects will be identical.</p>

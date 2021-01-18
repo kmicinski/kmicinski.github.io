@@ -6,9 +6,9 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 09 May 2020 19:53:55 -0400</pubDate>
-    <lastBuildDate>Sat, 09 May 2020 19:53:55 -0400</lastBuildDate>
-    <generator>Jekyll v3.8.5</generator>
+    <pubDate>Sun, 17 Jan 2021 19:00:12 -0500</pubDate>
+    <lastBuildDate>Sun, 17 Jan 2021 19:00:12 -0500</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>Why I hope you'll submit to Scheme Workshop</title>
@@ -24,6 +24,8 @@ implementation or community, workshop attendees are united by an
 appreciation for succinct expression of novel ideas realized via
 programming. The submission deadline is &lt;strong&gt;May 24th, 2019&lt;/strong&gt;, I hope
 you’ll help us celebrate by submitting a paper!&lt;/p&gt;
+
+&lt;hr class=&quot;posthr&quot; /&gt;
 
 &lt;h4 id=&quot;what-is-scheme-workshop&quot;&gt;What is Scheme Workshop?&lt;/h4&gt;
 
@@ -201,6 +203,8 @@ programming language, demonstrating the issue along the way. I like
 that this paper reveals a foundational problem in macro engineering.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;hr class=&quot;posthr&quot; /&gt;
 
 &lt;h4 id=&quot;help-us-build-a-community&quot;&gt;Help us build a community!&lt;/h4&gt;
 
@@ -784,14 +788,14 @@ feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ �
 you. Listen to how it sounds. Then, iterate until it conveys what
 you’d like to hear. On a mac, you can do this it like this:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;say -r words_per_minute &quot;My speech goes here&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;say -r words_per_minute &quot;My speech goes here&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;I do this to either:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Read the text back to me quickly (&lt;code class=&quot;highlighter-rouge&quot;&gt;-r 240-270&lt;/code&gt;). This helps follow
+    &lt;p&gt;Read the text back to me quickly (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r 240-270&lt;/code&gt;). This helps follow
 along with a document in front of me and check it for flow. It also
 catches miswordings, (some) grammar errors, and typos.&lt;/p&gt;
   &lt;/li&gt;

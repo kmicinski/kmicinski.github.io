@@ -101,38 +101,51 @@
       <div id="mainwrapper">
         <div id="topblurb">
 	  <p>
-	  I love thinking about programming, exploring ways to
-	  understand programs, developing new paradigms for writing
-	  programs, and helping students understand programs. I am
-	  an assistant professor in the
+	  I love thinking about programming, exploring ways to understand
+	  programs, developing new programming paradigms, and helping
+	  students program. I am an assistant professor in the
 	  <a href="http://eng-cs.syr.edu/our-departments/electrical-engineering-and-computer-science/">Electrical
 	  Engineering and Computer Science</a> department at Syracuse
-	  University. I am <b>always</b> looking for motivated
-	  undergraduate, masters, and doctoral students to work on
-	  research in programming languages (specifically static
-	  analysis) and security. Feel free to email me!
+	  University. My research centers around using understanding from
+	  programming language theory to build next-generation secure
+	  systems using static and dynamic analysis at unprecedented
+	  scale. I am <b>always</b> looking for motivated undergraduate,
+	  masters, and doctoral students to work on research in programming
+	  languages and security (specifically in static analysis and binary
+	  reverse engineering). Please feel free to reach out!
 	  </p>
         </div>
         <h2 id="research">Research</h2>
 
-<p>My goal is to keep users secure as they use modern systems. This is a
-challenging problem. Writing secure code is hard. Checking untrusted
-code is even harder. Developers are not always incentivized towards
-security. In some cases it is not always clear what security even
-means.</p>
+<p>My <a href="/publications">publications</a> page chronologically details my
+research output. As of 2021, I am primarily focused on two main
+directions. The first is developing new platforms for binary reverse
+engineering. Through several recent <a href="http://kmicinski.com/assets/usenix19.pdf">empirical
+studies</a>, we have strong
+reason to believe that the RE process would be substantially improved
+by allowing REs to interactively apply formal reasoning (in our case
+achieved via high-performance logical inference engines ala Datalog)
+to rapidly validate hypotheses about binaries. We are <a href="http://kmicinski.com/assets/d3re.pdf">currently
+developing</a> new RE techniques
+that allow users to interactively query state-of-the-art static
+analysis engines in an on-demand way. Second, I am involved in a
+collaboration to <a href="http://kmicinski.com/assets/cc21.pdf">scale high-performance logical inference systems to
+supercomputers</a>. We believe
+these systems will pave the way for the next generation of scale in
+static analysis technology.</p>
 
-<p>For example, consider an app that shows users nearby coffee shops
-frequented by their friends. Such an app may leak or store the user’s
-location (e.g., to an ad provider) in a way they do not
-intend. Sometimes, the developer is not even aware they are violating
-the user’s privacy (for example, if the developer uses an ad library
-and they are unaware it collects location data). Even if the developer
-is aware of how location is being collected, users may not assume that
-it is being stored permanently. You can look at some of my recent
-<a href="/publications">publications</a> to get an idea of the projects I’m
-currently working on to help solve these problems.</p>
-
-<p>To help achieve this goal, I use techniques from the following areas:</p>
+<!-- Broadly, I work to help humans understand and -->
+<!-- explicate properties of programs, typically production-scale binaries -->
+<!-- or bytecode. Much of my work focuses on computer security. This is -->
+<!-- because so many problems in security (e.g., reverse engineering, -->
+<!-- exploit development, or binary hardening) are at their core problems -->
+<!-- in program analysis or understanding. To achieve these goals, I build -->
+<!-- novel understanding tools (e.g., static program analyses for security) -->
+<!-- based on state-of-the-art implementation techniques (e.g., -->
+<!-- massively-parallel relational algebra to implement program analyses on -->
+<!-- supercomputers). My long-term goal is to help enable the next -->
+<!-- generation in scale of program analysis and understanding, both in -->
+<!-- performance (applying to real, large-scale codebases) and design. -->
 
 <table id="mainpgvenn">
   <tr id="areastr">
@@ -191,36 +204,51 @@ currently working on to help solve these problems.</p>
 
 </table>
 
-<p>I am lucky to have a great set of collaborators, many from the <a href="https://github.com/plum-umd">PLUM
-lab</a> at the University of Maryland, but
-also at the <a href="https://thomas.gilray.org/">University of Alabama</a>,
-<a href="http://david.darais.com/">Vermont</a>, and
-<a href="https://www.cs.tufts.edu/~jfoster/">Tufts</a>. You can find a list of my
-publications <a href="/publications">here</a> (and also on my <a href="https://scholar.google.com/citations?user=HpJLJWUAAAAJ&amp;hl=en">Google
-Scholar</a>
-profile).</p>
+<p>I co-direct the HARP (High-performance Automated Reasoning and
+Programming) research group with my collaborators <a href="https://thomas.gilray.org/">Thomas
+Gilray</a> and <a href="https://sidharthkumar.io/">Sidharth
+Kumar</a> at the University of Alabama at
+Birmingham. I am also involved in a number of other collaborations at
+Tufts, UWashington, Northeastern, and UMaryland.</p>
 
-<h3 id="undergraduate-research-and-theses">Undergraduate Research and Theses</h3>
+<h3 id="undergraduate--graduate-research-and-theses">Undergraduate / Graduate Research and Theses</h3>
 
-<p>Note that I am particularly excited to collaborate with Syracuse
-students. As you can likely tell from this page, my research is
-generally in programming languages, but related areas (especially
-computer security) also appeal to me. If you would like to pursue
-undergraduate research, please drop me a line so we can discuss!</p>
+<p>I am particularly excited to collaborate with Syracuse students. As
+you can likely tell from this page, my research is generally in
+programming languages and security, but related areas may also appeal
+to me. If you would like to pursue undergraduate research, please drop
+me a line so we can discuss! You should also read my thoughts on
+<a href="/undergrad-research-goals">goals and expectations for undergraduate
+research</a>.</p>
 
-<p>You should also read my thoughts on <a href="/undergrad-research-goals">goals and expectations for
-undergraduate research</a>.</p>
+<p>Graduate students or potential applicants should email me if they
+would like to discuss recent research. We also support a
+university-sponsored postdoc program towards which I would encourage
+applicants (particularly minority applicants) interested in post-docs
+in security or programming languages at SU.</p>
 
 <h2 id="teaching">Teaching</h2>
 
 <ul>
-  <li>Spring 2020: CIS352:  Programming Languages–Theory and Practice</li>
-  <li>Fall 2019: <a href="http://www.kmicinski.com/program-analysis">CIS700: Program Analysis</a></li>
-  <li>Spring 2019: <a href="http://www.kmicinski.com/cs245">CMSC245: Principles of Programming Languages</a></li>
-  <li>Fall 2018: <a href="http://kmicinski.com/mobile-apps/">CMSC395: Mobile Apps for Social Change</a></li>
-  <li>Fall 2018: <a href="http://kmicinski.com/cs107/">CMSC107: Introduction to Computer Science and Data Structures</a></li>
-  <li>Spring 2018: <a href="http://www.kmicinski.com/cybersecurity-course">CMSC311: Computer Security</a></li>
-  <li>Fall 2017: <a href="http://www.kmicinski.com/cmsc245">CMSC245: Principles of Programming Languages</a></li>
+  <li>Spring 2021: <a href="">CIS352—Principles of Programming Languages</a></li>
+  <li>Fall 2020: <a href="https://kmicinski.com/cis700-f20">CIS700—Formal Methods in Computer Security</a></li>
+  <li>Spring 2020: <a href="http://kmicinski.com/cis352-s20">CIS352—Principles of Programming Languages</a></li>
+  <li>Fall 2019: <a href="http://www.kmicinski.com/program-analysis">CIS700—Program Analysis</a></li>
+  <li>Spring 2019: <a href="http://www.kmicinski.com/cs245">CMSC245—Principles of Programming Languages</a></li>
+  <li>Fall 2018: <a href="http://kmicinski.com/mobile-apps/">CMSC395—Mobile Apps for Social Change</a></li>
+  <li>Fall 2018: <a href="http://kmicinski.com/cs107/">CMSC107—Introduction to Computer Science and Data Structures</a></li>
+  <li>Spring 2018: <a href="http://www.kmicinski.com/cybersecurity-course">CMSC311—Computer Security</a></li>
+  <li>Fall 2017: <a href="http://www.kmicinski.com/cmsc245">CMSC245—Principles of Programming Languages</a></li>
+</ul>
+
+<h2 id="students">Students</h2>
+
+<ul>
+  <li><a href="https://github.com/s-arash">Arash Sahebolamri</a>, PhD student</li>
+  <li><a href="https://github.com/StarGazerM">Yihao Sun</a>, PhD student</li>
+  <li><a href="https://drs.is/about/">Davis Silverman</a>, PhD student</li>
+  <li>Jeffrey Ching, MS student</li>
+  <li><a href="https://github.com/harp-lab/repo-scraper-builder/commits?author=christianfitzpatrick">Christian Fitzpatrick</a>, ugrad student</li>
 </ul>
 
       </div>

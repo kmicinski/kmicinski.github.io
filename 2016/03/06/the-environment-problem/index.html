@@ -116,7 +116,7 @@ talking about environments is a separate issue.</p>
 
 <p>As always, let’s start with an example:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let ((f (lambda (x h)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let ((f (lambda (x h)
   (if x
     (h)                ; Line 3
     (lambda () x)))))
@@ -125,17 +125,17 @@ talking about environments is a separate issue.</p>
 
 <p>Let’s say that we want to optimize the program. We’re going to do it
 as follows: we’re going to run a CFA and, if we see that there’s only
-one possible callee for a given call site (like <code class="highlighter-rouge">h</code> in line 3), we’ll
+one possible callee for a given call site (like <code class="language-plaintext highlighter-rouge">h</code> in line 3), we’ll
 replace it by the actual function that’s called. We run CFA and
 compute the set of functions that reach that point. What functions can
-<code class="highlighter-rouge">h</code> be? <code class="highlighter-rouge">f</code> is called once with <code class="highlighter-rouge">nil</code>, so <code class="highlighter-rouge">h</code> could be <code class="highlighter-rouge">nil</code>, and then
-<code class="highlighter-rouge">f</code> is called with the result of <code class="highlighter-rouge">(f #f nil)</code>, which is <code class="highlighter-rouge">(lambda ()
-x)</code>. So if <code class="highlighter-rouge">h</code> is invoked, it will only ever be <code class="highlighter-rouge">(lambda () x)</code>,
-meaning that we could inline that function in place of <code class="highlighter-rouge">h</code> in line 3.</p>
+<code class="language-plaintext highlighter-rouge">h</code> be? <code class="language-plaintext highlighter-rouge">f</code> is called once with <code class="language-plaintext highlighter-rouge">nil</code>, so <code class="language-plaintext highlighter-rouge">h</code> could be <code class="language-plaintext highlighter-rouge">nil</code>, and then
+<code class="language-plaintext highlighter-rouge">f</code> is called with the result of <code class="language-plaintext highlighter-rouge">(f #f nil)</code>, which is <code class="language-plaintext highlighter-rouge">(lambda ()
+x)</code>. So if <code class="language-plaintext highlighter-rouge">h</code> is invoked, it will only ever be <code class="language-plaintext highlighter-rouge">(lambda () x)</code>,
+meaning that we could inline that function in place of <code class="language-plaintext highlighter-rouge">h</code> in line 3.</p>
 
 <p>The problem is that doing this changes the meaning of the program:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let ((f (lambda (x h)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(let ((f (lambda (x h)
   (if x
     (lambda () x)
     (lambda () x)))))
@@ -144,10 +144,10 @@ meaning that we could inline that function in place of <code class="highlighter-
 </code></pre></div></div>
 
 <p>The problem with the previous line of thought is that we didn’t take
-into account that the <em>first</em> invocation of <code class="highlighter-rouge">f</code> produces the closure
-<code class="highlighter-rouge">&lt;(lambda () x), {x |-&gt; #f}&gt;</code>, which is then subsequently fed in for
-<code class="highlighter-rouge">h</code> in the second use of <code class="highlighter-rouge">f</code>.  When executed, the closure looks up x
-from its environment and gets the value <code class="highlighter-rouge">#f</code> out.</p>
+into account that the <em>first</em> invocation of <code class="language-plaintext highlighter-rouge">f</code> produces the closure
+<code class="language-plaintext highlighter-rouge">&lt;(lambda () x), {x |-&gt; #f}&gt;</code>, which is then subsequently fed in for
+<code class="language-plaintext highlighter-rouge">h</code> in the second use of <code class="language-plaintext highlighter-rouge">f</code>.  When executed, the closure looks up x
+from its environment and gets the value <code class="language-plaintext highlighter-rouge">#f</code> out.</p>
 
 <p>Control flow analyses don’t usually take the closure structure into
 account. The paper makes the argument that we should think of this
@@ -174,27 +174,27 @@ things have been “smushed together.”</p>
 <h1 id="solving-the-problem-abstract-counting">Solving the problem: abstract counting</h1>
 
 <p>When we run our abstract interpretation, we end up with an abstract
-environment <code class="highlighter-rouge">ρ^ : Var → Addr^</code>, that maps variables to <em>abstract</em>
+environment <code class="language-plaintext highlighter-rouge">ρ^ : Var → Addr^</code>, that maps variables to <em>abstract</em>
 addresses. The (abstract) store maps abstract addresses to abstract
-values.  We want to determine, for <code class="highlighter-rouge">ρ</code> and <code class="highlighter-rouge">ρ'</code>, and some variable <code class="highlighter-rouge">x
-∈ dom(ρ)</code>, if <code class="highlighter-rouge">σ(ρ(x)) = σ(ρ'(x))</code>. If we can successfully decide this
-is true for all of the free variables (<code class="highlighter-rouge">x</code> in our example) in the term
-(<code class="highlighter-rouge">(lambda () x)</code> in our example), then we can safely inline the
-function. Unfortunately, in general, because <code class="highlighter-rouge">ρ(x)</code> represents to a
-<em>set</em> of concrete values, we would have to decide that <code class="highlighter-rouge">∀ x, x'. x ∈ X
-= x' ∈ X'</code>, where <code class="highlighter-rouge">X = α (σ(ρ(x)))</code>, the concretization of <code class="highlighter-rouge">σ(ρ(x))</code>,
-and <code class="highlighter-rouge">X' = α (σ(ρ'(x)))</code>. Obviously this is false when the cardinality
-of <code class="highlighter-rouge">X</code> or <code class="highlighter-rouge">X'</code> is greater than one.</p>
+values.  We want to determine, for <code class="language-plaintext highlighter-rouge">ρ</code> and <code class="language-plaintext highlighter-rouge">ρ'</code>, and some variable <code class="language-plaintext highlighter-rouge">x
+∈ dom(ρ)</code>, if <code class="language-plaintext highlighter-rouge">σ(ρ(x)) = σ(ρ'(x))</code>. If we can successfully decide this
+is true for all of the free variables (<code class="language-plaintext highlighter-rouge">x</code> in our example) in the term
+(<code class="language-plaintext highlighter-rouge">(lambda () x)</code> in our example), then we can safely inline the
+function. Unfortunately, in general, because <code class="language-plaintext highlighter-rouge">ρ(x)</code> represents to a
+<em>set</em> of concrete values, we would have to decide that <code class="language-plaintext highlighter-rouge">∀ x, x'. x ∈ X
+= x' ∈ X'</code>, where <code class="language-plaintext highlighter-rouge">X = α (σ(ρ(x)))</code>, the concretization of <code class="language-plaintext highlighter-rouge">σ(ρ(x))</code>,
+and <code class="language-plaintext highlighter-rouge">X' = α (σ(ρ'(x)))</code>. Obviously this is false when the cardinality
+of <code class="language-plaintext highlighter-rouge">X</code> or <code class="language-plaintext highlighter-rouge">X'</code> is greater than one.</p>
 
 <p>The key insight is that we instrument the analysis to keep track of
 “how many things have been smushed together” for a given location in
 the store. In other words, we will add a bit of information to the
-analysis to say that – even though <code class="highlighter-rouge">|α(σ(ρ(x)))| &gt; 1</code> in general, we
+analysis to say that – even though <code class="language-plaintext highlighter-rouge">|α(σ(ρ(x)))| &gt; 1</code> in general, we
 really know that it actually represents <em>only one</em> concrete
 instantiation. We can do this by keeping a separate map, called the
-<code class="highlighter-rouge">count</code>, that tracks how many things have been merged into the heap at
+<code class="language-plaintext highlighter-rouge">count</code>, that tracks how many things have been merged into the heap at
 a given point. When we put something into the abstract store, we also
-record its <code class="highlighter-rouge">count</code> as <code class="highlighter-rouge">1</code>, when we merge another thing at that
+record its <code class="language-plaintext highlighter-rouge">count</code> as <code class="language-plaintext highlighter-rouge">1</code>, when we merge another thing at that
 location, we increment the count. It turns out that our argument
 really only works for singletons, so in general it really only helps
 to know that a location’s count is either one or greater than one.</p>
