@@ -325,7 +325,7 @@ up with doing it in an interactive proof assistant.</p>
              (⇓ proof-e1-v-res e1 ρ v))])]
 </code></pre></div></div>
 
-<h4 id="the-programs">The Programs</h4>
+<h3 id="the-programs">The Programs</h3>
 
 <p>Compared to the checking, writing the proofs is surprisingly
 straightforward—even pleasant (okay; maybe not pleasant). A common
@@ -453,7 +453,7 @@ unintimidating and to-the-point.</p>
                    ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v)))])])]))
 </code></pre></div></div>
 
-<h4 id="visualizing-our-proofs">Visualizing our Proofs</h4>
+<h3 id="visualizing-our-proofs">Visualizing our Proofs</h3>
 
 <p>Alright, so now our interpreter writes proofs–what do they look like?
 Thankfully, we used S-expressions.</p>
@@ -485,7 +485,7 @@ rendering…</p>
 
 <p><img src="/assets/longproof.png" alt="Longer proof" style="width:650px" class="post-image" /></p>
 
-<h4 id="metatheoretic-concessions-for-the-working-programmer">Metatheoretic Concessions for the Working Programmer</h4>
+<h3 id="metatheoretic-concessions-for-the-working-programmer">Metatheoretic Concessions for the Working Programmer</h3>
 
 <p>Obviously we would never write an interpreter in Racket the way we did
 above: there’s too much extraneous math (i.e., the proof objects). I
@@ -518,7 +518,7 @@ implementation.</p>
        [_ (eval-simpl e2 ρ)])]))
 </code></pre></div></div>
 
-<h4 id="conclusion">Conclusion</h4>
+<h3 id="conclusion">Conclusion</h3>
 
 <p>Do I think this is the future of dependently typed programming? Of
 anything? Perhaps also no. Racket is not a particularly appealing
@@ -546,7 +546,7 @@ interested in experimenting with the code. Adding closures and
 application, for example, should not be too hard; I may illustrate
 that in my course next term.</p>
 
-<h4 id="the-code">The Code</h4>
+<h3 id="the-code">The Code</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; self-certifying interpreters, summer 2022, kris micinski
 #lang racket
