@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 20:11:13 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 20:11:13 -0400</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2022 20:14:21 -0400</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2022 20:14:21 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -83,16 +83,16 @@ precisely the reason we’re doing it this way.&lt;/p&gt;
 &lt;p&gt;Of course it would be possible (especially in such a simple semantics
 as this) to define &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e, ρ ⇓ v&lt;/code&gt; using substitution to implement
 variables; I explicitly materialize environments to (a) anticipate
-closures and (b) present a representational challenge upon which I
-would like to expand a bit. Of course, using Racket as our
+closures (later) and (b) present a representational challenge upon
+which I would like to expand a bit. Of course, using Racket as our
 metalanguage, we could simply use hashes for environments. But
 remember—we are trying to appease the pedants among us, thus
 representation must be as symbolic as possible. Similarly, I represent
-the naturals symbolically. I also internalize a function to add
-numbers, which I use in the natural-deduction rule for addition. I
-admit that eliding &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fix&lt;/code&gt; in the source language feels a bit silly, but
-I would point out that once normalization of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plus&lt;/code&gt; happens, it’s all
-structural comparison.&lt;/p&gt;
+the naturals symbolically. I do allow myself a serious concession: I
+internalize &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plus&lt;/code&gt;, as I elide &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fix&lt;/code&gt; in the source language. If this
+defeatist I would say there’s no fundamental barrier, especially as we
+could easily-enough (via our environments) implement application and
+then a fixed-point combinator.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; naturals
 (define (nat? n)

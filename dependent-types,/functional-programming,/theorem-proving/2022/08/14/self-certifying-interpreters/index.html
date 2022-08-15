@@ -149,16 +149,16 @@ precisely the reason we’re doing it this way.</p>
 <p>Of course it would be possible (especially in such a simple semantics
 as this) to define <code class="language-plaintext highlighter-rouge">e, ρ ⇓ v</code> using substitution to implement
 variables; I explicitly materialize environments to (a) anticipate
-closures and (b) present a representational challenge upon which I
-would like to expand a bit. Of course, using Racket as our
+closures (later) and (b) present a representational challenge upon
+which I would like to expand a bit. Of course, using Racket as our
 metalanguage, we could simply use hashes for environments. But
 remember—we are trying to appease the pedants among us, thus
 representation must be as symbolic as possible. Similarly, I represent
-the naturals symbolically. I also internalize a function to add
-numbers, which I use in the natural-deduction rule for addition. I
-admit that eliding <code class="language-plaintext highlighter-rouge">fix</code> in the source language feels a bit silly, but
-I would point out that once normalization of <code class="language-plaintext highlighter-rouge">plus</code> happens, it’s all
-structural comparison.</p>
+the naturals symbolically. I do allow myself a serious concession: I
+internalize <code class="language-plaintext highlighter-rouge">plus</code>, as I elide <code class="language-plaintext highlighter-rouge">fix</code> in the source language. If this
+defeatist I would say there’s no fundamental barrier, especially as we
+could easily-enough (via our environments) implement application and
+then a fixed-point combinator.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; naturals
 (define (nat? n)
