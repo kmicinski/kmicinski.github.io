@@ -148,10 +148,10 @@ precisely the reason we’re doing it this way.</p>
 
 <p>Of course it would be possible (especially in such a simple semantics
 as this) to define <code class="language-plaintext highlighter-rouge">e, ρ ⇓ v</code> using substitution to implement
-variables; I explicitly materialize environments is a choice I make to
-(a) anticipate closures and (b) present a representational challenge
-upon which I would like to expand a bit. Of course, using Racket as
-our metalanguage, we could simply use hashes for environments. But
+variables; I explicitly materialize environments to (a) anticipate
+closures and (b) present a representational challenge upon which I
+would like to expand a bit. Of course, using Racket as our
+metalanguage, we could simply use hashes for environments. But
 remember—we are trying to appease the pedants among us, thus
 representation must be as symbolic as possible. Similarly, I represent
 the naturals symbolically. I also internalize a function to add
