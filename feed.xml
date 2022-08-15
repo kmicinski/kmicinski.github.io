@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Aug 2022 12:58:32 -0400</pubDate>
-    <lastBuildDate>Mon, 15 Aug 2022 12:58:32 -0400</lastBuildDate>
+    <pubDate>Mon, 15 Aug 2022 14:47:27 -0400</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 14:47:27 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -452,7 +452,7 @@ implementation.&lt;/p&gt;
 &lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
 
 &lt;p&gt;Do I think this is the future of dependently typed programming? Of
-anything? Perhaps also no. Racket is not a particularly appealing
+anything? Perhaps both no. Racket is not a particularly appealing
 implementation language for type theory and its pattern matching is
 not designed to scale to settings where higher-order unification is of
 concern to the user. Similarly, this code has serious algorithmic
