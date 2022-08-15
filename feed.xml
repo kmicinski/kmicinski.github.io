@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 20:25:24 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 20:25:24 -0400</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2022 20:26:41 -0400</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2022 20:26:41 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -766,8 +766,8 @@ that in my course next term.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 14 Aug 2022 00:00:00 -0400</pubDate>
-        <link>/dependent-types,/functional-programming,/theorem-proving/2022/08/14/self-certifying-interpreters/</link>
-        <guid isPermaLink="true">/dependent-types,/functional-programming,/theorem-proving/2022/08/14/self-certifying-interpreters/</guid>
+        <link>/certifying-interpreters</link>
+        <guid isPermaLink="true">/certifying-interpreters</guid>
         
         
         <category>dependent-types,</category>
