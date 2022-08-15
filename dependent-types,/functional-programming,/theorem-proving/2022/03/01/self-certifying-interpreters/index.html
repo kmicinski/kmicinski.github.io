@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Self-Certifying Interpreters in Racket</title>
+  <meta name="description" content="In teaching programming language theory, we focus a lot on usingstatic types and intuitionistic logic to formalize the semantics oflanguage features. As a st...">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/dependent-types,/functional-programming,/theorem-proving/2022/03/01/self-certifying-interpreters/">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Kristopher Micinski</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/blog/">Blog</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/teaching/">Teaching</a>
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Self-Certifying Interpreters in Racket</h1>
+    
+
+    <p class="post-meta"><time datetime="2022-03-01T00:00:00-05:00" itemprop="datePublished">Mar 1, 2022</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>In teaching programming language theory, we focus a lot on using
+static types and intuitionistic logic to formalize the semantics of
+language features. As a student, I struggled to relate the
+implementation of a programming language to the formal rules we used
+to define the language in mathematics. Now, in teaching my own class
+on programming languages, I present natural deduction, a particular
+methodology for constructing proofs about functions over inductive
+datatypes. But I have taken a careful intention to focus my attention
+on giving students a nuts-and-bolts description of how the math should
+inform the design of interpreters for the languages we consider.</p>
+
+<p>Within the broader programming languages ecosystem, there has been a
+considerable amount written about formalizing the lambda calculus (or
+other similar core languages) using statically (and often dependently)
+typed languages. Seemingly the dream of every new proof assistant is
+to scale to a robust implementation of programming language
+metatheory. I do not see this as a bad thing, but the formal rules for
+modern type theories used in proof assistants can be quite complex,
+and their separation between tactic and term languages can obscure (to
+the newcomer at least) the exact structure of the proof being
+constructed, even in settings that emphasize proof objects. In this
+post, I hope to convince you to entertain the value–in perspective
+shift–to using a completely dynamically-typed language to build
+proofs.</p>
+
+<h4 id="ifarith">IfArith</h4>
+
+<p>I will start with the language IfArith, which I describe as a
+predicate in Racket:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Specification of IfArith's syntax as a Racket predicate
+(define (expr? e)
+  (match e
+    [(? integer? n) #t]
+    [`(plus ,(? expr? e0) ,(? expr? e1)) #t]
+    [`(div ,(? expr? e0) ,(? expr? e1)) #t]
+    [`(not ,(? expr? e-guard)) #t]
+    [`(if ,(? expr? e0) ,(? expr? e1) ,(? expr? e2)) #t]
+    [_ #f]))
+</code></pre></div></div>
+
+<p>IfArith is essentially a stripped-down functional
+language. Specifically, IfArith does <em>not</em> have lambdas, and is <em>not</em>
+Turing-complete. This is a crucial decision, since it allows us to
+work with an almost-trivial language. My experience has been that
+students’ challenges with understanding natural deduction are
+orthogonal to their confusions with the lambda calculus–I think it is
+best not to teach both at the same time.</p>
+
+<p>The following are IfArith expressions:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define e0 '(plus 2 1))
+(define e1 '(if 0 (plus 1 2) (div 2 2)))
+(define e2 '(if 0 (plus 1 (div 2 3)) (if 1 (plus 2 3) 0)))
+</code></pre></div></div>
+
+<p>When we teach students how to build interpreters, we often start by
+showing metacircular interpreters. This style, following Reynold’s
+definitional interpreters, uses the defining (host) language’s
+features to implement the features of the target language. In this
+case, it’s all simple, since there are no functions. We can build an
+interpreter for IfArith as a function that observes expressions
+(matching them to handle each case) and computes values (values are
+the results of computation; just numbers here). By the way, to make
+IfArith easy, I don’t include booleans–I interpret anything that’s 0
+as false and everything else as true (an attempt to placate students
+who tell us they wished we taught C).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define value? integer?)
+(define/contract (evaluate e)
+  (-&gt; expr? value?)
+  (match e
+    [(? integer? i) i]
+    [`(plus ,e0 ,e1) (+ (evaluate e0) (evaluate e1))]
+    [`(div ,e0 ,e1) (/ (evaluate e0) (evaluate e1))]
+    [`(not ,e0)
+     (let ([v0 (evaluate e0)])
+       (if (= v0 0) 1 0))]
+    [`(if ,e0 ,e1 ,e2)
+     ;; anything = 0 is false, otherwise true
+     (if (= 0 (evaluate e0)) (evaluate e2) (evaluate e1))]
+    [_ (error "unknown expression")]))
+</code></pre></div></div>
+
+<p>The interpreter works as expected, as we can see by trying it on a few
+examples:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(evaluate '(plus 2 1))
+(evaluate '(if 0 (plus 1 2) (div 2 2)))
+(evaluate '(if 0 (plus 1 (div 2 3)) (if 1 (plus 2 3) 0)))
+</code></pre></div></div>
+
+<p>A few remarks on the interpreter already: the interpreter inherits
+some interesting properties of Racket whose importance may not be
+immediately apparent. For example, we inherit Racket’s evaluation
+order to implement <code class="language-plaintext highlighter-rouge">+</code>, evaluating each subexpression left to right
+(as this is the evaluation order of its interpretation in
+Racket). This is in fact an implementation artifact not present in the
+natural deduction semantics, as we will see.</p>
+
+<h4 id="natural-deduction">Natural Deduction</h4>
+
+<p><a href="https://en.wikipedia.org/wiki/Natural_deduction">Natural deduction</a>
+is a formalism that allows us to define the structure of a set of
+logical judgments via a set of inference rules. Rules consist of a set
+of premises (above the line)–all of which must be true–and a single
+conclusion.</p>
+
+<p>The inference rules for IfArith are below:</p>
+
+<p><em>diagram</em></p>
+
+<p>Inference rules allow us to break the definition of a large
+computation–each of which carries a proof of how the computation was
+performed–down into individual steps. Each of these steps is built by
+combining (via a small local computation, such as calling a
+constructor) proofs of the evaluation of each subexpression into a
+larger proof of the ultimate interpretation of the entire expression.</p>
+
+<p>An example proof of the evaluation of <code class="language-plaintext highlighter-rouge">(if 1 (div 1 1) 2)</code>:</p>
+
+<h4 id="representing-certificates">Representing Certificates</h4>
+
+<p>We want to build to demonstrating how we can build a certifying
+interpreter in Racket. We can represent certificates (i.e., the
+inductive proof terms above) in Racket using the same mechanism as we
+did to represent expression. Proofs always have a rule name, some
+premises, a line, and finally a conclusion (for which we define a
+utility projector function). Racket’s pattern matching is not
+especially strong, so we have to check some properties within the
+match body. Modern dependently-typed languages such as Agda, Idris,
+and others put considerable effort into good higher-order unification,
+though nothing prevents us doing a little DIY.</p>
+
+<h4 id="checking-our-work">Checking our work</h4>
+
+<p>Just to convince ourselves that this all carries over to the
+dependently-typed setting, here’s the corresponding Coq code–I
+simplify a few things (division, integers) for simplicity.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Inductive expr : Set :=
+    Const : nat -&gt; expr
+  | Plus : expr -&gt; expr -&gt; expr
+  | Not : expr -&gt; expr
+  | If : expr -&gt; expr -&gt; expr -&gt; expr.
+
+Definition value := nat.
+
+Inductive ifarith_eval : expr -&gt; value -&gt; Prop :=
+  | EConst : forall (c : nat), ifarith_eval (Const c) c
+  | EPlus : forall (e0 : expr) (n0 : value) (e1 : expr) (n1 : value) (nf : value),
+                  ifarith_eval e0 n0 -&gt; ifarith_eval e1 n1 -&gt; nf = n0 + n1 -&gt; ifarith_eval (Plus e0 e1) nf
+  | Not0 : forall (e : expr), ifarith_eval e 0 -&gt; ifarith_eval (Not e) 1
+  | Not1 : forall (e: expr) (n : value), ifarith_eval e n -&gt; n &lt;&gt; 0 -&gt; ifarith_eval (Not e) 0
+  | IfT : forall (e0 : expr) (n : value) (e1 : expr) (n' : value) (e2 : expr),
+                 ifarith_eval e0 n -&gt; n &lt;&gt; 0 -&gt; ifarith_eval e1 n' -&gt; ifarith_eval (If e0 e1 e2) n'
+  | IfF : forall (e0 : expr) (n : value) (e1 : expr) (n' : value) (e2 : expr),
+                 ifarith_eval e0 n -&gt; n = 0 -&gt; ifarith_eval e2 n' -&gt; ifarith_eval (If e0 e1 e2) n'.
+</code></pre></div></div>
+
+
+  </div>
+
+</article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Kristopher Micinski</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Kristopher Micinski</li>
+          <li><a href="mailto:kkmicins@syr.edu">kkmicins@syr.edu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kmicinski"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">kmicinski</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/krismicinski"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#fff" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">krismicinski</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kris Micinski's Website. Love the lambda.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+
+
+  </body>
+
+</html>

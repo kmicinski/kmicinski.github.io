@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Certifying Interpreters in Racket</title>
+  <meta name="description" content="When I began programming, I read a copy of Richard Steven’s “Programming in the UNIX Environment.” Ultimately, my early experimentations with C were a failur...">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/dependent-types,/functional-programming,/theorem-proving/2022/08/14/self-certifying-interpreters/">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Kristopher Micinski</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/blog/">Blog</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/teaching/">Teaching</a>
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Certifying Interpreters in Racket</h1>
+    
+
+    <p class="post-meta"><time datetime="2022-08-14T00:00:00-04:00" itemprop="datePublished">Aug 14, 2022</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>When I began programming, I read a copy of Richard Steven’s “Programming in the UNIX Environment.” Ultimately, my early experimentations with C were a failure; however, I later read David Beazley’s “Python: Essential Reference,” and was quickly able to pick up the UNIX API via it’s much simpler (admittedly, largely due to Beazley’s writing) Python counterpart. After teaching my undergraduate PL courses in Scheme variants these past few years I have wondered if we can understand type theory’s operationalization (via proof objects) using a similar shift in perspective.</p>
+
+<p>Here, I rigorously define an interpreter which produces a certificate
+of its own correctness—assuming you trust the correctness of our
+metalanguage, which (in the interests of appeasing the more skeptical
+among us) we treat as S-expression comparison. Here I use Racket, but
+any similar dynamic language with matching (or, if in OO, virtual
+methods) would work to illustrate the key ideas. I do use Racket’s
+contracts to check certificates, though other implementations could
+defer this to the end or even elide checking entirely.</p>
+
+<h3 id="the-language">The Language</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Specification of IfArith's syntax as a Racket predicate
+(define (expr? e)
+  (match e
+    [(? nonnegative-integer? n) #t]
+    [(? symbol? x) #t]
+    [`(let ,(? symbol? x) ,(? expr? e) ,(? expr? e-body))]
+    [`(plus ,(? expr? e0) ,(? expr? e1)) #t]
+    [`(not ,(? expr? e-guard)) #t]
+    [`(if0 ,(? expr? e0) ,(? expr? e1) ,(? expr? e2)) #t]
+    [_ #f]))
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define e0 '(plus 2 1)) ;; 3
+(define e1 '(plus 1 (if0 0 1 2))) ;; 2
+(define e2 '(let x (plus 0 0) (plus x 1))) ;; 1 
+(define e3 '(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0))) ;; 1
+</code></pre></div></div>
+
+<h3 id="the-proofs">The Proofs</h3>
+
+<p>Now the tricky part: we need to think about what proofs for evaluation
+of terms in our little language look like. To be precise about it, we
+need to define a relation: <code class="language-plaintext highlighter-rouge">e, ρ ⇓ v</code>, such that <code class="language-plaintext highlighter-rouge">e</code> is an expression,
+<code class="language-plaintext highlighter-rouge">ρ</code> is an environment (mapping variables to values) and <code class="language-plaintext highlighter-rouge">v</code> is a
+value. To be constructive about it, we need to algebraically define a
+structure representing proofs that the evaluation of <code class="language-plaintext highlighter-rouge">e</code> in <code class="language-plaintext highlighter-rouge">ρ</code>
+evaluates to <code class="language-plaintext highlighter-rouge">v</code>. Following the Scheme tradition of homoiconicity, we
+represent proofs as S-expressions themselves; inference rules using
+pattern matching over these S-expressions to mirror the natural
+deduction (big-step) style in which we would write our semantics on
+paper. As an example, here’s a derivation of <code class="language-plaintext highlighter-rouge">(if0 0 (plus 1 1) 0)</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(⇓-if-true
+  (⇓-const ----- 
+         (0 ∅ ⇓ O))
+  (⇓-plus
+   (⇓-const -----
+        (1 ∅ ⇓ (S O)))
+   (⇓-const -----
+          (1 ∅ ⇓ (S O)))
+   (plus -----
+      (= (+ (S O) (S O)) (S (S O))))
+   -----
+   ((plus 1 1) ∅ ⇓ (S (S O))))
+  -----
+  ((if0 0 (plus 1 1) 0) ∅ ⇓ (S (S O))))
+</code></pre></div></div>
+
+<p>Racket’s pattern matcher is, of course, very different than a more
+elaborate matcher centered around higher-order unification in a
+statically-typed setting. Manually explicating the unification becomes
+a bit of a chore after a while; certainly a rebuke to the thought of
+using this as a serious strategy for type theory, but at the same time
+precisely the reason we’re doing it this way.</p>
+
+<p>Of course it would be possible (especially in such a simple semantics
+as this) to define <code class="language-plaintext highlighter-rouge">e, ρ ⇓ v</code> using substitution to implement
+variables; I explicitly materialize environments is a choice I make to
+(a) anticipate closures and (b) present a representational challenge
+upon which I would like to expand a bit. Of course, using Racket as
+our metalanguage, we could simply use hashes for environments. But
+remember—we are trying to appease the pedants among us, thus
+representation must be as symbolic as possible. Similarly, I represent
+the naturals symbolically. I also internalize a function to add
+numbers, which I use in the natural-deduction rule for addition. I
+admit that eliding <code class="language-plaintext highlighter-rouge">fix</code> in the source language feels a bit silly, but
+I would point out that once normalization of <code class="language-plaintext highlighter-rouge">plus</code> happens, it’s all
+structural comparison.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; naturals
+(define (nat? n)
+  (match n ['O #t] [`(S ,(? nat? n)) #t] [_ #f]))
+
+(define/contract (num-&gt;nat n)
+  (-&gt; nonnegative-integer? nat?)
+  (match n
+    [0 'O]
+    [n `(S ,(num-&gt;nat (- n 1)))]))
+
+(define/contract (nat-&gt;num n)
+  (-&gt; nat? nonnegative-integer?)
+  (match n
+    ['O 0]
+    [`(S ,x) (add1 (nat-&gt;num x))]))
+
+(define/contract (nat-add s0 s1)
+  (-&gt; nat? nat? nat?)
+  (match s0
+    ['O s1]
+    [`(S ,s0+) `(S ,(nat-add s0+ s1))]))
+</code></pre></div></div>
+
+<p>To represent environments we define (a) a predicate dictating valid
+structure for environments and (b) a predicate, <code class="language-plaintext highlighter-rouge">(env-maps? ρ x v
+pf)</code>, which defines the structure of valid proofs showing that
+environment <code class="language-plaintext highlighter-rouge">ρ</code> maps variable <code class="language-plaintext highlighter-rouge">x</code> to value <code class="language-plaintext highlighter-rouge">v</code>. Both of these are in
+the de-facto “trusted computing base,” in the sense that if your
+definition of proofs is broken (i.e., don’t faithfully capture what
+you want to prove) then it doesn’t matter that your interpreter
+produces proofs. And, of course, this is the biggest drawback of using
+an untyped language to do this—we only get some rough syntactic
+checking, similar to tools such as Ott but not dependently-typed
+languages or provers. To avoid completely defeating the purpose of our
+exercise here, I have followed a bit of a trick to keep rely minimally
+on Racket as a metatheory: because many objects internal to the
+semantics (e.g., numbers, environments, and proofs) are represented
+purely symbolically (as S-expressions), we primarily rely upon Racket
+for S-expression equality and dispatch (matching). Aside from <code class="language-plaintext highlighter-rouge">plus</code>,
+our semantics, while implemented in Racket, is essentially existential
+fixed-point logic (whose Herbrand base comprises S-expressions).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; environments
+(define (environment? ρ)
+  (match ρ
+    ['∅ #t]
+    [`(↦ ,(? environment? ρ+) ,(? symbol? x) ,(? value? v)) #t]
+    [_ #f]))
+
+;; environment lookup -- predicate (inductive defn.)
+(define/contract (env-maps? pf ρ x v)
+  (-&gt; any/c environment? symbol? value? boolean?)
+  (match pf
+    [`(↦-hit
+       ------
+       (↦ ,ρ ,x0 ,v0))
+     (and (equal? x0 x) (equal? v0 v))]
+    [`(↦-miss
+       ,next-pf
+       -----
+       (↦ ,ρ ,x0 ,_))
+     (and (not (equal? x0 x))
+          (env-maps? next-pf ρ x v))]
+    [_ #f]))
+</code></pre></div></div>
+
+<p>The implementation of <code class="language-plaintext highlighter-rouge">(⇓ pf e ρ v)</code> follows its natural deduction
+counterpart (which I have not written down, but try to stylize via my
+spacing). Our procedure checks the proof, recursively calling itself
+to check subproofs—mirroring the top-down process you may follow on a
+whiteboard to check the proof yourself.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; proofs of evaluation
+(define/contract (⇓ pf e ρ v)
+  (-&gt; any/c expr? environment? value? boolean?)
+  (match pf
+    ;; Const
+    [`(⇓-const
+       -----
+       (,(? nonnegative-integer? n) ,ρ+ ⇓ ,v+))
+     (and (equal? (num-&gt;nat n) v) (equal? v v+) (equal? ρ+ ρ))]
+   ...
+</code></pre></div></div>
+
+<p>Checking proofs for constants is easy. The rest of the rules follow
+their natural deduction counterparts; the tedious part is the
+administrative overhead required to implement the store-passing
+construction. Of course my code is a bit smelly here; the ad-hoc use
+of <code class="language-plaintext highlighter-rouge">consequent</code> points to a much cleaner refactoring that elides using
+pairs of a return value and its proof in favor of projecting the value
+from the proof, but the point here is to stick to what I think I’d end
+up with doing it in an interactive proof assistant.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ;; Var
+    [`(⇓-var ,proof-x-in-ρ
+       -----
+       (,(? symbol? x) ,(? environment? ρ+) ⇓ ,(? value? v+)))
+    (and (equal? ρ+ ρ) (equal? v+ v) (env-maps? proof-x-in-ρ ρ x v))]
+    ;; Let
+    [`(⇓-let
+       ,proof-e0
+       ,proof-e1
+       -----
+       ((let ,x ,e0 ,e1) ,(? environment? ρ+) ⇓ ,(? value? v+)))
+     (and (equal? v+ v) (equal? ρ+ ρ)
+          (⇓ proof-e0 e0 ρ (last (consequent proof-e0)))
+          (⇓ proof-e1 e1 `(↦ ,ρ ,x ,(last (consequent proof-e0)))
+		                            (last (consequent proof-e1))))]
+    ;; Plus
+    [`(⇓-plus
+       ,proof-e0
+       ,proof-e1
+       (plus ----- (= (+ ,v0+ ,v1+) ,v-r))
+       -----
+       ((plus ,e0 ,e1) ,ρ+ ⇓ ,v-r))
+     #:when (and (equal? v-r v) (equal? ρ+ ρ))
+     (define v0 (last (consequent proof-e0)))
+     (define v1 (last (consequent proof-e1)))
+     (and (⇓ proof-e0 e0 ρ v0)
+          (⇓ proof-e1 e1 ρ v1)
+          (equal? v0+ v0)
+          (equal? v1+ v1)
+          (equal? v-r (nat-add v0 v1)))]
+    ;; Not
+    [`(⇓-not-0
+       ,proof-e0
+       -----
+       ((not ,e0) ,ρ ⇓ O))
+     (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
+     (and (equal? v0+ v) (not (equal? v 'O)) (⇓ proof-e0 e0 ρ v))]
+    [`(⇓-not-1
+       ,proof-e0
+       -----
+       ((not ,e0) ,ρ ⇓ (S O)))
+     (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
+     (and (equal? v0+ v) (equal? v 'O) (⇓ proof-e0 e0 ρ v))]
+    ;; If-True
+    [`(⇓-if-true
+       ,proof-guard-true
+       ,proof-e1-v-res
+       -----
+       ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v))
+     (match (consequent proof-guard-true)
+       [`(,_ ,_ ⇓ O)
+        (and (⇓ proof-guard-true e0 ρ 'O)
+             (⇓ proof-e1-v-res e1 ρ v))])]
+    ;; If-False
+    [`(⇓-if-false
+       ,proof-guard-false
+       ,proof-e1-v-res
+       -----
+       ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v+))
+     #:when (equal? v+ v)
+     (match (consequent proof-guard-false)
+       [`(,_ ,_ ⇓ ,n)
+        (and (not (equal? n 'O))
+             (⇓ proof-guard-false e0 ρ n)
+             (⇓ proof-e1-v-res e1 ρ v))])]
+</code></pre></div></div>
+
+<h4 id="the-programs">The Programs</h4>
+
+<p>Compared to the checking, writing the proofs is surprisingly
+straightforward—even pleasant (okay; maybe not pleasant). A common
+idiom when writing certified (proof-backed) code is the notion of
+returning an existential, i.e., a witness alongside its proof. Of
+course, the key challenge in writing certified code is convincing
+yourself of its correctness.  There are a variety of ways you could do
+this: you could inspect the output of the evaluator I write and ensure
+that they match the specification, for example. However, for full
+clarity, I will use Racket’s contract system, which allows dynamic
+checking—this allows us to check the correctness of our evaluators
+as we go, but of course won’t prove correctness across all runs, and
+using <code class="language-plaintext highlighter-rouge">define/contract</code> also interposes the check at <em>every</em> callsite
+(a serious overhead), though I am sure you can use your imagination
+about this could be made faster.</p>
+
+<p>Let’s start with environments, writing a function <code class="language-plaintext highlighter-rouge">(lookup ρ x)</code>,
+which returns a proof that <code class="language-plaintext highlighter-rouge">x</code> returns some value <code class="language-plaintext highlighter-rouge">v</code>–if it doesn’t,
+we would just throw a dynamic error due to a match failure–we are
+posting a proof exists. We can write a contract to ensure that the
+code we use to do this is correct. Racket’s default arrow contract
+combinator, <code class="language-plaintext highlighter-rouge">-&gt;</code>, is not powerful to express dependent contracts,
+where a property of the result depends on one of the inputs. However,
+Racket’s more powerful <code class="language-plaintext highlighter-rouge">-&gt;i</code> does allow dependent contracts, allowing
+us to write a version of <code class="language-plaintext highlighter-rouge">lookup</code> which both computes what we want and
+checks to ensure its correctness:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; decision procedure for lookup -- returns witness and proof of inclusion
+(define/contract (lookup ρ x)
+        ;; v---- domain ----v
+    (-&gt;i ([ρ environment?] [x symbol?])
+        ;; range -- produces a proof dependent on ρ,x
+         [result (ρ x)
+                 (match-lambda [`(,(? value? v) . ,pf) (env-maps? pf ρ x v)]
+                               [_ #f])])
+  (match ρ
+    [`(↦ ,ρ1 ,x1 ,v) #:when (equal? x1 x)
+                     `(,v . (↦-hit ------ (↦ ,ρ ,x ,v)))]
+    [`(↦ ,ρ1 ,x1 ,v) #:when (not (equal? x1 x))
+                     (match (lookup ρ1 x)
+                       [`(,v . ,pf)
+                        `(,v . (↦-miss ,pf ----- (↦ ,ρ1 ,x1 ,v)))])]))
+</code></pre></div></div>
+
+<p>Finally, the interpreter itself—unadorned by the ceremony and
+pedantics of checking low-level unification checking—is surprisingly
+unintimidating and to-the-point.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; produce a value alongside a proof of its correctness
+(define/contract (eval e ρ)
+  ;; contract: returns pair of value and proof of its derivation
+  (-&gt;i ([e expr?] [ρ environment?])
+       [result (e ρ)
+               (lambda (witness-pf) (match witness-pf
+                                      [`(,(? value? v) . ,pf) (⇓ pf e ρ v)]
+                                      [_ #f]))])
+  (match e
+    [(? nonnegative-integer? n)
+     (cons (num-&gt;nat n)
+           `(⇓-const
+             -----
+             (,n ,ρ ⇓ ,(num-&gt;nat n))))]
+    [(? symbol? x)
+     (match (lookup ρ x)
+       [`(,v . ,pf)
+        (cons v `(⇓-var
+                  ,pf
+                  -----
+                  (,x ,ρ ⇓ ,v)))])]
+    [`(let ,x ,e ,eb)
+     (match (eval e ρ)
+       [`(,v . ,pf-e)
+        (match (eval eb `(↦ ,ρ ,x ,v))
+          [`(,v-res . ,pf-v)
+           (cons v-res
+                 `(⇓-let
+                   ,pf-e
+                   ,pf-v
+                   -----
+                   ((let ,x ,e ,eb) ,ρ ⇓ ,v-res)))])])]
+    [`(plus ,e0 ,e1)
+     (match-define `(,v0 . ,pf-v0) (eval e0 ρ))
+     (match-define `(,v1 . ,pf-v1) (eval e1 ρ))
+     (define v-res (nat-add v0 v1))
+     (cons v-res
+           `(⇓-plus
+             ,pf-v0
+             ,pf-v1
+             (plus ----- (= (+ ,v0 ,v1) ,v-res))
+             -----
+             ((plus ,e0 ,e1) ,ρ ⇓ ,v-res)))]
+    [`(not ,e)
+     (match (eval e ρ)
+       [`(0 . ,pf-e)
+        (cons '(S O)
+              `(⇓-not-1
+                ,pf-e
+                -----
+                ((not ,e) ρ ⇓ (S O))))]
+       [`(,v0 . ,pf-e)
+        (cons 'O
+              `(⇓-not-0
+                ,pf-e
+                -----
+                ((not ,e) ρ ⇓ O)))])]
+    [`(if0 ,e0 ,e1 ,e2)
+     (match (eval e0 ρ)
+       [`(O . ,pf-e0)
+        (match (eval e1 ρ)
+          [`(,v . ,pf-v)
+           (cons v
+                 `(⇓-if-true
+                   ,pf-e0
+                   ,pf-v
+                   -----
+                   ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v)))])]
+       [`(,n . ,pf-e0)
+        (match (eval e2 ρ)
+          [`(,v . ,pf-v)
+           (cons v
+                 `(⇓-if-false
+                   ,pf-e0
+                   ,pf-v
+                   -----
+                   ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v)))])])]))
+</code></pre></div></div>
+
+<h4 id="visualizing-our-proofs">Visualizing our Proofs</h4>
+
+<p>Alright, so now our interpreter writes proofs–what do they look like?
+Thankfully, we used S-expressions.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; nice latex; comment out the labels by adding a % before \\tiny
+(define (pf-&gt;tex pf)
+  (define name (first pf))
+  (define antecedents (reverse (list-tail (reverse (list-tail (cdr pf) 0)) 2)))
+  (foldr
+   (lambda (k v acc) (string-replace acc k v))
+   (format " \n \\frac{ ~a }{ \\texttt{ ~a } }}"
+           name
+           (string-join (map pf-&gt;tex antecedents) "\\,")
+           (consequent pf))
+   '("⇓" "∅" "↦")
+   '("\\ensuremath{\\Downarrow}" "\\ensuremath{\\emptyset}" 
+     "\\ensuremath{\\mapsto}")))
+</code></pre></div></div>
+
+<p>Running the above code produces attractive-enough LaTeX. In fact I
+used this feature when doing some debugging the interpreter itself.</p>
+
+<p>Here’s the complete derivation of <code class="language-plaintext highlighter-rouge">((plus 1 (if0 0 1 2)))</code>:</p>
+
+<p><img src="/assets/plus-1.png" alt="Proof of ((plus 1 (if0 0 1 2)))" style="width:650px" class="post-image" /></p>
+
+<p>And a longer program where I had to remove the rule names in
+rendering…</p>
+
+<p><img src="/assets/longproof.png" alt="Longer proof" style="width:650px" class="post-image" /></p>
+
+<h4 id="metatheoretic-concessions-for-the-working-programmer">Metatheoretic Concessions for the Working Programmer</h4>
+
+<p>Obviously we would never write an interpreter in Racket the way we did
+above: there’s too much extraneous math (i.e., the proof objects). I
+think it’s surprising, though, to see how much more direct the code
+becomes by (a) erasing the proofs, (b) implementing the environment as
+hashes, and (c) relying upon racket’s built-in representation of
+numbers. The biggest burden in my implementation is obviously (a), as
+I have explicated the proofs via <code class="language-plaintext highlighter-rouge">cons</code>. Tighter implementations exist
+that would hide the ugliness via (say) monads. Eliminating proofs also
+eliminates a lot of administrative matching and in some places allows
+to make tail calls to <code class="language-plaintext highlighter-rouge">eval</code> where we couldn’t before, giving us a
+textbook metacircular interpreter. I think it is interesting to see
+just how directly a translation it is: I systematically removed each
+feature (in the same way an extractor would) to achieve the simpler
+implementation.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define (eval-simpl e ρ)
+  (match e
+    [(? nonnegative-integer? n) n]
+    [(? symbol? x) (hash-ref ρ x)]
+    [`(let ,x ,e ,eb) (eval-simpl eb (hash-set ρ x (eval-simpl e ρ)))]
+    [`(plus ,e0 ,e1) (+ (eval-simpl e0 ρ) (eval-simpl e1 ρ))]
+    [`(not ,e)
+     (match (eval-simpl e ρ)
+       [0 1]
+       [_ 0])]
+    [`(if0 ,e0 ,e1 ,e2)
+     (match (eval-simpl e0 ρ)
+       [0 (eval-simpl e1 ρ)]
+       [_ (eval-simpl e2 ρ)])]))
+</code></pre></div></div>
+
+<h4 id="conclusion">Conclusion</h4>
+
+<p>Do I think this is the future of dependently typed programming? Of
+anything? Perhaps also no. Racket is not a particularly appealing
+implementation language for type theory and its pattern matching is
+not designed to scale to settings where higher-order unification is of
+concern to the user. Similarly, this code has serious algorithmic
+inefficiencies; plenty of the proof checking could be memoized, and
+perhaps some simple contract trick would achieve this (though other
+evaluation strategies could, e.g., use tabling in the metatheory). I
+largely wrote this up to motivate my thoughts on (the potential of)
+explaining the operationalization of proof objects to students as an
+extension of operational semantics in the untyped setting I teach in
+my class. Perhaps this will help someone draw connections between
+operational semantics and proof objects, though I hesitate to say type
+theory, broadly.</p>
+
+<p>Ultimately I did manage to find a lot of bugs in my implementation of
+the interpreter using the contracts. Obviously, though, I was driving
+the process by generating terms and not using a systematic methodology
+of proving the correctness–I have tried to say that the interpreter
+generates certificates, but it is of course not certified. It’s a fun
+exercise, though–you can read the full code yourself below. I think
+there are a few follow ups that could be done from here if you are
+interested in experimenting with the code. Adding closures and
+application, for example, should not be too hard; I may illustrate
+that in my course next term.</p>
+
+<h4 id="the-code">The Code</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; self-certifying interpreters, summer 2022, kris micinski
+#lang racket
+
+;; naturals
+(define (nat? n)
+  (match n ['O #t] [`(S ,(? nat? n)) #t] [_ #f]))
+
+(define/contract (num-&gt;nat n)
+  (-&gt; nonnegative-integer? nat?)
+  (match n
+    [0 'O]
+    [n `(S ,(num-&gt;nat (- n 1)))]))
+
+(define/contract (nat-&gt;num n)
+  (-&gt; nat? nonnegative-integer?)
+  (match n
+    ['O 0]
+    [`(S ,x) (add1 (nat-&gt;num x))]))
+
+(define/contract (nat-add s0 s1)
+  (-&gt; nat? nat? nat?)
+  (match s0
+    ['O s1]
+    [`(S ,s0+) `(S ,(nat-add s0+ s1))]))
+
+;; values are nats
+(define value? nat?)
+
+;; expressions
+(define (expr? e)
+  (match e
+    [(? nonnegative-integer? n) #t]
+    [(? symbol? x) #t]
+    [`(let ,(? symbol? x) ,(? expr? e) ,(? expr? e-body)) #t]
+    [`(plus ,(? expr? e0) ,(? expr? e1)) #t]
+    [`(not ,(? expr? e-guard)) #t]
+    [`(if0 ,(? expr? e0) ,(? expr? e1) ,(? expr? e2)) #t]
+    [_ #f]))
+
+;; environments
+(define (environment? ρ)
+  (match ρ
+    ['∅ #t]
+    [`(↦ ,(? environment? ρ+) ,(? symbol? x) ,(? value? v)) #t]
+    [_ #f]))
+
+;; environment lookup -- predicate (inductive defn.)
+(define/contract (env-maps? pf ρ x v)
+  (-&gt; any/c environment? symbol? value? boolean?)
+  (match pf
+    [`(↦-hit
+       ------
+       (↦ ,ρ ,x0 ,v0))
+     (and (equal? x0 x) (equal? v0 v))]
+    [`(↦-miss
+       ,next-pf
+       -----
+       (↦ ,ρ ,x0 ,_))
+     (and (not (equal? x0 x))
+          (env-maps? next-pf ρ x v))]
+    [_ #f]))
+
+;; decision procedure for lookup -- returns witness and proof of inclusion
+(define/contract (lookup ρ x)
+        ;; v---- domain ----v
+    (-&gt;i ([ρ environment?] [x symbol?])
+        ;; range -- produces a proof dependent on ρ,x
+         [result (ρ x)
+                 (lambda (witness-pf) (match witness-pf
+                                        [`(,(? value? v) . ,pf) (env-maps? pf ρ x v)]
+                                        [_ #f]))])
+  (match ρ
+    [`(↦ ,ρ1 ,x1 ,v) #:when (equal? x1 x)
+                     `(,v . (↦-hit ------ (↦ ,ρ ,x ,v)))]
+    [`(↦ ,ρ1 ,x1 ,v) #:when (not (equal? x1 x))
+                     (match (lookup ρ1 x)
+                       [`(,v . ,pf)
+                        `(,v . (↦-miss ,pf ----- (↦ ,ρ1 ,x1 ,v) ))])]))
+
+; (lookup '(↦ (↦ ∅ x O) y (S O)) 'x)
+
+;; we will now follow the style '(name atecedent0 ... ----- consequent)
+(define (consequent judgement) (last judgement))
+
+;; predicate -- inductive definition of evaluation relation
+(define/contract (⇓ pf e ρ v)
+  (-&gt; any/c expr? environment? value? boolean?)
+  (match pf
+    ;; Const
+    [`(⇓-const
+       -----
+       (,(? nonnegative-integer? n) ,ρ+ ⇓ ,v+))
+     #:when (and (equal? (num-&gt;nat n) v) (equal? ρ+ ρ) (equal? v v+))
+     #t]
+    ;; Var
+    [`(⇓-var ,proof-x-in-ρ
+       -----
+       (,(? symbol? x) ,(? environment? ρ+) ⇓ ,(? value? v+)))
+     #:when (and (equal? ρ+ ρ) (equal? v+ v))
+     (env-maps? proof-x-in-ρ ρ x v)]
+    ;; Let
+    [`(⇓-let
+       ,proof-e0
+       ,proof-e1
+       -----
+       ((let ,(? symbol? x) ,(? expr? e0) ,(? expr? e1)) ,(? environment? ρ+) ⇓ ,(? value? v+)))
+     #:when (equal? v+ v) (equal? ρ+ ρ)
+     (and (⇓ proof-e0 e0 ρ (last (consequent proof-e0)))
+          (⇓ proof-e1 e1 `(↦ ,ρ ,x ,(last (consequent proof-e0))) (last (consequent proof-e1))))]
+    ;; Plus
+    [`(⇓-plus
+       ,proof-e0
+       ,proof-e1
+       (plus ----- (= (+ ,v0+ ,v1+) ,v-r))
+       -----
+       ((plus ,e0 ,e1) ,ρ+ ⇓ ,v-r))
+     #:when (and (equal? v-r v) (equal? ρ+ ρ))
+     (define v0 (last (consequent proof-e0)))
+     (define v1 (last (consequent proof-e1)))
+     (and (⇓ proof-e0 e0 ρ v0)
+          (⇓ proof-e1 e1 ρ v1)
+          (equal? v0+ v0)
+          (equal? v1+ v1)
+          (equal? v-r (nat-add v0 v1)))]
+    ;; Not
+    [`(⇓-not-0
+       ,proof-e0
+       -----
+       ((not ,e0) ,ρ ⇓ O))
+     (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
+     (and (equal? v0+ v) (not (equal? v 'O)) (⇓ proof-e0 e0 ρ v))]
+    [`(⇓-not-1
+       ,proof-e0
+       -----
+       ((not ,e0) ,ρ ⇓ (S O)))
+     (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
+     (and (equal? v0+ v) (equal? v 'O) (⇓ proof-e0 e0 ρ v))]
+    ;; If-True
+    [`(⇓-if-true
+       ,proof-guard-true
+       ,proof-e1-v-res
+       -----
+       ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v))
+     (match (consequent proof-guard-true)
+       [`(,_ ,_ ⇓ O)
+        (and (⇓ proof-guard-true e0 ρ 'O)
+             (⇓ proof-e1-v-res e1 ρ v))])]
+    ;; If-False
+    [`(⇓-if-false
+       ,proof-guard-false
+       ,proof-e1-v-res
+       -----
+       ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v+))
+     #:when (equal? v+ v)
+     (match (consequent proof-guard-false)
+       [`(,_ ,_ ⇓ ,n)
+        (and (not (equal? n 'O))
+             (⇓ proof-guard-false e0 ρ n)
+             (⇓ proof-e1-v-res e1 ρ v))])]
+    [_ #f]))
+
+;;
+;; Self-certifying interpreter
+;;
+
+;; produce a value alongside a proof of its correctness
+(define/contract (eval e ρ)
+  ;; contract: returns pair of value and proof of its derivation
+  (-&gt;i ([e expr?] [ρ environment?])
+       [result (e ρ)
+               (lambda (witness-pf) (match witness-pf
+                                      [`(,(? value? v) . ,pf) (⇓ pf e ρ v)]
+                                      [_ #f]))])
+  (match e
+    [(? nonnegative-integer? n)
+     (cons (num-&gt;nat n)
+           `(⇓-const
+             -----
+             (,n ,ρ ⇓ ,(num-&gt;nat n))))]
+    [(? symbol? x)
+     (match (lookup ρ x)
+       [`(,v . ,pf)
+        (cons v `(⇓-var
+                  ,pf
+                  -----
+                  (,x ,ρ ⇓ ,v)))])]
+    [`(let ,x ,e ,eb)
+     (match (eval e ρ)
+       [`(,v . ,pf-e)
+        (match (eval eb `(↦ ,ρ ,x ,v))
+          [`(,v-res . ,pf-v)
+           (cons v-res
+                 `(⇓-let
+                   ,pf-e
+                   ,pf-v
+                   -----
+                   ((let ,x ,e ,eb) ,ρ ⇓ ,v-res)))])])]
+    [`(plus ,e0 ,e1)
+     (match-define `(,v0 . ,pf-v0) (eval e0 ρ))
+     (match-define `(,v1 . ,pf-v1) (eval e1 ρ))
+     (define v-res (nat-add v0 v1))
+     (cons v-res
+           `(⇓-plus
+             ,pf-v0
+             ,pf-v1
+             (plus ----- (= (+ ,v0 ,v1) ,v-res))
+             -----
+             ((plus ,e0 ,e1) ,ρ ⇓ ,v-res)))]
+    [`(not ,e)
+     (match (eval e ρ)
+       [`(0 . ,pf-e)
+        (cons '(S O)
+              `(⇓-not-1
+                ,pf-e
+                -----
+                ((not ,e) ρ ⇓ (S O))))]
+       [`(,v0 . ,pf-e)
+        (cons 'O
+              `(⇓-not-0
+                ,pf-e
+                -----
+                ((not ,e) ρ ⇓ O)))])]
+    [`(if0 ,e0 ,e1 ,e2)
+     (match (eval e0 ρ)
+       [`(O . ,pf-e0)
+        (match (eval e1 ρ)
+          [`(,v . ,pf-v)
+           (cons v
+                 `(⇓-if-true
+                   ,pf-e0
+                   ,pf-v
+                   -----
+                   ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v)))])]
+       [`(,n . ,pf-e0)
+        (match (eval e2 ρ)
+          [`(,v . ,pf-v)
+           (cons v
+                 `(⇓-if-false
+                   ,pf-e0
+                   ,pf-v
+                   -----
+                   ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v)))])])]))
+
+;; nice latex; comment out the labels by adding a % before \\tiny
+(define (pf-&gt;tex pf)
+  (define name (first pf))
+  (define antecedents (reverse (list-tail (reverse (list-tail (cdr pf) 0)) 2)))
+  (foldr
+   (lambda (k v acc) (string-replace acc k v))
+   (format " \n \\frac{ ~a }{ \\texttt{ ~a } }}"
+           name
+           (string-join (map pf-&gt;tex antecedents) "\\,")
+           (consequent pf))
+   '("⇓" "∅" "↦")
+   '("\\ensuremath{\\Downarrow}" "\\ensuremath{\\emptyset}" "\\ensuremath{\\mapsto}")))
+
+(define (derive e)
+  (displayln (pf-&gt;tex (cdr (eval e '∅)))))
+
+;; examples
+
+;(derive '(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0)))
+;(derive '(plus 1 (if0 0 1 2)))
+;(derive '(let x (plus 0 0) (plus x 1)))
+
+(define (eval-simpl e ρ)
+  (match e
+    [(? nonnegative-integer? n) n]
+    [(? symbol? x) (hash-ref ρ x)]
+    [`(let ,x ,e ,eb)
+     (eval-simpl eb (hash-set ρ x (eval-simpl e ρ)))]
+    [`(plus ,e0 ,e1) (+ (eval-simpl e0 ρ) (eval-simpl e1 ρ))]
+    [`(not ,e)
+     (match (eval-simpl e ρ)
+       [0 1]
+       [_ 0])]
+    [`(if0 ,e0 ,e1 ,e2)
+     (match (eval-simpl e0 ρ)
+       [0 (eval-simpl e1 ρ)]
+       [_ (eval-simpl e2 ρ)])]))
+</code></pre></div></div>
+
+
+  </div>
+
+</article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Kristopher Micinski</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Kristopher Micinski</li>
+          <li><a href="mailto:kkmicins@syr.edu">kkmicins@syr.edu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kmicinski"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">kmicinski</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/krismicinski"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#fff" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">krismicinski</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kris Micinski's Website. Love the lambda.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+
+
+  </body>
+
+</html>
