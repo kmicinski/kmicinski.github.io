@@ -231,8 +231,10 @@ S-expressions.</p>
 <p>The implementation of <code class="language-plaintext highlighter-rouge">(⇓ pf e ρ v)</code> follows its natural deduction
 counterpart (which I have not written down, but try to stylize via my
 spacing). Our procedure checks the proof, recursively calling itself
-to check subproofs—mirroring the top-down process you may follow on a
-whiteboard to check the proof yourself.</p>
+to check subproofs—mirroring the top-down process you may follow on
+a whiteboard to check the proof yourself; of course, as Reynolds
+points out, the order of our checking is inherited from the
+metalanguage (i.e., Racket’s control flow).</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; proofs of evaluation
 (define/contract (⇓ pf e ρ v)
