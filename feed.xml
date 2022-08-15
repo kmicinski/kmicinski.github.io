@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 20:58:40 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 20:58:40 -0400</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2022 22:14:19 -0400</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2022 22:14:19 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -281,11 +281,11 @@ which returns a proof that &lt;code class=&quot;language-plaintext highlighter-r
 we would just throw a dynamic error due to a match failure–we are
 posting a proof exists. We can write a contract to ensure that the
 code we use to do this is correct. Racket’s default arrow contract
-combinator, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&amp;gt;&lt;/code&gt;, is not powerful to express dependent contracts,
-where a property of the result depends on one of the inputs. However,
-Racket’s more powerful &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&amp;gt;i&lt;/code&gt; does allow dependent contracts, allowing
-us to write a version of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lookup&lt;/code&gt; which both computes what we want and
-checks to ensure its correctness:&lt;/p&gt;
+combinator, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&amp;gt;&lt;/code&gt;, is not powerful enough to express dependent
+contracts, where a property of the result depends on one of the
+inputs. However, Racket’s more powerful &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&amp;gt;i&lt;/code&gt; does allow dependent
+contracts, allowing us to write a version of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lookup&lt;/code&gt; which both
+computes what we want and checks to ensure its correctness:&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; decision procedure for lookup -- returns witness and proof of inclusion
 (define/contract (lookup ρ x)
@@ -305,7 +305,7 @@ checks to ensure its correctness:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Finally, the interpreter itself—unadorned by the ceremony and
-pedantics of checking low-level unification checking—is surprisingly
+pedantics of low-level unification checking—is surprisingly
 unintimidating and to-the-point.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; produce a value alongside a proof of its correctness
@@ -479,6 +479,9 @@ there are a few follow ups that could be done from here if you are
 interested in experimenting with the code. Adding closures and
 application, for example, should not be too hard; I may illustrate
 that in my course next term.&lt;/p&gt;
+
+&lt;p&gt;Thanks to Quinn Wilton for some corrections to the phrasing in this
+post.&lt;/p&gt;
 
 &lt;h3 id=&quot;the-code&quot;&gt;The Code&lt;/h3&gt;
 

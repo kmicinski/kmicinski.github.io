@@ -347,11 +347,11 @@ which returns a proof that <code class="language-plaintext highlighter-rouge">x<
 we would just throw a dynamic error due to a match failure–we are
 posting a proof exists. We can write a contract to ensure that the
 code we use to do this is correct. Racket’s default arrow contract
-combinator, <code class="language-plaintext highlighter-rouge">-&gt;</code>, is not powerful to express dependent contracts,
-where a property of the result depends on one of the inputs. However,
-Racket’s more powerful <code class="language-plaintext highlighter-rouge">-&gt;i</code> does allow dependent contracts, allowing
-us to write a version of <code class="language-plaintext highlighter-rouge">lookup</code> which both computes what we want and
-checks to ensure its correctness:</p>
+combinator, <code class="language-plaintext highlighter-rouge">-&gt;</code>, is not powerful enough to express dependent
+contracts, where a property of the result depends on one of the
+inputs. However, Racket’s more powerful <code class="language-plaintext highlighter-rouge">-&gt;i</code> does allow dependent
+contracts, allowing us to write a version of <code class="language-plaintext highlighter-rouge">lookup</code> which both
+computes what we want and checks to ensure its correctness:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; decision procedure for lookup -- returns witness and proof of inclusion
 (define/contract (lookup ρ x)
@@ -371,7 +371,7 @@ checks to ensure its correctness:</p>
 </code></pre></div></div>
 
 <p>Finally, the interpreter itself—unadorned by the ceremony and
-pedantics of checking low-level unification checking—is surprisingly
+pedantics of low-level unification checking—is surprisingly
 unintimidating and to-the-point.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; produce a value alongside a proof of its correctness
@@ -545,6 +545,9 @@ there are a few follow ups that could be done from here if you are
 interested in experimenting with the code. Adding closures and
 application, for example, should not be too hard; I may illustrate
 that in my course next term.</p>
+
+<p>Thanks to Quinn Wilton for some corrections to the phrasing in this
+post.</p>
 
 <h3 id="the-code">The Code</h3>
 
