@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 22:16:15 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 22:16:15 -0400</lastBuildDate>
+    <pubDate>Mon, 15 Aug 2022 12:58:32 -0400</pubDate>
+    <lastBuildDate>Mon, 15 Aug 2022 12:58:32 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -406,9 +406,6 @@ Thankfully, we used S-expressions.&lt;/p&gt;
    '(&quot;\\ensuremath{\\Downarrow}&quot; &quot;\\ensuremath{\\emptyset}&quot; 
      &quot;\\ensuremath{\\mapsto}&quot;)))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Running the above code produces attractive-enough LaTeX. In fact I
-used this feature when doing some debugging the interpreter itself.&lt;/p&gt;
 
 &lt;p&gt;Here’s the complete derivation of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;((plus 1 (if0 0 1 2)))&lt;/code&gt;:&lt;/p&gt;
 
