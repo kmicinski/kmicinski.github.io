@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 20:22:27 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 20:22:27 -0400</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2022 20:25:24 -0400</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2022 20:25:24 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -167,9 +167,9 @@ structurally-recursive addition).&lt;/p&gt;
 counterpart (which I have not written down, but try to stylize via my
 spacing). Our procedure checks the proof, recursively calling itself
 to check subproofs—mirroring the top-down process you may follow on
-a whiteboard to check the proof yourself; of course, as Reynolds
-points out, the order of our checking is inherited from the
-metalanguage (i.e., Racket’s control flow).&lt;/p&gt;
+a whiteboard to check the proof yourself, though Reynolds points out
+that the order of sub-checks is inherited from the metalanguage (i.e.,
+Racket’s control flow).&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; proofs of evaluation
 (define/contract (⇓ pf e ρ v)
