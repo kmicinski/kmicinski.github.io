@@ -199,8 +199,10 @@ on Racket as a metatheory: because many objects internal to the
 semantics (e.g., numbers, environments, and proofs) are represented
 purely symbolically (as S-expressions), we primarily rely upon Racket
 for S-expression equality and dispatch (matching). Aside from <code class="language-plaintext highlighter-rouge">plus</code>,
-our semantics, while implemented in Racket, is essentially existential
-fixed-point logic (whose Herbrand base comprises S-expressions).</p>
+our semantics, while implemented in Racket, is I believe essentially
+either (equivalently) existential fixed-point logic (whose Herbrand
+base comprises S-expressions) or constrained horn clauses over
+S-expressions.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; environments
 (define (environment? ρ)

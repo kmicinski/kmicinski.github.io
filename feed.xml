@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 20:16:21 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 20:16:21 -0400</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2022 20:18:01 -0400</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2022 20:18:01 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -133,8 +133,10 @@ on Racket as a metatheory: because many objects internal to the
 semantics (e.g., numbers, environments, and proofs) are represented
 purely symbolically (as S-expressions), we primarily rely upon Racket
 for S-expression equality and dispatch (matching). Aside from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plus&lt;/code&gt;,
-our semantics, while implemented in Racket, is essentially existential
-fixed-point logic (whose Herbrand base comprises S-expressions).&lt;/p&gt;
+our semantics, while implemented in Racket, is I believe essentially
+either (equivalently) existential fixed-point logic (whose Herbrand
+base comprises S-expressions) or constrained horn clauses over
+S-expressions.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; environments
 (define (environment? ρ)
