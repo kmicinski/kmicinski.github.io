@@ -194,15 +194,15 @@ produces proofs. And, of course, this is the biggest drawback of using
 an untyped language to do this—we only get some rough syntactic
 checking, similar to tools such as Ott but not dependently-typed
 languages or provers. To avoid completely defeating the purpose of our
-exercise here, I have followed a bit of a trick to keep rely minimally
-on Racket as a metatheory: because many objects internal to the
-semantics (e.g., numbers, environments, and proofs) are represented
-purely symbolically (as S-expressions), we primarily rely upon Racket
-for S-expression equality and dispatch (matching). Aside from <code class="language-plaintext highlighter-rouge">plus</code>
-our semantics uses a very small subset of Racket: I believe
-essentially either (equivalently) existential fixed-point logic (of a
-Herbrand base comprising S-expressions) or constrained horn clauses
-(whose background logic includes S-expression equality and
+exercise here, I have followed a bit of a trick to rely minimally on
+Racket as a metatheory: because many objects internal to the semantics
+(e.g., numbers, environments, and proofs) are represented purely
+symbolically (as S-expressions), we primarily rely upon Racket for
+S-expression equality and dispatch (matching). Aside from <code class="language-plaintext highlighter-rouge">plus</code> our
+semantics uses a very small subset of Racket: I believe essentially
+either (equivalently) existential fixed-point logic (of a Herbrand
+base comprising S-expressions) or constrained horn clauses (whose
+background logic includes S-expression equality and
 structurally-recursive addition).</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; environments
@@ -340,7 +340,7 @@ checking—this allows us to check the correctness of our evaluators
 as we go, but of course won’t prove correctness across all runs, and
 using <code class="language-plaintext highlighter-rouge">define/contract</code> also interposes the check at <em>every</em> callsite
 (a serious overhead), though I am sure you can use your imagination
-about this could be made faster.</p>
+about how this could be made faster.</p>
 
 <p>Let’s start with environments, writing a function <code class="language-plaintext highlighter-rouge">(lookup ρ x)</code>,
 which returns a proof that <code class="language-plaintext highlighter-rouge">x</code> returns some value <code class="language-plaintext highlighter-rouge">v</code>–if it doesn’t,

@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Aug 2022 22:14:19 -0400</pubDate>
-    <lastBuildDate>Sun, 14 Aug 2022 22:14:19 -0400</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2022 22:15:23 -0400</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2022 22:15:23 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -128,15 +128,15 @@ produces proofs. And, of course, this is the biggest drawback of using
 an untyped language to do this—we only get some rough syntactic
 checking, similar to tools such as Ott but not dependently-typed
 languages or provers. To avoid completely defeating the purpose of our
-exercise here, I have followed a bit of a trick to keep rely minimally
-on Racket as a metatheory: because many objects internal to the
-semantics (e.g., numbers, environments, and proofs) are represented
-purely symbolically (as S-expressions), we primarily rely upon Racket
-for S-expression equality and dispatch (matching). Aside from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plus&lt;/code&gt;
-our semantics uses a very small subset of Racket: I believe
-essentially either (equivalently) existential fixed-point logic (of a
-Herbrand base comprising S-expressions) or constrained horn clauses
-(whose background logic includes S-expression equality and
+exercise here, I have followed a bit of a trick to rely minimally on
+Racket as a metatheory: because many objects internal to the semantics
+(e.g., numbers, environments, and proofs) are represented purely
+symbolically (as S-expressions), we primarily rely upon Racket for
+S-expression equality and dispatch (matching). Aside from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plus&lt;/code&gt; our
+semantics uses a very small subset of Racket: I believe essentially
+either (equivalently) existential fixed-point logic (of a Herbrand
+base comprising S-expressions) or constrained horn clauses (whose
+background logic includes S-expression equality and
 structurally-recursive addition).&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; environments
@@ -274,7 +274,7 @@ checking—this allows us to check the correctness of our evaluators
 as we go, but of course won’t prove correctness across all runs, and
 using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;define/contract&lt;/code&gt; also interposes the check at &lt;em&gt;every&lt;/em&gt; callsite
 (a serious overhead), though I am sure you can use your imagination
-about this could be made faster.&lt;/p&gt;
+about how this could be made faster.&lt;/p&gt;
 
 &lt;p&gt;Let’s start with environments, writing a function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(lookup ρ x)&lt;/code&gt;,
 which returns a proof that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; returns some value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;–if it doesn’t,
