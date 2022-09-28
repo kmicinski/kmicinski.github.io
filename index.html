@@ -115,24 +115,30 @@
         </div>
         <h2 id="research">Research</h2>
 
-<p>My goal is to keep users secure as they use modern systems. This is a
-challenging problem. Writing secure code is hard. Checking untrusted
-code is even harder. Developers are not always incentivized towards
-security. In some cases it is not always clear what security even
-means.</p>
-
-<p>For example, consider an app that shows users nearby coffee shops
-frequented by their friends. Such an app may leak or store the user’s
-location (e.g., to an ad provider) in a way they do not
-intend. Sometimes, the developer is not even aware they are violating
-the user’s privacy (for example, if the developer uses an ad library
-and they are unaware it collects location data). Even if the developer
-is aware of how location is being collected, users may not assume that
-it is being stored permanently. You can look at some of my recent
-<a href="/publications">publications</a> to get an idea of the projects I’m
-currently working on to help solve these problems.</p>
-
-<p>To help achieve this goal, I use techniques from the following areas:</p>
+<p>My current goal is to help enable the next generation of scalable
+logical and deductive frameworks that power static analyses, type
+systems, and binary reverse engineering tools. We achieve this via a
+combination of algorithmic innovations (including a <a href="https://kmicinski.com/assets/hosd.pdf">semantic
+extension of datalog to support hash-distributed structured
+data</a>) and fundamentally-new
+infrastructure at the systems level (e.g., <a href="https://kmicinski.com/assets/optimizing-bruck.pdf">high-performance
+communication
+algorithms (HPDC ‘22)</a>
+tailored to our workloads).  My recent interests have focused on two
+directions: (a) efficient compilation of Datalog to
+<a href="https://github.com/s-arash/ascent">single-node (CC ‘22)</a> and
+<a href="https://dl.acm.org/doi/10.1145/3446804.3446855">massively-parallel (CC ‘21)</a>
+backends and (b) employing those backends to build state-of-the-art
+program analysis tools that support reasoning about large, real-world
+corpuses of programs. As concrete examples, our recent efforts have
+(a) scaled the performance of control-flow analyses by
+orders-of-magnitude (seconds in our system versus hours in Soufflé, a
+best-in-class Datalog engine, <a href="https://kmicinski.com/assets/hosd.pdf">see Table II</a>), (b) built all Windows C++
+binaries on GitHub to malware classification tools (see
+<a href="https://github.com/harp-lab/Assemblage">Assemblage</a>), and (c)
+compiled lattice-oriented programs 50x better
+(vs. <a href="https://flix.dev/">Flix</a>) using a <a href="https://dl.acm.org/doi/abs/10.1145/3497776.3517779">macro-based approach in
+Rust</a>.</p>
 
 <table id="mainpgvenn">
   <tr id="areastr">
