@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Time-Travelling Debuggers via Higher-Order Control</title>
-  <meta name="description" content="Time-travelling debuggers offer users the ability to record and replaytrace histories of program execution to observe its behavior and(often) explore debuggi...">
+  <title>Certifying Interpreters in Racket</title>
+  <meta name="description" content="When I began programming, I read a copy of Richard Steven’s “Programming in the UNIX Environment.” Ultimately, my early experimentations with C were a failur...">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="/certifying-interpreters">
@@ -71,54 +71,42 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Time-Travelling Debuggers via Higher-Order Control</h1>
+    <h1 class="post-title" itemprop="name headline">Certifying Interpreters in Racket</h1>
     
 
-    <p class="post-meta"><time datetime="2022-08-21T00:00:00-04:00" itemprop="datePublished">Aug 21, 2022</time></p>
+    <p class="post-meta"><time datetime="2022-08-14T00:00:00-04:00" itemprop="datePublished">Aug 14, 2022</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>Time-travelling debuggers offer users the ability to record and replay
-trace histories of program execution to observe its behavior and
-(often) explore debugging hypotheses. In this post I will demonstrate
-that–when the metalanguage includes higher-order control–it is
-relatively straightforward to extend a metacircular interpreter to a
-time-travelling debugger, provided the formalism is set up in the
-right way. My implementation here uses delimited continuations, though
-equivalent implementations could be achieved using algebraic effects,
-monads, call/cc, or any other basis for higher-order control.</p>
+    <p>When I began programming, I read a copy of Richard Steven’s “Programming in the UNIX Environment.” Ultimately, my early experimentations with C were a failure; however, I later read David Beazley’s “Python: Essential Reference,” and was quickly able to pick up the UNIX API via it’s much simpler (admittedly, largely due to Beazley’s writing) Python counterpart. After teaching my undergraduate PL courses in Scheme variants these past few years I have wondered if we can understand type theory’s operationalization (via proof objects) using a similar shift in perspective.</p>
 
-<p>The fact we can do this should not be particularly surprising, of
-course: higher-order control primitives allow us to arbitrarily
-restructure control-flow dynamically, capturing and reinstating
-portions of the stack on-demand. However, I think this exercise lets
-us begin to see the connection between monads, delimited
-continuations, and similar structures for higher-order control.</p>
+<p>Here, I rigorously define an interpreter which produces a certificate
+of its own correctness—assuming you trust the correctness of our
+metalanguage, which (in the interests of appeasing the more skeptical
+among us) we treat as S-expression comparison. Here I use Racket, but
+any similar dynamic language with matching (or, if in OO, virtual
+methods) would work to illustrate the key ideas. I do use Racket’s
+contracts to check certificates, though other implementations could
+defer this to the end or even elide checking entirely.</p>
 
-<h3 id="a-basic-metacircular-interpreter">A Basic Metacircular Interpreter</h3>
+<h3 id="the-language">The Language</h3>
 
-<p>Here’s a fairly routine metacircular interpreter to get us
-started. Note that it uses store-passing style, explicitly constructs
-environments, and uses Racket’s stack rather than explicitly
-materializing continuations (e.g., as a CEK machine would do).</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Specification of IfArith's syntax as a Racket predicate
+(define (expr? e)
+  (match e
+    [(? nonnegative-integer? n) #t]
+    [(? symbol? x) #t]
+    [`(let ,(? symbol? x) ,(? expr? e) ,(? expr? e-body))]
+    [`(plus ,(? expr? e0) ,(? expr? e1)) #t]
+    [`(not ,(? expr? e-guard)) #t]
+    [`(if0 ,(? expr? e0) ,(? expr? e1) ,(? expr? e2)) #t]
+    [_ #f]))
 </code></pre></div></div>
 
-<h3 id="a-monadic-interpreter">A Monadic Interpreter</h3>
-
-<p>Using an explicit store-passing style is ugly; it is obviously an
-instance of the state monad–later we will see that it is useful to
-abstract the store into a monad for other reasons, too. I will not be
-placing a lot of importance on the monadic structure right now, and in
-this post I will treat a monad loosely by it’s <code class="language-plaintext highlighter-rouge">return</code>/<code class="language-plaintext highlighter-rouge">bind</code> API:
-<code class="language-plaintext highlighter-rouge">return</code> lifts a pure computation into a stateful computation, <code class="language-plaintext highlighter-rouge">bind</code>
-chains a stateful computation with a function that continues the
-computation. As Racket does not have typeclasses, and to ignore the
-more confusing details, I will provide the definitions for each inline
-in each case.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define e0 '(plus 2 1)) ;; 3
+(define e1 '(plus 1 (if0 0 1 2))) ;; 2
+(define e2 '(let x (plus 0 0) (plus x 1))) ;; 1 
+(define e3 '(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0))) ;; 1
 </code></pre></div></div>
 
 <h3 id="the-proofs">The Proofs</h3>
