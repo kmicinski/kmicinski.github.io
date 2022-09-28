@@ -1,4 +1,76 @@
-<h1>micinski.bib</h1><a name="faamcets"></a><pre>
+<h1>micinski.bib</h1><a name="KeFan:2022"></a><pre>
+@inproceedings{<a href="publications#KeFan:2022">KeFan:2022</a>,
+  author = {Fan, Ke and Gilray, Thomas and Pascucci, Valerio and Huang, Xuan and Micinski, Kristopher and Kumar, Sidharth},
+  title = {Optimizing the Bruck Algorithm for Non-Uniform All-to-All Communication},
+  year = {2022},
+  isbn = {9781450391993},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3502181.3531468},
+  doi = {10.1145/3502181.3531468},
+  booktitle = {Proceedings of the 31st International Symposium on High-Performance Parallel and Distributed Computing},
+  pages = {172–184},
+  numpages = {13},
+  keywords = {mpi, collective communication, bruck algorithm, alltoallv},
+  location = {Minneapolis, MN, USA},
+  series = {HPDC '22}
+}
+</pre>
+
+<a name="Sahebolamri:2022"></a><pre>
+@inproceedings{<a href="publications#Sahebolamri:2022">Sahebolamri:2022</a>,
+  author = {Sahebolamri, Arash and Gilray, Thomas and Micinski, Kristopher},
+  title = {Seamless Deductive Inference via Macros},
+  year = {2022},
+  isbn = {9781450391832},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3497776.3517779},
+  doi = {10.1145/3497776.3517779},
+  abstract = {We present an approach to integrating state-of-art bottom-up logic programming within the Rust ecosystem, demonstrating it with Ascent, an extension of Datalog that performs well against comparable systems. Rust’s powerful macro system permits Ascent to be compiled uniformly with the Rust code it’s embedded in and to interoperate with arbitrary user-defined components written in Rust, addressing a challenge in real-world use of logic programming languages: the fact that logical programs are parts of bigger software systems and need to interoperate with other components written in imperative programming languages. We leverage Rust’s trait system to extend Datalog semantics with non-powerset lattices, much like Flix, and with user-defined data types much like Formulog and Souffle. We use Ascent to re-implement the Rust borrow checker, a static analysis required by the Rust compiler. We evaluate our performance against Datafrog, Flix, and Souffl\'{e} using the borrow checker and other benchmarks, observing comparable performance to Datafrog and Souffl\'{e}, and speedups of around two orders of magnitude compared to Flix.},
+  booktitle = {Proceedings of the 31st ACM SIGPLAN International Conference on Compiler Construction},
+  pages = {77–88},
+  numpages = {12},
+  keywords = {Logic Programming, Ascent, Static Analysis, Program Analysis, Datalog, Rust},
+  location = {Seoul, South Korea},
+  series = {CC 2022}
+}
+</pre>
+
+<a name="KeFan:2021"></a><pre>
+@inproceedings{<a href="publications#KeFan:2021">KeFan:2021</a>,
+  author = {Fan, Ke and Micinski, Kristopher and Gilray, Thomas and Kumar, Sidharth},
+  booktitle = {2021 IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW)},
+  title = {Exploring MPI Collective I/O and File-per-process I/O for Checkpointing a Logical Inference Task},
+  year = {2021},
+  volume = {},
+  number = {},
+  pages = {965-972},
+  doi = {10.1109/IPDPSW52791.2021.00153}
+}
+</pre>
+
+<a name="Gilray:2021"></a><pre>
+@inproceedings{<a href="publications#Gilray:2021">Gilray:2021</a>,
+  author = {Gilray, Thomas and Kumar, Sidharth and Micinski, Kristopher},
+  title = {Compiling Data-Parallel Datalog},
+  year = {2021},
+  isbn = {9781450383257},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/3446804.3446855},
+  doi = {10.1145/3446804.3446855},
+  abstract = {Datalog allows intuitive declarative specification of logical inference tasks while enjoying efficient implementation via state-of-the-art engines such as LogicBlox and Souffl\'{e}. These engines enable high-performance implementation of complex logical tasks including graph mining, program analysis, and business analytics. However, all efficient modern Datalog solvers make use of shared memory, and present inherent challenges scalability. In this paper, we leverage recent insights in parallel relational algebra and present a methodology for constructing data-parallel deductive databases. Our approach leverages recent developments in parallelizing relational algebra to create an efficient data-parallel semantics for Datalog. Based on our methodology, we have implemented the first MPI-based data-parallel Datalog solver. Our experiments demonstrate comparable performance and improved single-node scalability versus Souffl\'{e}, a state-of-art solver.},
+  booktitle = {Proceedings of the 30th ACM SIGPLAN International Conference on Compiler Construction},
+  pages = {23–35},
+  numpages = {13},
+  keywords = {Datalog, Relational Algebra, Parallelism, Logic},
+  location = {Virtual, Republic of Korea},
+  series = {CC 2021}
+}
+</pre>
+
+<a name="faamcets"></a><pre>
 @inproceedings{<a href="publications#faamcets">faamcets</a>,
   author = {Micinski, Kristopher and Darais, David and Gilray, Thomas},
   title = {Abstracting Faceted Execution},
