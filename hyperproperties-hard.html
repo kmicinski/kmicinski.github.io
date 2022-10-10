@@ -314,7 +314,7 @@ else:
   out = 1
 </code></pre></div></div>
 
-<p>The program leaks information because for every trace <code class="language-plaintext highlighter-rouge">t0</code>, there
+<p>The program does not leak information because for every trace <code class="language-plaintext highlighter-rouge">t0</code>, there
 exists another trace <code class="language-plaintext highlighter-rouge">t1</code> such that the outputs are equivalent but the
 inputs are not. Informally: the output of the program does not depend
 on the secret input. Extending the definition of noninterference to

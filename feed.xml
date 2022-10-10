@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 10 Oct 2022 15:48:57 -0400</pubDate>
-    <lastBuildDate>Mon, 10 Oct 2022 15:48:57 -0400</lastBuildDate>
+    <pubDate>Mon, 10 Oct 2022 15:52:30 -0400</pubDate>
+    <lastBuildDate>Mon, 10 Oct 2022 15:52:30 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -248,7 +248,7 @@ else:
   out = 1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The program leaks information because for every trace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t0&lt;/code&gt;, there
+&lt;p&gt;The program does not leak information because for every trace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t0&lt;/code&gt;, there
 exists another trace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t1&lt;/code&gt; such that the outputs are equivalent but the
 inputs are not. Informally: the output of the program does not depend
 on the secret input. Extending the definition of noninterference to
