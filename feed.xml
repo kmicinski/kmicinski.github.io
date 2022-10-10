@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 10 Oct 2022 15:15:16 -0400</pubDate>
-    <lastBuildDate>Mon, 10 Oct 2022 15:15:16 -0400</lastBuildDate>
+    <pubDate>Mon, 10 Oct 2022 15:30:40 -0400</pubDate>
+    <lastBuildDate>Mon, 10 Oct 2022 15:30:40 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
@@ -130,7 +130,7 @@ memory is freed and then subsequently (but in a finite time horizon)
 accessed. I.e., “bad things don’t happen.”&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Liveness properties are things which proving some finite notion of
+    &lt;p&gt;Liveness properties are things which require some finite proof of
 progress. The quintessential liveness examples are guaranteed
 service or starvation freedom.&lt;/p&gt;
   &lt;/li&gt;
