@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Hyperproperties and why they're hard</title>
+  <meta name="description" content="Computer security as a field is met with a persistent criticism:flashy attacks arehot,boring (hard-fought) defenses arenot. Comparedto security, programming ...">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/hyperproperties-hard">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Kristopher Micinski</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/blog/">Blog</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/teaching/">Teaching</a>
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Hyperproperties and why they're hard</h1>
+    
+
+    <p class="post-meta"><time datetime="2022-10-10T00:00:00-04:00" itemprop="datePublished">Oct 10, 2022</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Computer security as a field is met with a persistent criticism:
+flashy attacks are
+<a href="https://twitter.com/AndrewCMyers/status/1579120278759563265">hot</a>,
+boring (hard-fought) defenses are
+<a href="https://www.ieee-security.org/CSFWweb/goodessay.html">not</a>. Compared
+to security, programming language theory seems relatively adept at
+transitioning research to mainstream practice (e.g., Rust and the
+popularity of Haskell). By contrast, it would appear many of the
+innovations in security have been relatively engineering-focused in
+nature: W^X, ASLR, and the like. As someone who does research in this
+space myself, I have wondered why this is; while I think the reasons
+are myriad, I think a central challenge is the intrinsic need in
+security to reason about the ever-elusive hyperproperties.</p>
+
+<h2 id="properties">Properties</h2>
+
+<p>The <em>properties</em> of a program are mathematical statements we can make
+about it’s traces. For example, consider the following program:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while true:          # 0
+  if (n % 2 == 0):   # 1
+    n := n/2         # 2
+  else:              # 3
+    n := 3*n + 1     # 4
+</code></pre></div></div>
+
+<p>What could traces of this program’s execution look like? If <code class="language-plaintext highlighter-rouge">n</code> is
+known, we might say it is the sequence of <code class="language-plaintext highlighter-rouge">n</code> paired with the
+appropriate line number. For example, if <code class="language-plaintext highlighter-rouge">n</code> starts at <code class="language-plaintext highlighter-rouge">5</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⟪0, n=5⟫, ⟪1, n=5⟫, ⟪4, n=5⟫, ⟪0, n=16⟫, ⟪1, n=16⟫, ⟪2, n=16⟫, ⟪0, n=8⟫,
+⟪1, n=8⟫, ⟪2, n=8⟫, ⟪0, n=4⟫, ⟪1, n=4⟫, ⟪2, n=4⟫, ⟪0, n=2⟫, ⟪1, n=2⟫, 
+⟪2, n=2⟫, ⟪0, n=1⟫, ...
+</code></pre></div></div>
+
+<p>Each trace is (countably) infinite in size, without loss of generality
+(as a terminating program may be thought of as infinitely repeating a
+final <code class="language-plaintext highlighter-rouge">skip</code> state). Quantifying over the input is possible by
+producing an infinite set of (infinite) traces. For example, one
+property of the above (set of) traces is this: the suffix of every
+trace is the (infinite loop) <code class="language-plaintext highlighter-rouge">⟪0, n=4⟫, ⟪1, n=4⟫, ⟪2, n=4⟫, ⟪0, n=2⟫,
+⟪1, n=2⟫, ⟪2, n=2⟫, ⟪0, n=1⟫, ...</code>.</p>
+
+<p>The trace-based nature inherent to this style of semantics is a core
+challenge in checking properties of the associated programs, because
+computers may only materialize a finite approximation of infinite
+objects. Unfortunately, the exact nature of this approximation can
+deeply impacts the kind of properties which may be checked. This is
+why the different approaches to program modeling and verification
+often pair a representation with an intended logic:</p>
+
+<ul>
+  <li>
+    <p>Model checking allow the user to specify the program using a
+domain-specific languages (see, e.g., <a href="https://lamport.azurewebsites.net/tla/book-21-07-04.pdf">Chapter 2.3 of the TLA+
+book</a>)
+which compiles into an automaton. This is no coincidence: statements
+in temporal logics also map cleanly to the same automata (an
+extension of finite automata called Büchi automata), at which point
+automata-theoretic constructions (intersection, complementation,
+etc…) may be used.</p>
+  </li>
+  <li>
+    <p>Abstract interpretation recognizes that the infinite behavior may be
+finitized by approximating values in the semantics as elements of a
+lattice allow using a <a href="https://www.di.ens.fr/~cousot/COUSOTpapers/publications.www/CousotCousot-POPL-77-ACM-p238--252-1977.pdf">fixed-point theorem to obtain
+tractability</a>. In
+this setting, a set of traces is often modeled as an abstract state
+<em>graph</em>, the deterministic nature of traces often being lost in the
+(necessary) finite approximation; paths through the abstract state
+graph then correspond to traces in the (infinite) semantics. Using
+this style, an abstract interpreter materializes a state graph and
+then checks a property (e.g., the inclusion of a specific data flow)
+by examining this abstract representation.</p>
+  </li>
+  <li>
+    <p>Symbolic execution keeps a <em>symbolic</em> representation of the program
+state, and thus produces symbolic traces. The problem is that
+symbolic execution can only materialize finite portions of these
+traces, and thus it is impossible to reason about infinite
+behavior. Thus, a symbolic executor includes a “scheduler” which
+picks how to explore paths to avoid unproductive exploration. A
+central challenge in symbolic execution is how to avoid getting
+stuck early on in the trace. This problem is avoided in (say)
+abstract interpretation by allowing the abstract state graph to
+discover spurious edges, allowing reasoning from the “middle” of the
+program, but at the cost of adding traces not present in the
+original program.</p>
+  </li>
+  <li>
+    <p>Axiomatic semantics (e.g., Hoare triples) allows the user to
+annotate the program with specifications, which are subsequently
+enumerated to “verification conditions.” The semantics, and thus the
+set of traces, is implicitly represented as the set of valid program
+states which would satisfy the necessary verification conditions at
+any specific point in the program. Metatheoretic results justify the
+way in which we may stitch these verification conditions together to
+obtain an end-to-end correct program. Still no free lunch here,
+however, as the programmer often needs to articulate tedious loop
+invariants in an iterative process with the verification tool.</p>
+  </li>
+</ul>
+
+<h2 id="safety-and-liveness">Safety and Liveness</h2>
+
+<p>Surprisingly, all properties of programs can be broken down into a
+combination of two things: a “safety” property, and a “liveness”
+property.</p>
+
+<ul>
+  <li>
+    <p>Safety properties are things which can be refuted using finite
+counterexamples. For example, if a program has a use-after-free
+vulnerability, you will be able to demonstrate some exploit wherein
+memory is freed and then subsequently (but in a finite time horizon)
+accessed. I.e., “bad things don’t happen.”</p>
+  </li>
+  <li>
+    <p>Liveness properties are things which proving some finite notion of
+progress. The quintessential liveness examples are guaranteed
+service or starvation freedom.</p>
+  </li>
+</ul>
+
+<p>For example, consider the following concurrent code, wherein process 1
+and 2 operate concurrently:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n := 0
+sem := 1
+
+Process 1:
+  while true:
+    take(sem)
+    i := 0
+    while (i != n):
+      skip
+    n := n + 1
+    rel(sem)
+
+Process 2:
+  while true:
+    take(sem)
+    if (n &gt;= 7)
+      *NULL; // crash
+    rel(sem)
+</code></pre></div></div>
+
+<p>Assuming a fair scheduler, the program will eventually
+crash. Demonstrating this requires only that we enumerate a thread
+schedule wherein we choose process 1 to take <code class="language-plaintext highlighter-rouge">sem</code> (at least) seven times. A
+similar argument holds for any arbitrarily-picked natural number, thus
+the statement we’re making is one of safety.</p>
+
+<p>Things that are crash-like (vulnerabilities, memory errors, etc…)
+are often safety properties. In fact, safety properties are so common
+it is not obvious that there are other kinds of properties. At least, this
+is probably true for computer scientists, pained by their hours of
+debugging safety properties. By contrast, liveness properties say that
+“good things” happen eventually. Examples include guaranteed
+availability and (surprisingly, perhaps) termination.</p>
+
+<p>Formally, a liveness property has the form: “for all traces t0, there
+exists an extension t1 such that t0⋅t1 ⊨ P.” Termination is a simple
+instance of this liveness template, where <code class="language-plaintext highlighter-rouge">P</code> states that <code class="language-plaintext highlighter-rouge">t1</code> is a
+stream of <code class="language-plaintext highlighter-rouge">skip</code> expressions. The fact that any trace property of a
+program may be factored into a combination of a safety property and
+liveness property follows from the topological interpretation where
+(a) safety properties represent closed sets (of traces) and (b)
+liveness properties represent open sets. I am not an expert on
+liveness, and will instead point you at the <a href="https://www.cs.cornell.edu/fbs/publications/DefLiveness.pdf">main paper I’ve read on
+it</a>.</p>
+
+<h2 id="properties-and-their-proofs">Properties and Their Proofs</h2>
+
+<p>It is hard to understate how much work has been done in checking
+safety and liveness properties of programs. Because safety properties
+feel like crashes, and programmers really hate crashes, we have
+naturally developed a huge amount of our programming culture around
+methods designed to help us understand and avoid crashes. Broadly,
+this breaks down into static checking / verification and dynamic
+auditing / enforcement / logging. For example, the central aim of most
+program analyses is to check safety properties of programs, including
+avoidance of crashes, errors, and similar faults, and reifies in
+vastly-different ways from <code class="language-plaintext highlighter-rouge">printf</code>-style debugging to abstract
+interpretation and program analysis tools (like Astrée, Soot, and
+DOOP), to program verification frameworks (like
+<a href="https://github.com/EasyCrypt/certicrypt">CertiCrypt</a>). This is not to
+say there is no great work in the area (e.g., the <a href="https://github.com/mmjb/T2">Terminator
+project</a>), but rather that I think most of
+us have a natural intuition for safety properties as programmers.</p>
+
+<p>Notice that one I have left out until now is type systems. Type
+systems feel very different than the methods I described above,
+because they are prescriptive in nature and do not so obviously lead
+to a trace-based semantics. The semantics of a type system is designed
+to be compositional in the manner of natural deduction, which feels
+very different than the trace-based nature of safety and liveness
+properties.</p>
+
+<h2 id="hyperproperties">Hyperproperties</h2>
+
+<p>Hyperproperties allow us to talk about multiple traces of a program at
+the same time. It is not immediately clear why this would be useful,
+but some of the most motivating examples are from computer
+security. For example, consider the following program:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Process 1:
+  while true:
+    s = read(secret)
+    if (s == 0):
+	  o = 1
+    else:
+      o = 0
+
+Process 2:
+  while true:
+    out(o)
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">secret</code> is a stream of secret (binary) values. Is it possible to
+infer <code class="language-plaintext highlighter-rouge">secret</code> from the (buffered) output? Of course: we just change
+the 1s to 0s. Formally, though, it’s a bit hard to think about a
+general property that would allow us to speak about the relationship
+between the input and the output that would avoid this.</p>
+
+<p>It turns out this kind of obliviousness or “noninterference” is a more
+general kind of program property, a proper that can simultaneously
+quantify over two traces at once. The original formulation applied to
+sequential programs, for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (secret == 0):
+  out = 1
+else:
+  out = 1
+</code></pre></div></div>
+
+<p>The program leaks information because for every trace <code class="language-plaintext highlighter-rouge">t0</code>, there
+exists another trace <code class="language-plaintext highlighter-rouge">t1</code> such that the outputs are equivalent but the
+inputs are not. Informally: the output of the program does not depend
+on the secret input. Extending the definition of noninterference to
+concurrent systems proved hard because of a basic challenge: once the
+thread schedule is tainted by a secret value (e.g., by branching on a
+secret and then doing something schedule-specific), non-local
+reasoning must be done to ensure the thread schedule’s safety–all the
+hell of concurrent programming, doubled.</p>
+
+<p>This is the point at which I would say, off-hand, “a particularly cool
+idea by Zdancewic and Myers is to <a href="https://www.cs.cornell.edu/andru/papers/csfw03.pdf">statically-ensure observational
+determinism</a>.”
+But, as thinking over this, I realized: the coolest results for
+<em>checking</em> hyperproperties I can find are <em>intensional</em> systems (a
+type system, in this case) to ensure the <em>extensional</em> guarantees
+necessitated by hyperproperties.</p>
+
+<h2 id="proofs-of-hyperproperties">Proofs of Hyperproperties</h2>
+
+<p>Unlike proofs of safety and liveness, relatively little work has been
+done on proofs for hyperproperties. This is no insult to people
+working in this research direction; finding bugs in one trace at a
+time is proving hard enough, it seems.</p>
+
+<p>I speculate that this is because each new advance in logics for safety
+checking corresponded with advances to the intensional representation
+used to check those properties. Model checking became a huge deal once
+we realized there were relatively simple automata-theoretic algorithms
+to do it, but also because of the advent of
+<a href="https://web.stanford.edu/class/cs357/cegar.pdf">CEGAR-style</a>
+methods. By contrast, I think similar advances happen in security
+coinciding with advances in intensional checking mechanisms for
+hyperproperties. For example, the aforementioned CertiCrypt and
+ <a href="https://www.cs.cornell.edu/jif/">Jif</a>.</p>
+
+<p>A unifying trick to much of this work is to make hyperproperties
+become just regular properties by having the semantics generate
+<a href="https://link.springer.com/chapter/10.1007/978-3-642-21437-0_17"><em>pairs</em> of
+traces</a>,
+and then cooking up a version of a hypersafety statement of interest
+to speak about these pairs.  This draws a connection between
+hyperproperties and the large body of literature on relational program
+verification. In some of my own work, we tried to use ideas from
+<a href="https://projects.csail.mit.edu/jeeves/papers/plas07-austin.pdf">faceted
+execution</a>
+to push the pairs from the trace-level to <a href="https://ieeexplore.ieee.org/document/9155136">the value
+level</a>. In other work I
+did on model checking for hyperproperties, we just used a product
+construction—the CEGAR algorithm would need to be updated to refine
+states appropriately, but we did not attempt that. These efforts are
+rooted in the intuition that we may exploit the rich body of work from
+program analyses and the like to immediately reason about these pairs
+of traces, but there is no free lunch, and making the abstractions
+work in practice is seriously challenging.</p>
+
+<p>However, I have come think many of these efforts may be ultimately
+fruitless compared to using secure-by-construction building
+blocks. Once you’re at the level of needing to reason about
+noninterference, you’re already in a pretty serious threat
+model—timing channels and the like are going to be ever-present, and
+will necessitate increasingly-advanced program logics, CEGAR-style
+reasoning, and similar technologies, I believe. Any state-based
+abstraction of the program will be destined to imprecision which will
+eventually fall apart if the abstraction is not tightly tied to (and
+derived from) the program’s semantics in a predictable way, but the
+necessary explosion of the state graph (from the product construction)
+implies serious complexity-theoretic challenges here, I worry.</p>
+
+<p>Thus, I claim we haven’t and won’t see hyperproperties (as they are
+now) take off as a general way to give us new innovations in proofs of
+security properties for programs. Instead, like the innovations in
+safety properties, I think we’ll see more and more specialized
+hyperproperties gain steam hand-in-hand with new innovations in
+checking those properties. But crucially, I think these will be
+<em>intensional</em> in nature: more security type systems, popular libraries
+which provide secure communication channels whose API satisfies
+hypersafety guarantees when used properly, “secure linking” DSLs at
+the binary layer which ensure specific invariants to guarantee
+end-to-end correctness. I claim the most useful security innovations
+(bounds checking, bytecode verification, etc..) have truly been safety
+properties, constructed and used in a way to guarantee (a specific
+instance of) hypersafety in practice.</p>
+
+  </div>
+
+</article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Kristopher Micinski</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Kristopher Micinski</li>
+          <li><a href="mailto:kkmicins@syr.edu">kkmicins@syr.edu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kmicinski"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">kmicinski</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/krismicinski"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#fff" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">krismicinski</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kris Micinski's Website. Love the lambda.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+
+
+  </body>
+
+</html>

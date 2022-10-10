@@ -6,9 +6,344 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 29 Sep 2022 18:37:52 -0400</pubDate>
-    <lastBuildDate>Thu, 29 Sep 2022 18:37:52 -0400</lastBuildDate>
+    <pubDate>Mon, 10 Oct 2022 15:15:16 -0400</pubDate>
+    <lastBuildDate>Mon, 10 Oct 2022 15:15:16 -0400</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Hyperproperties and why they're hard</title>
+        <description>&lt;p&gt;Computer security as a field is met with a persistent criticism:
+flashy attacks are
+&lt;a href=&quot;https://twitter.com/AndrewCMyers/status/1579120278759563265&quot;&gt;hot&lt;/a&gt;,
+boring (hard-fought) defenses are
+&lt;a href=&quot;https://www.ieee-security.org/CSFWweb/goodessay.html&quot;&gt;not&lt;/a&gt;. Compared
+to security, programming language theory seems relatively adept at
+transitioning research to mainstream practice (e.g., Rust and the
+popularity of Haskell). By contrast, it would appear many of the
+innovations in security have been relatively engineering-focused in
+nature: W^X, ASLR, and the like. As someone who does research in this
+space myself, I have wondered why this is; while I think the reasons
+are myriad, I think a central challenge is the intrinsic need in
+security to reason about the ever-elusive hyperproperties.&lt;/p&gt;
+
+&lt;h2 id=&quot;properties&quot;&gt;Properties&lt;/h2&gt;
+
+&lt;p&gt;The &lt;em&gt;properties&lt;/em&gt; of a program are mathematical statements we can make
+about it’s traces. For example, consider the following program:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;while true:          # 0
+  if (n % 2 == 0):   # 1
+    n := n/2         # 2
+  else:              # 3
+    n := 3*n + 1     # 4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;What could traces of this program’s execution look like? If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; is
+known, we might say it is the sequence of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; paired with the
+appropriate line number. For example, if &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; starts at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;⟪0, n=5⟫, ⟪1, n=5⟫, ⟪4, n=5⟫, ⟪0, n=16⟫, ⟪1, n=16⟫, ⟪2, n=16⟫, ⟪0, n=8⟫,
+⟪1, n=8⟫, ⟪2, n=8⟫, ⟪0, n=4⟫, ⟪1, n=4⟫, ⟪2, n=4⟫, ⟪0, n=2⟫, ⟪1, n=2⟫, 
+⟪2, n=2⟫, ⟪0, n=1⟫, ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Each trace is (countably) infinite in size, without loss of generality
+(as a terminating program may be thought of as infinitely repeating a
+final &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;skip&lt;/code&gt; state). Quantifying over the input is possible by
+producing an infinite set of (infinite) traces. For example, one
+property of the above (set of) traces is this: the suffix of every
+trace is the (infinite loop) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;⟪0, n=4⟫, ⟪1, n=4⟫, ⟪2, n=4⟫, ⟪0, n=2⟫,
+⟪1, n=2⟫, ⟪2, n=2⟫, ⟪0, n=1⟫, ...&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The trace-based nature inherent to this style of semantics is a core
+challenge in checking properties of the associated programs, because
+computers may only materialize a finite approximation of infinite
+objects. Unfortunately, the exact nature of this approximation can
+deeply impacts the kind of properties which may be checked. This is
+why the different approaches to program modeling and verification
+often pair a representation with an intended logic:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Model checking allow the user to specify the program using a
+domain-specific languages (see, e.g., &lt;a href=&quot;https://lamport.azurewebsites.net/tla/book-21-07-04.pdf&quot;&gt;Chapter 2.3 of the TLA+
+book&lt;/a&gt;)
+which compiles into an automaton. This is no coincidence: statements
+in temporal logics also map cleanly to the same automata (an
+extension of finite automata called Büchi automata), at which point
+automata-theoretic constructions (intersection, complementation,
+etc…) may be used.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Abstract interpretation recognizes that the infinite behavior may be
+finitized by approximating values in the semantics as elements of a
+lattice allow using a &lt;a href=&quot;https://www.di.ens.fr/~cousot/COUSOTpapers/publications.www/CousotCousot-POPL-77-ACM-p238--252-1977.pdf&quot;&gt;fixed-point theorem to obtain
+tractability&lt;/a&gt;. In
+this setting, a set of traces is often modeled as an abstract state
+&lt;em&gt;graph&lt;/em&gt;, the deterministic nature of traces often being lost in the
+(necessary) finite approximation; paths through the abstract state
+graph then correspond to traces in the (infinite) semantics. Using
+this style, an abstract interpreter materializes a state graph and
+then checks a property (e.g., the inclusion of a specific data flow)
+by examining this abstract representation.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Symbolic execution keeps a &lt;em&gt;symbolic&lt;/em&gt; representation of the program
+state, and thus produces symbolic traces. The problem is that
+symbolic execution can only materialize finite portions of these
+traces, and thus it is impossible to reason about infinite
+behavior. Thus, a symbolic executor includes a “scheduler” which
+picks how to explore paths to avoid unproductive exploration. A
+central challenge in symbolic execution is how to avoid getting
+stuck early on in the trace. This problem is avoided in (say)
+abstract interpretation by allowing the abstract state graph to
+discover spurious edges, allowing reasoning from the “middle” of the
+program, but at the cost of adding traces not present in the
+original program.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Axiomatic semantics (e.g., Hoare triples) allows the user to
+annotate the program with specifications, which are subsequently
+enumerated to “verification conditions.” The semantics, and thus the
+set of traces, is implicitly represented as the set of valid program
+states which would satisfy the necessary verification conditions at
+any specific point in the program. Metatheoretic results justify the
+way in which we may stitch these verification conditions together to
+obtain an end-to-end correct program. Still no free lunch here,
+however, as the programmer often needs to articulate tedious loop
+invariants in an iterative process with the verification tool.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;safety-and-liveness&quot;&gt;Safety and Liveness&lt;/h2&gt;
+
+&lt;p&gt;Surprisingly, all properties of programs can be broken down into a
+combination of two things: a “safety” property, and a “liveness”
+property.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Safety properties are things which can be refuted using finite
+counterexamples. For example, if a program has a use-after-free
+vulnerability, you will be able to demonstrate some exploit wherein
+memory is freed and then subsequently (but in a finite time horizon)
+accessed. I.e., “bad things don’t happen.”&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Liveness properties are things which proving some finite notion of
+progress. The quintessential liveness examples are guaranteed
+service or starvation freedom.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example, consider the following concurrent code, wherein process 1
+and 2 operate concurrently:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;n := 0
+sem := 1
+
+Process 1:
+  while true:
+    take(sem)
+    i := 0
+    while (i != n):
+      skip
+    n := n + 1
+    rel(sem)
+
+Process 2:
+  while true:
+    take(sem)
+    if (n &amp;gt;= 7)
+      *NULL; // crash
+    rel(sem)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Assuming a fair scheduler, the program will eventually
+crash. Demonstrating this requires only that we enumerate a thread
+schedule wherein we choose process 1 to take &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sem&lt;/code&gt; (at least) seven times. A
+similar argument holds for any arbitrarily-picked natural number, thus
+the statement we’re making is one of safety.&lt;/p&gt;
+
+&lt;p&gt;Things that are crash-like (vulnerabilities, memory errors, etc…)
+are often safety properties. In fact, safety properties are so common
+it is not obvious that there are other kinds of properties. At least, this
+is probably true for computer scientists, pained by their hours of
+debugging safety properties. By contrast, liveness properties say that
+“good things” happen eventually. Examples include guaranteed
+availability and (surprisingly, perhaps) termination.&lt;/p&gt;
+
+&lt;p&gt;Formally, a liveness property has the form: “for all traces t0, there
+exists an extension t1 such that t0⋅t1 ⊨ P.” Termination is a simple
+instance of this liveness template, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P&lt;/code&gt; states that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t1&lt;/code&gt; is a
+stream of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;skip&lt;/code&gt; expressions. The fact that any trace property of a
+program may be factored into a combination of a safety property and
+liveness property follows from the topological interpretation where
+(a) safety properties represent closed sets (of traces) and (b)
+liveness properties represent open sets. I am not an expert on
+liveness, and will instead point you at the &lt;a href=&quot;https://www.cs.cornell.edu/fbs/publications/DefLiveness.pdf&quot;&gt;main paper I’ve read on
+it&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;properties-and-their-proofs&quot;&gt;Properties and Their Proofs&lt;/h2&gt;
+
+&lt;p&gt;It is hard to understate how much work has been done in checking
+safety and liveness properties of programs. Because safety properties
+feel like crashes, and programmers really hate crashes, we have
+naturally developed a huge amount of our programming culture around
+methods designed to help us understand and avoid crashes. Broadly,
+this breaks down into static checking / verification and dynamic
+auditing / enforcement / logging. For example, the central aim of most
+program analyses is to check safety properties of programs, including
+avoidance of crashes, errors, and similar faults, and reifies in
+vastly-different ways from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;printf&lt;/code&gt;-style debugging to abstract
+interpretation and program analysis tools (like Astrée, Soot, and
+DOOP), to program verification frameworks (like
+&lt;a href=&quot;https://github.com/EasyCrypt/certicrypt&quot;&gt;CertiCrypt&lt;/a&gt;). This is not to
+say there is no great work in the area (e.g., the &lt;a href=&quot;https://github.com/mmjb/T2&quot;&gt;Terminator
+project&lt;/a&gt;), but rather that I think most of
+us have a natural intuition for safety properties as programmers.&lt;/p&gt;
+
+&lt;p&gt;Notice that one I have left out until now is type systems. Type
+systems feel very different than the methods I described above,
+because they are prescriptive in nature and do not so obviously lead
+to a trace-based semantics. The semantics of a type system is designed
+to be compositional in the manner of natural deduction, which feels
+very different than the trace-based nature of safety and liveness
+properties.&lt;/p&gt;
+
+&lt;h2 id=&quot;hyperproperties&quot;&gt;Hyperproperties&lt;/h2&gt;
+
+&lt;p&gt;Hyperproperties allow us to talk about multiple traces of a program at
+the same time. It is not immediately clear why this would be useful,
+but some of the most motivating examples are from computer
+security. For example, consider the following program:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Process 1:
+  while true:
+    s = read(secret)
+    if (s == 0):
+	  o = 1
+    else:
+      o = 0
+
+Process 2:
+  while true:
+    out(o)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;secret&lt;/code&gt; is a stream of secret (binary) values. Is it possible to
+infer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;secret&lt;/code&gt; from the (buffered) output? Of course: we just change
+the 1s to 0s. Formally, though, it’s a bit hard to think about a
+general property that would allow us to speak about the relationship
+between the input and the output that would avoid this.&lt;/p&gt;
+
+&lt;p&gt;It turns out this kind of obliviousness or “noninterference” is a more
+general kind of program property, a proper that can simultaneously
+quantify over two traces at once. The original formulation applied to
+sequential programs, for example:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (secret == 0):
+  out = 1
+else:
+  out = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The program leaks information because for every trace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t0&lt;/code&gt;, there
+exists another trace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t1&lt;/code&gt; such that the outputs are equivalent but the
+inputs are not. Informally: the output of the program does not depend
+on the secret input. Extending the definition of noninterference to
+concurrent systems proved hard because of a basic challenge: once the
+thread schedule is tainted by a secret value (e.g., by branching on a
+secret and then doing something schedule-specific), non-local
+reasoning must be done to ensure the thread schedule’s safety–all the
+hell of concurrent programming, doubled.&lt;/p&gt;
+
+&lt;p&gt;This is the point at which I would say, off-hand, “a particularly cool
+idea by Zdancewic and Myers is to &lt;a href=&quot;https://www.cs.cornell.edu/andru/papers/csfw03.pdf&quot;&gt;statically-ensure observational
+determinism&lt;/a&gt;.”
+But, as thinking over this, I realized: the coolest results for
+&lt;em&gt;checking&lt;/em&gt; hyperproperties I can find are &lt;em&gt;intensional&lt;/em&gt; systems (a
+type system, in this case) to ensure the &lt;em&gt;extensional&lt;/em&gt; guarantees
+necessitated by hyperproperties.&lt;/p&gt;
+
+&lt;h2 id=&quot;proofs-of-hyperproperties&quot;&gt;Proofs of Hyperproperties&lt;/h2&gt;
+
+&lt;p&gt;Unlike proofs of safety and liveness, relatively little work has been
+done on proofs for hyperproperties. This is no insult to people
+working in this research direction; finding bugs in one trace at a
+time is proving hard enough, it seems.&lt;/p&gt;
+
+&lt;p&gt;I speculate that this is because each new advance in logics for safety
+checking corresponded with advances to the intensional representation
+used to check those properties. Model checking became a huge deal once
+we realized there were relatively simple automata-theoretic algorithms
+to do it, but also because of the advent of
+&lt;a href=&quot;https://web.stanford.edu/class/cs357/cegar.pdf&quot;&gt;CEGAR-style&lt;/a&gt;
+methods. By contrast, I think similar advances happen in security
+coinciding with advances in intensional checking mechanisms for
+hyperproperties. For example, the aforementioned CertiCrypt and
+ &lt;a href=&quot;https://www.cs.cornell.edu/jif/&quot;&gt;Jif&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A unifying trick to much of this work is to make hyperproperties
+become just regular properties by having the semantics generate
+&lt;a href=&quot;https://link.springer.com/chapter/10.1007/978-3-642-21437-0_17&quot;&gt;&lt;em&gt;pairs&lt;/em&gt; of
+traces&lt;/a&gt;,
+and then cooking up a version of a hypersafety statement of interest
+to speak about these pairs.  This draws a connection between
+hyperproperties and the large body of literature on relational program
+verification. In some of my own work, we tried to use ideas from
+&lt;a href=&quot;https://projects.csail.mit.edu/jeeves/papers/plas07-austin.pdf&quot;&gt;faceted
+execution&lt;/a&gt;
+to push the pairs from the trace-level to &lt;a href=&quot;https://ieeexplore.ieee.org/document/9155136&quot;&gt;the value
+level&lt;/a&gt;. In other work I
+did on model checking for hyperproperties, we just used a product
+construction—the CEGAR algorithm would need to be updated to refine
+states appropriately, but we did not attempt that. These efforts are
+rooted in the intuition that we may exploit the rich body of work from
+program analyses and the like to immediately reason about these pairs
+of traces, but there is no free lunch, and making the abstractions
+work in practice is seriously challenging.&lt;/p&gt;
+
+&lt;p&gt;However, I have come think many of these efforts may be ultimately
+fruitless compared to using secure-by-construction building
+blocks. Once you’re at the level of needing to reason about
+noninterference, you’re already in a pretty serious threat
+model—timing channels and the like are going to be ever-present, and
+will necessitate increasingly-advanced program logics, CEGAR-style
+reasoning, and similar technologies, I believe. Any state-based
+abstraction of the program will be destined to imprecision which will
+eventually fall apart if the abstraction is not tightly tied to (and
+derived from) the program’s semantics in a predictable way, but the
+necessary explosion of the state graph (from the product construction)
+implies serious complexity-theoretic challenges here, I worry.&lt;/p&gt;
+
+&lt;p&gt;Thus, I claim we haven’t and won’t see hyperproperties (as they are
+now) take off as a general way to give us new innovations in proofs of
+security properties for programs. Instead, like the innovations in
+safety properties, I think we’ll see more and more specialized
+hyperproperties gain steam hand-in-hand with new innovations in
+checking those properties. But crucially, I think these will be
+&lt;em&gt;intensional&lt;/em&gt; in nature: more security type systems, popular libraries
+which provide secure communication channels whose API satisfies
+hypersafety guarantees when used properly, “secure linking” DSLs at
+the binary layer which ensure specific invariants to guarantee
+end-to-end correctness. I claim the most useful security innovations
+(bounds checking, bytecode verification, etc..) have truly been safety
+properties, constructed and used in a way to guarantee (a specific
+instance of) hypersafety in practice.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Oct 2022 00:00:00 -0400</pubDate>
+        <link>/hyperproperties-hard</link>
+        <guid isPermaLink="true">/hyperproperties-hard</guid>
+        
+        
+        <category>dependent-types,</category>
+        
+        <category>functional-programming,</category>
+        
+        <category>theorem-proving</category>
+        
+      </item>
     
       <item>
         <title>Certifying Interpreters in Racket</title>
@@ -1651,75 +1986,6 @@ University of Maryland, College Park.  Full slides available
         <category>talks</category>
         
         <category>grad-school</category>
-        
-      </item>
-    
-      <item>
-        <title>Here: Have Some PLUM Scrum</title>
-        <description>&lt;p&gt;This post is about transparency with your advisor. It seems like most
-problems that PhD students face boil down to communication and
-transparency: students work on something the advisor doesn’t expect,
-the advisor has different expectations for number of papers required
-to graduate, student collaborates with someone when the advisor
-doesn’t expect them to, etc…&lt;/p&gt;
-
-&lt;p&gt;The &lt;a href=&quot;http://www.cs.umd.edu/projects/PL/&quot;&gt;PLUM group&lt;/a&gt; at UMD uses a
-scrum-style approach to managing research called “PL status.” There’s
-a &lt;a href=&quot;http://www.cs.umd.edu/~mwh/papers/score.pdf&quot;&gt;nice paper&lt;/a&gt; my advisor
-and Mike Hicks wrote up about this approach that details it, but I can
-tell you what it is right now:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Have everyone meet for 15 minutes three times each week&lt;/li&gt;
-  &lt;li&gt;Stand up and talk about what you did, what you’re doing, and what you’re going to do&lt;/li&gt;
-  &lt;li&gt;Highlight problems you’re having and arrange to meet offline if necessary&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I view the PLUM-scrum as one way to address the issue of transparency
-between advisors and advisees. It’s not a silver bullet: there have
-been times when I skipped status for a while, or would kind of
-reiterate the same vague and high level thing for a few days. But when
-applied correctly and honestly, I think it helps students and advisors
-feel on the same page. Obviously for long term disagreements on
-vision, something longer than a 15 minute meeting will be
-required. But I think even here the scrum approach pays off, since it
-helps break down the barriers that eventually fester and cause
-advisors and advisees to feel like they don’t communicate correctly.&lt;/p&gt;
-
-&lt;p&gt;One problem I see among my peer grad students (outside of PL) is that
-they gradually grow a little distant. This is natural: advisors get
-overwhelmed with responsibilities and it’s easy to simply assume your
-(probably very bright) PhD student is doing the right thing and making
-progress. After all, PhD school is about learning how to do research,
-and some of that has to be about independent thought and
-development. The scrum approach helps correct this by requiring
-students and advisors to maintain some consistent level of
-plugged-in-ness.&lt;/p&gt;
-
-&lt;p&gt;I continually see grad students who say something along the lines of
-“well, my advisor doesn’t really know what I’m doing right now.” This
-is fine, if it works, but what happens when the grad student has
-problems? What if they end up working on an area that doesn’t pan out?
-Or write a paper that ends up being scooped? My theory is that if
-there’s transparency between the student and advisor, at least they’ll
-be able to understand what went wrong, and how to improve it in the
-future.&lt;/p&gt;
-
-&lt;p&gt;I’m sure there are tons of ways to maintain transparency between
-advisors and advisees, but the PLUM-scrum seems to be a fairly
-lightweight (45 minutes a week for all students) way to do this that
-offers high potential rewards: catch problems early, mutual assurance
-that advisors and students are working together, and a more cohesive
-group dynamic to name a few.&lt;/p&gt;
-
-&lt;p&gt;Maybe you could try suggesting this to your advisor&lt;/p&gt;
-</description>
-        <pubDate>Sun, 23 Oct 2016 00:00:00 -0400</pubDate>
-        <link>/research/2016/10/23/here-have-some-plum-scrum/</link>
-        <guid isPermaLink="true">/research/2016/10/23/here-have-some-plum-scrum/</guid>
-        
-        
-        <category>research</category>
         
       </item>
     
