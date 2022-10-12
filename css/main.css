@@ -311,7 +311,7 @@ ul p { text-indent: 0px; }
 
 #topcontent { width: 800px; position: absolute; text-align: left; top: 320px; color: #fff; left: -50%; }
 
-#mainpagecontent { margin-top: 20px; }
+#mainpagecontent { margin-top: 20px; padding: 10px; }
 
 #mainpgvenn { margin-top: 50px; margin-bottom: 40px; }
 
