@@ -341,7 +341,7 @@ ul p { text-indent: 0px; }
 
 .post-image { margin: auto; display: block; }
 
-.post { font: 20px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
+.post { font: 20px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; padding: 20px; }
 
 #mainwrapper { font: 20px/1.8 ShermanSans, "Trebuchet MS", Tahoma, sans-serif; }
 
