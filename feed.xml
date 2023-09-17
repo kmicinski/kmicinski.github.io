@@ -6,9 +6,51 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 16 Dec 2022 11:55:40 -0500</pubDate>
-    <lastBuildDate>Fri, 16 Dec 2022 11:55:40 -0500</lastBuildDate>
-    <generator>Jekyll v4.2.0</generator>
+    <pubDate>Sun, 17 Sep 2023 16:24:20 -0400</pubDate>
+    <lastBuildDate>Sun, 17 Sep 2023 16:24:20 -0400</lastBuildDate>
+    <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>Our PPoSS Large from NSF</title>
+        <description>&lt;p&gt;Over the past few years, our group has been working to implement
+highly-scale declarative systems which enable orders-of-magnitude
+performance gains for deductive-analytic workloads, including program
+analysis, graph and social-media mining, and even drug discovery. We
+have just learned our group has been awarded an NSF PPoSS large grant,
+funding six faculty over five years at a total of five million
+dollars. We are very excited about this, and I hope to convey the gist
+of our team’s plan over the next few years.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-full-stack&quot;&gt;The Full Stack&lt;/h3&gt;
+
+&lt;p&gt;Effectively leveraging highly-parallel architectures has been a
+persistent challenge in computing. To the dismay of programming
+language enthusiasts, modern high-performance computation is still
+largely dominated multi-dimensional vectors. For example,
+transformer-based machine learning has effectively enabled massive
+scalability via encoding schemes (e.g., positional embedding) which
+effectively pull work forward.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 01 Aug 2023 00:00:00 -0400</pubDate>
+        <link>/pposs</link>
+        <guid isPermaLink="true">/pposs</guid>
+        
+        
+        <category>datalog,</category>
+        
+      </item>
+    
+      <item>
+        <title>Datalog</title>
+        <description>
+</description>
+        <pubDate>Tue, 02 May 2023 00:00:00 -0400</pubDate>
+        <link>/2023/05/02/datalog/</link>
+        <guid isPermaLink="true">/2023/05/02/datalog/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Mid-Point Review Materials</title>
@@ -27,6 +69,237 @@ review packet, including CV, papers, and my personal statement.&lt;/p&gt;
         <link>/year-3-review</link>
         <guid isPermaLink="true">/year-3-review</guid>
         
+        
+      </item>
+    
+      <item>
+        <title>An Operational Approach to Type Theory</title>
+        <description>&lt;p&gt;My undergraduate programming languages course is structured around
+teaching operational semantics. For several years, I have been
+pondering how to motivate and properly explain type theory and its
+operational interpretation. Here I have some notes from my course this
+semester, which I hope to expand into videos (as with the rest of my
+undergraduate course) over the coming weeks.&lt;/p&gt;
+
+&lt;h2 id=&quot;simply-typed-λ-calculus-stlc&quot;&gt;Simply-Typed λ-Calculus (STLC)&lt;/h2&gt;
+
+&lt;p&gt;The Simply-Typed λ-Calculus (STLC) is a type system that allows
+proving safety properties of the calling conventions of terms in the λ
+calculus. A type system is a set of rules that defines how an
+“annotated” program may be constructed. The annotations stipulate
+types for each subexpression of the program: the type system (more
+specifically the definition of the typing derivation) tells us how to
+check this fully-annotated program is constructed correctly.  Assumingi 
+it is, you will get a certain guarantee of a safety property of the
+program: that it is “type correct” and does not crash due to a type
+error, for example. As we will see, the notion of “type correct” can
+be arbitrarily complex–so as to encode complex logical formulas
+encoding, for example, a statement that an expression’s result
+satisfies some functional guarantee.&lt;/p&gt;
+
+&lt;p&gt;I will start by assume knowledge of the untyped λ-calculus. For our
+purposes here, the untyped λ-calculus is a small, Turing-equivalent
+model of computation consisting of only applications &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(e0 e1)&lt;/code&gt; and
+abstractions &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(λ (x) e)&lt;/code&gt; over variables &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;—binding is often (but
+not always) handled via substitution, the model I present in my class
+(other encodings, including De Bruijn indices, also exist–I ignore
+them here). The only value (runtime object) in the language is a λ,
+operationalized via a closure or some similar mechanism.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define (expr? e)
+  (match e
+    ;; Variables
+    [(? symbol? x) #t]
+    ;; Literals
+    [(? bool-lit? b) #t]
+    [(? int-lit? i) #t]
+    ;; Applications
+    [`(,(? expr? e0) ,(? expr? e1)) #t]
+    ;; Annotated expressions
+    [`(,(? expr? e) : ,(? type? t)) #t]
+    ;; Anotated lambdas
+    [`(lambda (,(? symbol? x) : ,(? type? t)) ,(? expr? e)) #t]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can only do one interesting operation in the λ-calculus: calling
+functions. There is only one thing that can go wrong when we call a
+function: that there is no function to call. For example, notice that
+the following term crashes in Racket:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;((λ (f) ((f (λ (a) a)) (λ (a) a))) (λ (z) 1))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If we envision that all functions in our language have been curried,
+we can construe the call to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;f&lt;/code&gt; as a (curried) application &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;f&lt;/code&gt; on two
+arguments; the program crashes because &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;f&lt;/code&gt; is then bound to a function
+of a single argument: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(λ (z) 1)&lt;/code&gt;. The same thing occurs in the
+λ-calculus if we just change &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1&lt;/code&gt; to a free variable; we can’t evaluate
+non-closed λ-calculus terms in Racket, but the underlying issue is the
+same.&lt;/p&gt;
+
+&lt;p&gt;We want to ensure a global invariant: at every call site &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(e0 e1)&lt;/code&gt;,
+the set of values that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e0&lt;/code&gt; computes must always be functions (rather
+than, say, free variables). More generally, if &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(e0 e1 ... en)&lt;/code&gt; is a
+callsite, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e0&lt;/code&gt; must be a function of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; arguments. Of course the
+challenge is that, in a higher-order language, it is (in general)
+impossible to know precisely which syntactic functions reach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e0&lt;/code&gt;: if
+we knew precisely which lambdas &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e0&lt;/code&gt; could be, we could just manually
+inspect all of them to ensure they were of the appropriate arity. This
+is impossible to perfectly predict, as being able to do so implies a
+solution to the halting problem (is the following program safe? &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;((if
+(program-halts expr) (lambda (x) x) (lambda (x y) x)) 1)&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;To make the problem tractable, STLC will take a more conservative
+approach. Every subexpression in the program is annotated with a
+&lt;em&gt;type&lt;/em&gt;, which constrains its behavior. There are two base types I will
+discuss here: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;int&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bool&lt;/code&gt;. The precise base types are unimportant
+and a parameter of the system, but they are useful for examples and I
+will assume some basic operations such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;is-zero?&lt;/code&gt;. Next,
+there are &lt;em&gt;arrow&lt;/em&gt; types, which are the types of functions. If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T1&lt;/code&gt; and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T2&lt;/code&gt; are types, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T1 -&amp;gt; T2&lt;/code&gt; is also a type, and is the type of
+functions from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T1&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T2&lt;/code&gt;. Arrow types are formed by λ abstractions
+such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(λ (a) a)&lt;/code&gt;, but crucially, in STLC all binders explicitly
+constrain their argument to be of a specific type, so the full form is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(λ (a : T) a)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Types for STLC
+(define (type? t)
+  (match t
+    ;; Base types: int and bool
+    ['int #t]
+    ['bool #t]
+    ;; Arrow types: t0 -&amp;gt; t1
+    [`(,(? type? t0) -&amp;gt; ,(? type? t1)) #t]
+    [_ #f]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s look at some example expressions and their types:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; The type of an integer 
+(23 : int)
+;; The type of a function from from int to int
+(lambda (x : int) x)
+;; The type of a function whose input type is int -&amp;gt; int
+;; and whose output type is bool -&amp;gt; bool
+(lambda (x : int -&amp;gt; int) (lambda (y : bool) y)) 
+  : ((int -&amp;gt; int) -&amp;gt; (bool -&amp;gt; bool))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In my presentation here, I allow any expression to be &lt;em&gt;explicitly&lt;/em&gt;
+annotated &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(e : t)&lt;/code&gt;. While it is very ugly, it is sometimes
+semantically-helpful to construe STLC terms in this fully-annotated
+representation. Here are some more examples:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;((lambda (x : int) (x : int)) : int -&amp;gt; int)
+
+(((lambda (f : int -&amp;gt; (int -&amp;gt; int)) ((f : int) (3 : int))) 
+  : (int -&amp;gt; (int -&amp;gt; int)) -&amp;gt; (int -&amp;gt; int))
+ ((lambda (x : int) (lambda (y : int) y)) : (int -&amp;gt; (int -&amp;gt; int))))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Most of the time, these terms are written as the less-obnoxious:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;((lambda (x : int) x) 
+
+(((lambda (f : int -&amp;gt; (int -&amp;gt; int)) (f 3)))
+ ((lambda (x : int) (lambda (y : int) y))))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is because our mind quickly becomes adept at inferring the
+missing types from the surrounding contextual information, provided
+the arguments of λs are annotated. This is a subtle point, but is of
+crucial importance to STLC: once we know the argument types for λ
+abstractions, the rest of the types fall into place, assuming the
+expression is typeable at all. We will see next how this leads to a
+“syntax-directed” algorithm, but it is instructive to carry on this
+fully-explicit style for a while, as it leads to a nice understanding
+of the typing derivation itself as a strict syntactic extension of the
+original program.&lt;/p&gt;
+
+&lt;p&gt;Here are the typing rules for STLC (I leave out booleans, they are
+also constants and handled similar to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;int&lt;/code&gt;s).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/stlc.png&quot; alt=&quot;Typing Rules for STLC&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Const&lt;/code&gt; rule tells us that any literal integer constant in the
+program can be immediately said to have the type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;int&lt;/code&gt;. The types of
+variables is tracked via a map Γ, a (partial) function from variables
+to their associated types. An implementation would likely implement
+this using a hashmap, HAMT, or similar immutable dictionary. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Var&lt;/code&gt;
+rule says that if x is a syntactic variable, and Γ(x) = t, then it is
+allowed to say x has type x under the context Γ. Notice that the
+notation in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Const&lt;/code&gt; rule implicitly quantifies over all Γ, and
+thus the rule is schematic. The apply rule allows us to use
+(eliminate) lambdas: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;App&lt;/code&gt; says that if we call a function of type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t
+-&amp;gt; t'&lt;/code&gt; with an input &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t&lt;/code&gt;, then we can get an output &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t'&lt;/code&gt;. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Lam&lt;/code&gt;
+rule allows us to build (introduce) lambdas. The rule can be
+conceptualized as follows: when you reach a λ, take the type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t&lt;/code&gt;
+stipulated by the binding for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; and update Γ with a binding &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{x ↦
+t}&lt;/code&gt;, then evaluate (typecheck) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e&lt;/code&gt; to obtain the result of the body
+expression &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t'&lt;/code&gt;. This allows you to typecheck the entire λ with the
+type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t -&amp;gt; t'&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The logical statements below the line represents a rule’s conclusion,
+and the statements above the line represent proof obligations. If
+there are no statements above the line, the proof is said to be an
+assumption. Notice that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Const&lt;/code&gt; rule obligates no statements above
+the line. By contrast, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Var&lt;/code&gt; rule obligates that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Γ(x) = t&lt;/code&gt; must
+be proven in the metatheory. An implementation may simply check this,
+but a fully-formal proof would demand a totally-rigorous derivation of
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;’s value in the map Γ. The difference is subtle, but meaningful:
+the more a typechecker pushes into the metatheory, the less is
+explicated as a certificate that may be independently checked. The
+application and lambda rules also require proofs of their premises,
+and thus a proof of any nontrivial expression is in fact a tree of
+well-formed judgements.&lt;/p&gt;
+
+&lt;p&gt;We may represent this tree in various ways. In the rules above it is
+conveyed in a conventional symbolic representation (natural
+deduction), but we just as well implement it using a structured
+expression (S-expression). To adopt that approach, we define proofs as
+symbolic lists built in a canonical way:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   (rule-name antecedents ... 
+              -----
+              (Γ ⊢ e : t))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Proofs are recursive: each assumption will also have the same
+structure (ending in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(Γ ⊢ e : t)&lt;/code&gt;), even if it is an axiom (e.g.,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(const ----- {} ⊢ 5 : int)&lt;/code&gt;). This allows us to define an operation
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;consequent&lt;/code&gt; to be simply the last item in the proof:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define consequent last)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Checking a proof involves checking the correctness of each
+sub-derivation. The S-expression structure we adopted makes this
+relatively simple: all rules end in their stipulated conclusions
+(i.e., all terms are fully-annotated), so we may write a recursive
+predicate that characterizes the well-formedness of proofs:&lt;/p&gt;
+
+&lt;h2 id=&quot;soundness-and-proofs-of-the-simply-typed-λ-calculus&quot;&gt;Soundness and Proofs of the Simply-Typed λ-Calculus&lt;/h2&gt;
+
+&lt;p&gt;STLC is sound: a term&lt;/p&gt;
+
+&lt;h1 id=&quot;intuitionistic-propositional-logic&quot;&gt;Intuitionistic Propositional Logic&lt;/h1&gt;
+
+&lt;p&gt;The Curry-Howard Isomorphism (CHI) is an oft-cited principle wherein
+every well-typed program may be understood as a proof of a theorem in
+a suitable logic. In the case of STLC, every well-typed STLC term is a
+proof of a theorem in intuitionistic propositional logic.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 10 Oct 2022 00:00:00 -0400</pubDate>
+        <link>/operational-type-theory</link>
+        <guid isPermaLink="true">/operational-type-theory</guid>
+        
+        
+        <category>type-theory,</category>
+        
+        <category>functional-programming,</category>
+        
+        <category>program-analysis</category>
         
       </item>
     
@@ -1336,341 +1609,6 @@ I’ll just put the slides here.&lt;/p&gt;
         <category>git</category>
         
         <category>talks</category>
-        
-      </item>
-    
-      <item>
-        <title>My new cybersecurity course at Haverford (Spring 2017)</title>
-        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;computer-security-attacks-and-defenses&quot;&gt;Computer Security: Attacks and Defenses&lt;/h2&gt;
-&lt;p&gt;(&lt;em&gt;CMSC 323&lt;/em&gt; at Haverford)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Prerequisites&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Experience in C programming:
-    &lt;ul&gt;
-      &lt;li&gt;E.g., CMSC245 at Haverford or CMSC246 at Bryn Mawr&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Experience with or willingness to learn learn new languages (Python, SQL, JavaScript, etc..)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Workload&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;3 lecture hours per week&lt;/li&gt;
-  &lt;li&gt;1 lab hour per week&lt;/li&gt;
-  &lt;li&gt;This will be a lab / project intensive class. Approximately 6-10
-hours per week &lt;em&gt;outside&lt;/em&gt; of class will be expected from
-students. I recommend against taking this course concurrent with
-other project-heavy courses.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Cap&lt;/strong&gt;: 25 (may be lifted to 35)&lt;/p&gt;
-
-&lt;h2 id=&quot;course-overview&quot;&gt;Course Overview&lt;/h2&gt;
-
-&lt;p&gt;This​ ​course​ ​will​ ​serve​ ​as​ ​a​ ​broad​ ​introduction​ ​to​ ​the​ ​field​ ​of​
-​computer​ ​security,​ ​from​ ​two concurrent​ ​perspectives:​ ​attacks​ ​on​
-​systems,​ ​and​ ​defenses​ ​against​ ​those​ ​attacks.​ ​The​ ​goal​ ​of this​ ​course​
-​will​ ​be​ ​to​ ​help​ ​build​ ​intuition​ ​so​ ​that–when​ ​designing​ ​your​ ​own​
-​systems–you​ ​can intelligently​ ​assess​ ​and​ ​mitigate​ ​security​ ​risks.&lt;/p&gt;
-
-&lt;p&gt;To​ ​understand​ ​how​ ​attackers​ ​think,​ ​we​ ​will​ ​learn​ ​about​ ​the​ ​attacks​
-​they​ ​employ.​ ​​ ​We​ ​will dissect​ ​a​ ​number​ ​of​ ​real-world​ ​attacks​ ​(such​ ​as​
-​Heartbleed​ ​or​ ​WannaCry)​ ​and​ ​reflect​ ​upon​ ​what could​ ​have​ ​been​ ​done​ ​to​
-​prevent​ ​them.​ ​But​ ​understanding​ ​a​ ​collection​ ​of​ ​attacks​ ​is​ ​not​ ​alone
-sufficient​ ​for​ ​helping​ ​us​ ​understand​ ​how​ ​to​ ​build​ ​secure​ ​systems.​ ​So​
-​alongside​ ​attacks,​ ​we​ ​will also​ ​learn​ ​the​ ​theoretical​ ​underpinnings​
-​of​ ​security,​ ​and​ ​use​ ​it​ ​to​ ​build​ ​defenses​ ​into​ ​our systems.&lt;/p&gt;
-
-&lt;p&gt;Labs​ ​will​ ​transition​ ​theory​ ​into​ ​practice.​ ​We​ ​will​ ​conclude​ ​with​ ​a​
-​group​ ​project​ ​exploring advanced​ ​topics​ ​relevant​ ​to​ ​the​ ​state​ ​of​ ​the​
-​art​ ​in​ ​computer​ ​security.​ ​The​ ​course​ ​will​ ​begin​ ​with a​ ​discussion​ ​on​
-​ethical​ ​application​ ​of​ ​techniques​ ​we​ ​learn.&lt;/p&gt;
-
-&lt;h2 id=&quot;topics&quot;&gt;Topics&lt;/h2&gt;
-
-&lt;p&gt;We​ ​will​ ​cover​ ​parts​ ​of​ ​the​ ​following​ ​topics,​ ​adjusted​ ​for​ ​time​ ​and​ ​pace​ ​of​ ​the​ ​course,​ ​along​ ​with
-student​ ​interest​ ​in​ ​each​ ​area.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Low-level​ ​memory​ ​attacks​ ​and​ ​defenses
-    &lt;ul&gt;
-      &lt;li&gt;Buffer​ ​overflows&lt;/li&gt;
-      &lt;li&gt;Stack​ ​canaries&lt;/li&gt;
-      &lt;li&gt;Access​ ​space​ ​randomization​ ​/​ ​derandomization&lt;/li&gt;
-      &lt;li&gt;Return​ ​to​ ​libc​ ​/​ ​return-oriented-programming&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Cryptography
-    &lt;ul&gt;
-      &lt;li&gt;Symmetric and asymmetric-key cryptography&lt;/li&gt;
-      &lt;li&gt;Certificates, CAs, and​ ​PKI&lt;/li&gt;
-      &lt;li&gt;SSL/TLS&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Web security
-    &lt;ul&gt;
-      &lt;li&gt;SQL​ ​injections&lt;/li&gt;
-      &lt;li&gt;Cross-site​ ​scripting&lt;/li&gt;
-      &lt;li&gt;Cross-site​ ​request​ ​forgery&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Social​ ​engineering​ ​and​ ​security​ ​ethics&lt;/li&gt;
-  &lt;li&gt;UI​ ​design​ ​for​ ​security
-    &lt;ul&gt;
-      &lt;li&gt;App​ ​permissions​ ​design&lt;/li&gt;
-      &lt;li&gt;Best​ ​practices​ ​for​ ​security​ ​UI&lt;/li&gt;
-      &lt;li&gt;Permission​ ​lifetime​ ​and​ ​revocation&lt;/li&gt;
-      &lt;li&gt;Case​ ​study​ ​in​ ​privacy​ ​controls:
-        &lt;ul&gt;
-          &lt;li&gt;Facebook​ ​privacy​ ​controls&lt;/li&gt;
-          &lt;li&gt;Android​ ​permissions&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Information​ ​flow​ ​control​ ​in​ ​web​ ​apps&lt;/li&gt;
-  &lt;li&gt;Reverse​ ​engineering&lt;/li&gt;
-  &lt;li&gt;Theoretical​ ​underpinnings​ ​of​ ​security
-    &lt;ul&gt;
-      &lt;li&gt;Full​ ​abstraction&lt;/li&gt;
-      &lt;li&gt;Information​ ​flow&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;projects-and-labs&quot;&gt;Projects and Labs&lt;/h2&gt;
-
-&lt;p&gt;Projects​ ​will​ ​be​ ​started​ ​in​ ​labs,​ ​and​ ​then​ ​continued​ ​individually.​
-​Some​ ​labs​ ​are​ ​structured​ ​so​ ​that they​ ​begin​ ​with​ ​a​ ​concrete​
-​assignment​ ​to​ ​work​ ​on​ ​as​ ​an​ ​individual​ ​in​ ​the​ ​first​ ​week,​ ​and​ ​then
-move​ ​on​ ​to​ ​a​ ​group​ ​assignment​ ​to​ ​complete​ ​a​ ​larger​ ​task.&lt;/p&gt;
-
-&lt;h4 id=&quot;project-1-memory-attacks-weeks-1-4-inclusive-uses-c-programming&quot;&gt;Project 1: Memory attacks (Weeks 1-4 inclusive) (Uses C programming)&lt;/h4&gt;
-
-&lt;p&gt;This​ ​project​ ​will​ ​cover​ ​low-level​ ​memory​ ​attacks​ ​using​ ​the​ ​C​
-​programming​ ​language.​ ​The students​ ​will​ ​begin​ ​by​ ​executing​ ​an​ ​attack​
-​from​ ​starter​ ​code​ ​provided.​ ​They​ ​will​ ​then​ ​implement their​ ​own​ ​buffer​
-​overflow​ ​attack,​ ​and​ ​demonstrate​ ​a​ ​way​ ​to​ ​prevent​ ​the​ ​attack​ ​by​
-​intelligent programming,​ ​and​ ​also​ ​facilities​ ​provided​ ​by​ ​the​
-​compiler.​ ​After​ ​completing​ ​this​ ​task,​ ​students will​ ​form​ ​groups​ ​to​
-​complete​ ​a​ ​more​ ​advanced​ ​attack​ ​studying​ ​ASLR​ ​or​ ​ROP.​ ​1.5​ ​weeks​ ​will​
-​be allocated​ ​for​ ​independent​ ​programming,​ ​and​ ​1.5​ ​weeks​ ​will​ ​be​
-​allocated​ ​for​ ​group​ ​work.&lt;/p&gt;
-
-&lt;h4 id=&quot;project-2-cryptography-weeks-4-7-incl-uses-python-programming&quot;&gt;Project 2: Cryptography (weeks 4-7 incl.) (Uses Python programming)&lt;/h4&gt;
-
-&lt;p&gt;This​ ​project​ ​will​ ​involve​ ​creating​ ​a​ ​public​ ​/​ ​private​ ​key​ ​pair​ ​and​
-​manually​ ​exchanging​ ​keys​ ​to collaborate​ ​secretly​ ​communicate​ ​with​
-​group​ ​members.​ ​The​ ​next​ ​week,​ ​students​ ​will​ ​either implement​ ​a​ ​secure​
-​chat​ ​using​ ​cryptographic​ ​primitives​ ​provided,​ ​or​ ​explore​ ​an​ ​attack​ ​on​
-​an insecure​ ​cryptographic​ ​hash.&lt;/p&gt;
-
-&lt;h4 id=&quot;project-3-web-security-weeks-7-9-incl-uses-python-programming&quot;&gt;Project 3: Web security (weeks 7-9 incl.) (Uses Python programming)&lt;/h4&gt;
-
-&lt;p&gt;Students​ ​will​ ​be​ ​given​ ​an​ ​insecure​ ​web​ ​app​ ​written​ ​in​ ​Python​ ​which​ ​is​
-​vulnerable​ ​to​ ​an​ ​SQL injection​ ​attack.​ ​They​ ​will​ ​then​ ​craft​ ​an​ ​input​
-​which​ ​causes​ ​the​ ​app​ ​to​ ​leak​ ​secret​ ​information​ ​(in this​ ​case,​
-​student​ ​grades​ ​from​ ​a​ ​synthetic​ ​gradebook​ ​consisting​ ​of​ ​fictitious​
-​students).​ ​They​ ​will then​ ​fix​ ​this​ ​attack​ ​in​ ​the​ ​app.​ ​Finally,​
-​students​ ​will​ ​attempt​ ​to​ ​break​ ​other​ ​students’​ ​fixes.&lt;/p&gt;
-
-&lt;h4 id=&quot;final-project-weeks-10-14&quot;&gt;Final project (weeks 10-14):&lt;/h4&gt;
-
-&lt;p&gt;This​ ​will​ ​be​ ​a​ ​final​ ​project,​ ​either​ ​in​ ​a​ ​group​ ​or​ ​alone.​ ​Students​ ​requesting​ ​to​ ​work​ ​alone​ ​need
-prior​ ​approval​ ​for​ ​a​ ​topic​ ​and​ ​expectations​ ​will​ ​be​ ​calibrated​ ​accordingly.​ ​Students​ ​will​ ​select
-one​ ​of​ ​the​ ​following​ ​projects,​ ​or​ ​propose​ ​their​ ​own​ ​project:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Information flow specification (uses Python/Jeeves)&lt;/p&gt;
-
-    &lt;p&gt;Implement​ ​privacy​ ​policies​ ​for​ ​a​ ​secure​ ​student​ ​grades​ ​database​
-​using​ ​Jeeves,​ ​an extension​ ​to​ ​the​ ​Python​ ​programming​ ​language.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Designing a privacy UI (uses Python / Javascript / etc..)&lt;/p&gt;
-
-    &lt;p&gt;Use​ ​best​ ​practices​ ​to​ ​propose​ ​and​ ​implement​ ​a​ ​new​ ​UI​ ​for​ ​some​ ​privacy-related
-mechanism,​ ​and​ ​perform​ ​a​ ​mock​ ​implementation.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Malware reverse engineering&lt;/p&gt;
-
-    &lt;p&gt;Use​ ​reverse​ ​engineering​ ​tools​ ​to​ ​understand​ ​and​ ​discuss​ ​how​ ​a​
-​particular​ ​piece​ ​of malware​ ​works.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Implement signature-based antivirus&lt;/p&gt;
-
-    &lt;p&gt;Students​ ​will​ ​read​ ​about​ ​and​ ​implement​ ​a​ ​variant​ ​of​ ​signature-based​
-​antivirus​ ​detection for​ ​a​ ​small​ ​sample​ ​of​ ​malware.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Students​ ​will​ ​check​ ​in​ ​with​ ​the​ ​professor​ ​regularly,​ ​and​
-collaboration​ ​will​ ​occur​ ​via​ ​Github.&lt;/p&gt;
-
-&lt;h2 id=&quot;grading&quot;&gt;Grading&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Labs and projects: 50%
-    &lt;ul&gt;
-      &lt;li&gt;Individual component: 30%&lt;/li&gt;
-      &lt;li&gt;Group component: 20%&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Two midterm exams: 30% (take home and open note)
-    &lt;ul&gt;
-      &lt;li&gt;Given 1/3rd and 2/3rd of the way through the course&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Final project: 20%&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Evaluation​ ​for​ ​group​ ​projects​ ​will​ ​be​ ​based​ ​on​ ​mutual​ ​student​
-feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ ​members.&lt;/p&gt;
-
-&lt;h2 id=&quot;books&quot;&gt;Books&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Required&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Security Engineering, Second Editing&lt;/strong&gt;, ​by ​Ross ​Anderson
-    &lt;ul&gt;
-      &lt;li&gt;This​ ​book​ ​is​ ​freely​ ​available​ ​online​ ​from​ ​the​ ​author&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Online​ ​resources​ ​will​ ​be​ ​distributed​ ​throughout​ ​the​ ​course.​ ​These​
-​include​ ​blog​ ​articles (e.g.,​ ​by​ ​the​ ​Facebook​ ​privacy​ ​group),​ ​academic​
-​papers,​ ​and​ ​websites​ ​(e.g.,​ ​the​ ​Android security​ ​internals).​ ​These​
-​will​ ​all​ ​be​ ​freely​ ​available.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;The Web Application Hacker’s Handbook&lt;/strong&gt;​,​ ​by​ ​Dafydd​ ​Stuttard​ ​&amp;amp;​ ​Marcus​ ​Pinto&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Applied Cryptography, Second Edition&lt;/strong&gt;, by​ ​Bruce​ ​Schneier&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Sat, 23 Sep 2017 00:00:00 -0400</pubDate>
-        <link>/teaching/2017/09/23/my-cybersecurity-course/</link>
-        <guid isPermaLink="true">/teaching/2017/09/23/my-cybersecurity-course/</guid>
-        
-        
-        <category>teaching</category>
-        
-      </item>
-    
-      <item>
-        <title>Writing tip: say the text back to you</title>
-        <description>&lt;p&gt;Here’s the tip: have your computer read your writing back to
-you. Listen to how it sounds. Then, iterate until it conveys what
-you’d like to hear. On a mac, you can do this it like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;say -r words_per_minute &quot;My speech goes here&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I do this to either:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Read the text back to me quickly (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r 240-270&lt;/code&gt;). This helps follow
-along with a document in front of me and check it for flow. It also
-catches miswordings, (some) grammar errors, and typos.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Close my eyes, sit back, and really try to absorb the text. I listen
-slowly, around 180-200 words per minute. This allows me to hear
-places where the text sounds awkward or redundant.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The book &lt;a href=&quot;https://www.amazon.com/BUGS-Writing-Revised-Guide-Debugging/dp/020137921X&quot;&gt;BUGS in
-Writing&lt;/a&gt;
-talks at length about developing an “ear” for good writing. While I
-found the book’s content useful, it’s decidedly hard to be able to
-objectively “hear” your own writing. I have a tough time divorcing the
-process of reading from pondering over the endless ways I could
-improve any given sentence.&lt;/p&gt;
-
-&lt;p&gt;I’ve found that listening to the text spoken back to you is a great
-way to perform rapid prototyping on documents. For example, I wrote a
-rough draft of this post, listened to it, and then restructured based
-on what I heard. I don’t think of myself as a naturally good
-writer. Forcing myself to slow down and concentrate naturally shifts
-my sentences towards being shorter and more concise.&lt;/p&gt;
-
-&lt;p&gt;Here’s an example from the syllabus for my upcoming security course,
-which I was editing today:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;To understand how attackers think, we will learn about the attacks
-they employ. But understanding a collection of attacks is not alone
-sufficient for helping us understand how to build secure systems. So
-alongside attacks, we will also cover the theory behind building
-defenses into our systems. We will dissect a number of real-world
-attacks (such as Heartbleed or WannaCry) and reflect upon what could
-have been done to prevent them. To complement these examples, will
-learn the theoretical underpinnings of security that apply across
-systems.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I spent some amount of time going over this text, but never really
-“heard” it all together. When I did, I immediately identified the
-problem: the paragraph was saying the same thing twice, breaking the
-natural flow.&lt;/p&gt;
-
-&lt;p&gt;I then came up with this:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;To understand how attackers think, we will learn about the attacks
-they employ. We will dissect a number of real-world attacks (such as
-Heartbleed or WannaCry) and reflect upon what could have been done
-to prevent them. But understanding a collection of attacks is not
-alone sufficient for helping us understand how to build secure
-systems. So alongside attacks, we will also learn the theoretical
-underpinnings of security, and use it to build defenses into our
-systems.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Which sounds a lot better to me!&lt;/p&gt;
-
-&lt;p&gt;By the way, I learned this trick from Philip Guo:&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Do other people do this too? I often use text-to-speech to have my computer/phone read my own writing back to me to sense how it sounds&lt;/p&gt;&amp;mdash; Philip Guo (@pgbovine) &lt;a href=&quot;https://twitter.com/pgbovine/status/910182577767514113&quot;&gt;September 19, 2017&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-</description>
-        <pubDate>Fri, 22 Sep 2017 00:00:00 -0400</pubDate>
-        <link>/writing/2017/09/22/reading-text-back/</link>
-        <guid isPermaLink="true">/writing/2017/09/22/reading-text-back/</guid>
-        
-        
-        <category>writing</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Succeed in Grad School</title>
-        <description>&lt;p&gt;I gave this talk on August 24, 2017, to incoming grad students at the
-University of Maryland, College Park.  Full slides available
-&lt;a href=&quot;/assets/gradschoolsuccess.key&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-&lt;iframe src=&quot;https://www.icloud.com/keynote/021F6CUaWtKuou6byPrV-aYvg?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
-</description>
-        <pubDate>Fri, 01 Sep 2017 00:00:00 -0400</pubDate>
-        <link>/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
-        <guid isPermaLink="true">/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
-        
-        
-        <category>talks</category>
-        
-        <category>grad-school</category>
         
       </item>
     
