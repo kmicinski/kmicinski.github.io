@@ -101,7 +101,7 @@ a {
   text-decoration: none;
 }
 a:visited {
-  color: #882c00;
+  color: rgb(135.5, 44.1014150943, 0);
 }
 a:hover {
   color: #111;
@@ -113,7 +113,7 @@ a:hover {
  */
 blockquote {
   color: #6F777D;
-  border-left: 4px solid #dadcde;
+  border-left: 4px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
   padding-left: 15px;
   font-size: 18px;
   letter-spacing: -1px;
@@ -129,7 +129,7 @@ blockquote > :last-child {
 pre,
 code {
   font-size: 15px;
-  border: 1px solid #dadcde;
+  border: 1px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
   border-radius: 3px;
   background-color: #eef;
 }
@@ -231,7 +231,7 @@ pre > code {
     top: 9px;
     right: 15px;
     background-color: #fdfdfd;
-    border: 1px solid #dadcde;
+    border: 1px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
     border-radius: 5px;
     text-align: right;
   }
@@ -273,7 +273,7 @@ pre > code {
  * Site footer
  */
 .site-footer {
-  border-top: 1px solid #dadcde;
+  border-top: 1px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
   padding: 30px 0;
 }
 
@@ -302,35 +302,35 @@ pre > code {
 
 .footer-col-1 {
   width: -webkit-calc(35% - (30px / 2));
-  width: calc(35% - (30px / 2));
+  width: calc(35% - 30px / 2);
 }
 
 .footer-col-2 {
   width: -webkit-calc(20% - (30px / 2));
-  width: calc(20% - (30px / 2));
+  width: calc(20% - 30px / 2);
 }
 
 .footer-col-3 {
   width: -webkit-calc(45% - (30px / 2));
-  width: calc(45% - (30px / 2));
+  width: calc(45% - 30px / 2);
 }
 
 @media screen and (max-width: 800px) {
   .footer-col-1,
   .footer-col-2 {
     width: -webkit-calc(50% - (30px / 2));
-    width: calc(50% - (30px / 2));
+    width: calc(50% - 30px / 2);
   }
   .footer-col-3 {
     width: -webkit-calc(100% - (30px / 2));
-    width: calc(100% - (30px / 2));
+    width: calc(100% - 30px / 2);
   }
 }
 @media screen and (max-width: 600px) {
   .footer-col {
     float: none;
     width: -webkit-calc(100% - (30px / 2));
-    width: calc(100% - (30px / 2));
+    width: calc(100% - 30px / 2);
   }
 }
 /**

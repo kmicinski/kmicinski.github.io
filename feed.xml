@@ -2,13 +2,713 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kristopher Micinski</title>
-    <description>Kris Micinski's Website. Love the lambda.
+    <description>Kris Micinski&apos;s Website. Love the lambda.
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 26 Oct 2023 05:34:48 -0400</pubDate>
-    <lastBuildDate>Thu, 26 Oct 2023 05:34:48 -0400</lastBuildDate>
-    <generator>Jekyll v4.3.2</generator>
+    <pubDate>Fri, 01 Aug 2025 21:20:24 -0400</pubDate>
+    <lastBuildDate>Fri, 01 Aug 2025 21:20:24 -0400</lastBuildDate>
+    <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>Why Tail-Recursive Functions are Loops</title>
+        <description>&lt;p&gt;One story every computing enthusiast should hear is the lesson of
+how loops and tail-recursion are equivalent. We like recursive
+functions because they’re amenable to induction, and we can derive
+them in a way that is in direct correspondence with the definition of
+the datatype over which they recur. We like loops because they’re
+fast and make intuitive sense as long as variables don’t change in too
+tricky a way.&lt;/p&gt;
+
+&lt;p&gt;In general, recursive functions are slower than loops because they
+push stack frames: the performance of most programs today is dominated
+by memory reads/writes. The data we touch the most lives in the
+cache–we do &lt;em&gt;not&lt;/em&gt; want to evict a ton of stuff from the cache, under
+any circumstance. In a direct-style implementation of a recursive
+function, the recursive call &lt;em&gt;has&lt;/em&gt; to push a stack frame to remember
+what to do once the function returns:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Racket
+(define (sum l)
+  (if (empty? l)
+      0
+      (+ (first l) (sum (rest l)))))
+
+// C 
+int sum(int *l, int length) {
+    if (length == 0)
+        return 0;
+    else
+        return l[0] + sum(l + 1, length - 1);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When we get to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(+ (first l) (sum (rest l)))&lt;/code&gt;, we first call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(first
+l)&lt;/code&gt; (which returns the first element). While we’re making that call,
+we have to remember to come back and do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(sum (rest l))&lt;/code&gt;–to be fully
+precise, we remember that we need to do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(rest l)&lt;/code&gt;, then take its
+result &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; and call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(sum x)&lt;/code&gt;, remembering to come back and finally
+take &lt;em&gt;that&lt;/em&gt; result and add it to the result of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(first l)&lt;/code&gt;. The reason
+we have to do this is because we need to remember those partial
+results (in this case the result of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(first l)&lt;/code&gt;): we have to store
+them somewhere after all, and each time we make the recursive call, we
+need to remember the result of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(first l)&lt;/code&gt; from &lt;em&gt;this&lt;/em&gt; call–we need
+O(n) stack space for a list of size n.&lt;/p&gt;
+
+&lt;p&gt;Of course, if we use iteration this all goes away:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Racket
+(define (sum l)
+  (define x 0)
+  (for ([elt l])
+    (set! x (+ x elt)))
+  x)
+
+// C
+int sum(const int *l, int length) {
+    int x = 0;
+    for (int i = 0; i &amp;lt; length; i++) {
+        x += l[i];
+    }
+    return x;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We all have an intuitive sense of what the loop is doing: once we hit
+the end of the loop, we do &lt;em&gt;not&lt;/em&gt; make a recursive call (we never issue
+a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;call&lt;/code&gt; instruction in assembly), we simply &lt;em&gt;jump&lt;/em&gt; up to the
+beginning of the loop. The key is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; is being used as an
+&lt;em&gt;accumulator&lt;/em&gt;, growing a partial result in a &lt;em&gt;bottom-up&lt;/em&gt; fashion as
+the computation proceeds, eventually yielding the final value at the
+end. Instead of keeping partial results on the stack, the loop takes a
+&lt;em&gt;constant&lt;/em&gt; amount of space but linear time.&lt;/p&gt;
+
+&lt;p&gt;In a tail-recursive implementation, the rule is that every recursive
+call must be a &lt;em&gt;tail&lt;/em&gt; call. Intuitively, a tail call is a call which
+is “immediately returned.” More formally, a subexpression of an
+expression is in tail position if the return value from that
+expression is the return value from the whole expression. For example,
+in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(if guard e-t e-f)&lt;/code&gt;, both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e-t&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e-f&lt;/code&gt; are in tail position,
+but the guard is not: after we decide which branch to take, we’re
+committed:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define (foo ...)
+  ...
+  (if guard
+    (f x y ...)
+    (g z ...)))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once we finish executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;guard&lt;/code&gt;, it would be &lt;em&gt;useless&lt;/em&gt; (but
+&lt;strong&gt;correct&lt;/strong&gt;) to (a) push a stack frame, (b) wait on the result of the
+subordinate call, and (c) merely return &lt;em&gt;that same result&lt;/em&gt;, because
+all we’d be doing is &lt;em&gt;copying&lt;/em&gt; the return value from the callee and
+propagating it back as the return value of the caller.  Being a tail
+call is a syntactic property of a callsite: we (and the compiler) can
+easily look at a piece of code and cheaply decide when a call is a
+tail call versus not.&lt;/p&gt;
+
+&lt;p&gt;This reasoning above generalizes to &lt;em&gt;any&lt;/em&gt; call expression in tail
+position: &lt;em&gt;because a tail call will necessarily evaluate to its
+result, administratively copying it up/down the stack is extensionally
+a no-op&lt;/em&gt;. Now, the tail-recursive version uses a simple trick I teach
+to all of my students: (a) identify an accumulator variable, (b)
+instead of computing with the &lt;em&gt;result&lt;/em&gt; of the recursive call, compute
+with the &lt;em&gt;current accumulator&lt;/em&gt;, (c) return the accumulator in the base
+case:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Racket
+(define (sum l acc) ;; note: acc got added
+  (if (empty? l)
+      acc ;; this is the *true* return!
+      (sum (rest l) (+ acc (first l)))))
+
+// C -- we pass in length manually because we&apos;re using arrays
+int sum(const int* l, int length, int acc) {
+    if (length == 0) return acc;
+    return sum(l + 1, length - 1, acc + l[0]);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Both of these functions are tail recursive: because the only recursive
+call to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sum&lt;/code&gt; is &lt;em&gt;also&lt;/em&gt; the return value from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sum&lt;/code&gt; (or, more
+directly: because both calls to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sum&lt;/code&gt; are in tail position). Since the
+compiler knows that these are tail calls, a compiler with tail-call
+optimization will ensure that both of these tail calls compile into
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jmp&lt;/code&gt; statements–with zero implication on stack usage–rather than
+the more burdensome (on the cache, stack, etc.) direct-style
+calls. Something that should concern you is this: if the function is
+using constant stack space, how are the variables being updated /
+represented!? The answer is that the arguments get &lt;strong&gt;stomped over&lt;/strong&gt;,
+and &lt;strong&gt;mutably updated&lt;/strong&gt;, yielding the &lt;em&gt;exact same performance profile
+as a loop!&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now time for an exercise, what about this program, can you convert it
+to using tail-recursion?&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; return a pair (cons cell) of the number of even numbers,
+;; and the number of odd numbers.
+;; HINT: use multiple accumulators. 
+(define (even-odd l)
+  (if (empty? l)
+      (cons 0 0)
+      (let ([v (even-odd (rest l))])
+            (if (first l)
+                (cons (add1 (car v)) (cdr v))
+                (cons (car v) (add1 (cdr v))))))))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;What about &lt;em&gt;this&lt;/em&gt; program?&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; flattens a tree? into a list
+;; It&apos;s hard because there are *two* calls to linearize--can you do anything?
+(define (linearize t)
+  (match t
+    [&apos;empty &apos;()]
+    [`(node ,v ,t0 ,t1) (append (list v) (linearize t0) (linearize t1))]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;One surprising fact is that we can systematically compile &lt;em&gt;any&lt;/em&gt;
+program so that &lt;em&gt;every&lt;/em&gt; call is a tail-call, by completely
+transforming the program into &lt;a href=&quot;https://matt.might.net/articles/cps-conversion/&quot;&gt;continuation-passing-style
+(CPS)&lt;/a&gt;, this
+essentially &lt;em&gt;eliminates&lt;/em&gt; the stack. Indeed, some compilers for
+functional languages work precisely this way: those languages
+&lt;strong&gt;cannot&lt;/strong&gt; fall prey to a stack overflow, because they have
+essentially traded a monolithic (efficient, array-like) stack for a
+deeply-nested stack, strewn throughout the heap—because the
+continuations will be heap-allocated and nested. There are various
+exciting trade-offs here, but for now I will leave this as is–we will
+continue next week.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 01 Aug 2025 00:00:00 -0400</pubDate>
+        <link>/functional-programming/2025/08/01/loops/</link>
+        <guid isPermaLink="true">/functional-programming/2025/08/01/loops/</guid>
+        
+        
+        <category>functional-programming</category>
+        
+      </item>
+    
+      <item>
+        <title>Modern Deduction Post 1: Chain-Forward Computation</title>
+        <description>&lt;p&gt;Our setting is logic programming, a field which attempts to design
+programming languages whose semantics have a close relationship to
+formal logic. The reason we might want to do this is that it suits our
+application domain more precisely than an implementation in a
+traditional programming language. Thus, using a logic programming
+language allows us to write more obviously-correct code, and perhaps
+even code that can be extracted cleanly from a certified
+implementation. Alternatively, if we did it ourselves, we’d have to do
+what our compiler (interpreter, …) would do anyway, so there’s no
+sense in doing it manually. Unfortunately, when we see a powerful
+tool, we are tempted to use it for everything: if our application is
+not ultimately-suited to the operationalization strategy of the logic
+programming engine we’re using, we simply obfuscate the issue in a
+veneer of formalism and end up with leaky abstractions. This is, I
+speculate, why logic programming languages have never caught on
+broadly for general-purpose programming. In this blog, I will detail
+the various trade-offs and implementation paradigms for modern logic
+programming engines, starting from Datalog and with a focus on program
+analysis.&lt;/p&gt;
+
+&lt;p&gt;The history of logic is rich, and I will not attempt to recount it
+all. Here I will focus on more restricted, application-specific
+languages, especially Datalog and its derivatives. The specific
+features of these languages, and the particulars of their
+implementation, often dovetail with a “right place, right time”
+effect. For example, &lt;a href=&quot;https://suif.stanford.edu/papers/pldi04.pdf&quot;&gt;Datalog backed by
+BDDs&lt;/a&gt; was a significant
+step forward in terms of production program analyses. More modern
+implementations eschew BDDs for more explicit representations, but it
+remains the case that engineers and computer scientists are on the
+lookout for logic-programming-based approaches to hard problems,
+especially those which deal intrinsically in the enumeration of large
+state spaces.&lt;/p&gt;
+
+&lt;p&gt;Perhaps one of logic programming’s most exciting motivations is
+program analysis. Program analysis systems automatically prove
+properties about, find bugs in, or simply help us understand our
+programs. These can come in a variety of forms from on-demand
+in-editor type-checking to whole-program (runs in microseconds),
+context-sensitive points-to analysis (days). Program analyses are
+notoriously hard to specify, and are especially hard to implement in a
+way that provides a close relationship to the formal
+specification. Additionally, program analyses often grapple with large
+state spaces in practice to solve interesting problems, and require
+some amount of thought regarding high-performance implementation.&lt;/p&gt;
+
+&lt;h4 id=&quot;chain-forward-computation-and-datalog&quot;&gt;Chain-Forward Computation and Datalog&lt;/h4&gt;
+
+&lt;p&gt;The central evaluation mechanism in Datalog, and its derivatives, is
+to saturate a set of rules (e.g., Horn clauses) to a fixed point, to
+obtain a knowledge database in some domain. We call the computation
+“chain forward” because the evaluation of such languages is guided by
+an ordering on knowledge, typically set inclusion (in the case of
+traditional Datalogs). In these settings, we define an “immediate
+consequence” operator, which tells us everything which must be known,
+as a consequence of what we currently know; crucially, this operator
+is typically monotonic: we do not lose knowledge over time, though we
+will discuss some interesting departures from this
+assumption. Applying this immediate consequence operator repeatedly
+yields a stream of knowledge databases over time. Assuming the
+immediate consequence operator is monotone, this stream of knowledge
+databases over time forms an ascending chain according to the ordering
+on knowledge.&lt;/p&gt;
+
+&lt;p&gt;Datalog’s syntax consisting of “facts” and “rules.” Facts are “known
+statements” and always have the following form: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R(c0, ...)&lt;/code&gt;, where
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R&lt;/code&gt; is a relation name (identifier) and the arguments are
+constants. For example &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;gt;(3,2)&lt;/code&gt; might be a fact, along with
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reaches(&quot;n0&quot;,&quot;n1&quot;)&lt;/code&gt;. But facts may not include variables, for
+example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reaches(&quot;n0&quot;,x)&lt;/code&gt; is disallowable as a fact, because &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; is
+not bounded in any way.&lt;/p&gt;
+
+&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;;; atomic lits are symbols&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; variables must be explicitly tagged, not &apos;x, but &apos;(var x)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var-or-atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; tuples are untagged&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tuple?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; facts add a relation name (otherwise how would we know it)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fact?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; notice that ∧ is implicit in the body&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rule?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;head-rel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;var-or-atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;--&lt;/span&gt; 
+       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;body-rels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;var-or-atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s look at simplest interesting example: transitive closure. The
+Datalog program (technically in Soufflé here) to implement transitive
+closure &lt;a href=&quot;&quot;&gt;example (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tc.dl&lt;/code&gt;)&lt;/a&gt; is here (I elide some declarations):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.output path
+.decl edge(x:number,y:number)
+.decl path(x:number,y:number)
+edge(1,2). edge(2,3). edge(3,5). edge(5,4). edge(4,1). edge(4,8).
+path(x, y) :- edge(x, y).
+path(x, y) :- path(x, z), edge(z, y).
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Running this program in Soufflé (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;souffle tc.dl&lt;/code&gt;) yields an output
+database, the transitively-closed graph, in the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;path.csv&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;datalog-cannot-search-disjunction-saturated-conjunctions-only&quot;&gt;Datalog cannot search (disjunction), saturated conjunctions only&lt;/h4&gt;
+
+&lt;p&gt;Disjunctions in the head of a rule is disallowed: this is not
+semantically within reach of Datalog. The following is invalid:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Q(x,...) ∨ R(x,...) ← P(...) ∧ R(...)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once we have more than one positive literal in a clause, we need a SAT
+solver. SAT solvers combine search (“guess new things”) and deduction
+(“derive consequences”); Datalog solvers only employ deduction. Both
+SAT and Datalog engines share some overlapping ideas; for example,
+both use indexing, to accelerate joins (Datalog) and for efficient
+unit propagation (SAT). But (&amp;gt;2)-SAT is strictly harder than Datalog:
+2-SAT can be written as Horn clauses (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Q ← R&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;¬R ∨ Q&lt;/code&gt;), but 3-SAT
+and beyond are out of reach. By contrast, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;∧&lt;/code&gt; in the head of a rule
+presents no serious semantic issue: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Q(x,...) ∧ R(x,...) ← ...&lt;/code&gt; can
+easily be desugared into two rules: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Q(x,...) ← ...&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R(x,...) ←
+...&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;SAT solvers have an importance difference from Datalog solvers: they
+forget information. This is important because, while you can use
+Datalog to do SAT solving just fine, you will pay a massive
+performance due to the concomitant over-materialization induced by
+enumerating all possibilities: you would be &lt;em&gt;literally materializing
+O(2ⁿ)&lt;/em&gt;. Of course, there are languages that embrace such
+cartoonishly-huge state spaces by design (answer-set programming, for
+example), and their designs are subsequently guided around these
+issues; indeed, grounding on-the-fly is an active research topic
+within ASP.&lt;/p&gt;
+
+&lt;p&gt;As an example, think about how you could write 5-clique:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;clique3(A, B, C) :-
+    edge(A, B), edge(A, C), edge(B, C),
+    A != B, A != C, B != C.
+clique4(A, B, C, D) :-
+    clique3(A, B, C),
+    edge(A, D), edge(B, D), edge(C, D),
+    A != D, B != D, C != D.
+clique5(A, B, C, D, E) :-
+    clique4(A, B, C, D),
+    edge(A, E), edge(B, E), edge(C, E), edge(D, E),
+    A != E, B != E, C != E, D != E.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;semi-naïve-evaluation&quot;&gt;Semi-Naïve Evaluation&lt;/h4&gt;
+
+&lt;p&gt;One issue with the repeated application of the rules is that if we use
+an explicit set-based representation of tuples, each iteration we’ll
+“rediscover” all knowledge from every previous iteration—this
+translates to additional data load, without commensurate knowledge
+throughput. In Datalog, the solution is to employ a compilation into
+an incrementalized IR, ala semi-naïve evaluation. For example, the
+recursive rule in transitive closure becomes:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;path(x,z) ← path(x,y) ∧ edge(y,z)
+          | 
+   becomes| No Δ versions for edge as it is static
+          |
+Δpath(x,z) ← (Δpath(x,y) ∧ edge(y,z)) - path
+i.e., 
+Δpath(x,z) ∪= (Δpath(x,y) ⋈ edge(y,z)) - path
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The rule expands into a single rule, because the relation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;edge&lt;/code&gt; never
+changes–thus, tracking a delta version would be
+irrelevant. Additionally, we assume that at the end of each iteration,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δpath&lt;/code&gt; is merged into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;path&lt;/code&gt;. In the more general case such as:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;g(y,x) ∧ p(x,z) ← p(x,y) ∧ g(y,z)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We would need to split the rule into several versions: one to join
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δp&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;g&lt;/code&gt;, one to join &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;p&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δg&lt;/code&gt;, and one to join &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δp&lt;/code&gt; with
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δg&lt;/code&gt;. Think about what would happen if we have only &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δp ⋈ Δg&lt;/code&gt;: if we
+have facts &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(x,y)&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δp&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(y,z)&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δg&lt;/code&gt;, everything works
+fine. But what happens if &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(x,y)&lt;/code&gt; skips an iteration? It would be hard
+to ensure that doesn’t happen (though some work certainly explores
+this to a degree), and so we diversify our rules to enable us to catch
+things in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δp&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Δg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Previously, I mentioned the resulting rule would look something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Δpath(x,z) ∪= (Δpath(x,y) ⋈ edge(y,z)) - path
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In fact, all rules within a fixedpoint (more specifically, an SCC of
+rules) will have the structure:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ΔR(x...) ∪= (ΔR(x,...) ⋈ Q(y,...)) - R
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;There is a crucial tacit point to be explained here: deduplication,
+i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;- R&lt;/code&gt; is dirt cheap when implemented thoughtfully, and it is
+possible to parallelize nicely. There is no explicit scan of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R&lt;/code&gt; in
+implementing subtraction, rather every rule generates a set of
+possibly-new tuples, which are deduplicated in some efficient manner
+to add to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ΔR&lt;/code&gt; at the end of each iteration, before emptying &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ΔR&lt;/code&gt; in
+preparation for the next iteration.&lt;/p&gt;
+
+&lt;p&gt;I will not code up semi-naïve evaluation here, but will likely discuss
+a general approach to forward differentation and incrementalization in
+subsequent posts.&lt;/p&gt;
+
+&lt;h4 id=&quot;relational-algebra&quot;&gt;Relational Algebra&lt;/h4&gt;
+
+&lt;p&gt;The explicit focus on bound variables has made the above presentation
+informal, as substitution was never defined. Indeed, substitution is
+“where computation happens” here in much the same way as in the
+λ-calculus. However, handling binders is a bit tedious, and it turns
+out there is a better, more systematic way. In the same way that
+category theory will avoid mentioning concrete points for products A ×
+B, relational algebra will avoid mentioning explicitly-named points
+for manipulating relations.&lt;/p&gt;
+
+&lt;p&gt;The lack of explicit binders allows us to write an obviously-correct
+(albeit slow) interpreter for a conjunctive query that produces sets
+of tuples as its output:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; q: query?
+;; db: hashmap from relation name ↦ ℘(Tuple)
+;; returns a set of tuples
+(define (interpret-query q db)
+  (match q
+    [`(literal-tuple ,es ...) (set es)]
+    [`(scan ,R) (hash-ref db R)]
+    [`(select from ,q+ where column ,n equals ,k)
+     (list-&amp;gt;set (filter (lambda (x) (equal? (list-ref x n) k))
+                        (set-&amp;gt;list (interpret-query q+ db))))]
+    [`(,q0 ∪ ,q1) (set-union (interpret-query q0 db)
+                             (interpret-query q1 db))]
+    [`(,q0 ∩ ,q1) (set-intersect (interpret-query q0 db)
+                                 (interpret-query q1 db))]
+    [`(reorder ,q ,order ...)
+     (let ([ts (set-&amp;gt;list (interpret-query q db))])
+       (set-&amp;gt;list
+        (map (λ (t) (map (λ (i) (list-ref t i)) order))
+             ts)))]
+    [`(project ,q to first ,n)
+     (list-&amp;gt;set (map (λ (t) (take t n)) (set-&amp;gt;list (interpret-query q db))))]
+    [`(,q0 ⋈ ,q1 on first ,N)
+     (list-&amp;gt;set
+      (foldl
+       (λ (t0 tups)
+         (foldl (λ (t1 tups)
+                  (if (equal? (take t0 N) (take t1 N))
+                      (set-add tups (append (take t0 N) (drop t0 N) (drop t1 N)))
+                      tups))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The implementation is mostly standard: notice that ⋈ degenerates to
+the cartesian product in the case that N=0 (since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(take t 0)&lt;/code&gt; returns
+the empty list for all &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t&lt;/code&gt;). We include only binary joins, k-ary joins
+are typically decomposed into chains or trees of binary joins: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R ⋈ Q
+⋈ S&lt;/code&gt; can be construed as either &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(R ⋈ Q) ⋈ S&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R ⋈ (Q ⋈ S)&lt;/code&gt; (3 or
+more joins would allow us to consider trees, too). Unfortunately, the
+wrong choice could force the enumeration to explode: if a subordinate
+join produces lots of junk which is later filtered out by the outer
+join, we may end up doing more work than an alternative join
+plan. Join planning–-the process of optimally deciding on a join
+decomposition–is a challenging aspect of the implementation; for some
+programs, &lt;em&gt;any&lt;/em&gt; particular static join plan is be inefficient, as
+relation sizes dynamically evolve, the optimal join plan may shift as
+well. While traditional databases put a lot of effort into query
+planning, Datalog has taken a slightly different approach, with only
+scant recent work exploring dynamic plans.&lt;/p&gt;
+
+&lt;p&gt;With this implementation, we can write query to find us all of the
+one-hop transitive edges: the query we want is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;edge(x,y), path(y,z)&lt;/code&gt;,
+which operationalizes to a join between edge and path; since we want
+to line up the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt;s we reorder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;edge&lt;/code&gt;, then reorder the join result
+(to gather &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;z&lt;/code&gt;), then project the first two elements.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(interpret-query
+ &apos;(project (reorder ((reorder (scan edge) 1 0) ⋈ (scan path) on first 1) 1 2 0)
+           to first 2)
+ (hash &apos;edge (set &apos;(a b) &apos;(b c) &apos;(c d) &apos;(b e))
+       &apos;path (set &apos;(a b) &apos;(b c) &apos;(c d) &apos;(b e))))
+;; yields (set &apos;(a e) &apos;(b d) &apos;(a c))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Assuming we’re willing to write programs in terms of relational
+algebra, we can iteratively generate new tuples. An &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RA-rule?&lt;/code&gt; extends
+a specific relation (recall we’re taking a point-free style) with the
+result of a query. We can interpret rules by evaluating the query and
+unioning the result set into the necessary relation. A program is a
+set of rules, which we can evaluate by iteratively (to a fixed point)
+applying all rules until we see no changes in the database.&lt;/p&gt;
+
+&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;RA-rule?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-rule&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match-define&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,R&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-set&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-union&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-program&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;next-iteration&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;foldl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-rule&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;do-some-more&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;equal?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;next-iteration&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;do-some-more&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;next-iteration&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;do-some-more&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can write small programs:&lt;/p&gt;
+
+&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-program&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;project&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;⋈&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                     &lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next time, we’ll plan to talk a bit about how to systematically
+compile our high-level rules into the RA plans, and discuss the
+various trade-offs in doing so.&lt;/p&gt;
+
+&lt;h4 id=&quot;the-full-code&quot;&gt;The full code&lt;/h4&gt;
+
+&lt;p&gt;Is here in &lt;a href=&quot;https://gist.github.com/kmicinski/e31ef6f2526c21cb0ec968f0e260e4a0&quot;&gt;this gist&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-scheme highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;;; Relational algebra&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;lang&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;racket&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;;; atomic lits are symbols&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; variables must be explicitly tagged, not &apos;x, but &apos;(var x)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var-or-atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;var?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; tuples are untagged&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tuple?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; facts add a relation name (otherwise how would we know it)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fact?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; notice that ∧ is implicit in the body&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rule?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;head-rel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;var-or-atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;--&lt;/span&gt; 
+       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;body-rels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;var-or-atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; should all be true&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rule?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rule?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;--&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rule?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;--&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rule?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;--&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; RA queries&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;es&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;;; scan a relation&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;nv&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nonnegative-integer?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;nv&quot;&gt;equals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;atom?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+     &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;;; natural join on the first N columns, values must be equal&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;⋈&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nonnegative-integer?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∩&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;;; reorder tuples&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nonnegative-integer?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;;; project the first n elements of tuples&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;project&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;nonnegative-integer?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;;; need closed-world assumption&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; q: query?&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;; db: hashmap from relation name ↦ ℘(Tuple)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;; returns a set of tuples&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;es&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;es&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q+&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;where&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;column&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;equals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;list-&amp;gt;set&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;filter&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;equal?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list-ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-&amp;gt;list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q+&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,q0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-union&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                             &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,q0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∩&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-intersect&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                                 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;order&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ts&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-&amp;gt;list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))])&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-&amp;gt;list&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list-ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;order&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+             &lt;span class=&quot;nv&quot;&gt;ts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;project&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;list-&amp;gt;set&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;take&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-&amp;gt;list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,q0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;⋈&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;list-&amp;gt;set&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;foldl&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;t0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tups&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;foldl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;t1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tups&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;equal?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;take&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;take&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                      &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-add&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;tups&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;append&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;take&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;drop&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;drop&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+                      &lt;span class=&quot;nv&quot;&gt;tups&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                &lt;span class=&quot;nv&quot;&gt;tups&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-&amp;gt;list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q1&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-&amp;gt;list&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q0&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))]))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;RA-rule?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relation?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;RA-query?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-rule&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match-define&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;,R&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-set&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set-union&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-program&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;next-iteration&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;foldl&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-rule&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;do-some-more&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;equal?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;next-iteration&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;do-some-more&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;next-iteration&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;do-some-more&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;;; relations: hash from relation names to their associated arities&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;;; herbrand-base is a list of atoms &lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;herbrand-universe&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relations&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;herbrand-base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;;; generate a cartesian product of arity n with atoms from herbrand-base&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(())&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;append&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;lst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cons&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;lst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;herbrand-base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))))&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;foldl&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;λ&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-set&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;acc&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;h&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relations&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash-keys&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;relations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-query&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;project&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;⋈&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+           &lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hash&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;&apos;edge&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+       &lt;span class=&quot;ss&quot;&gt;&apos;path&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;interpret-program&lt;/span&gt;
+ &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;edge&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;literal-tuple&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;∪&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;project&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;reorder&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;edge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;⋈&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                     &lt;span class=&quot;nv&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Sat, 11 May 2024 00:00:00 -0400</pubDate>
+        <link>/modern-deduction/1</link>
+        <guid isPermaLink="true">/modern-deduction/1</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Modern Deduction Post 0: Prologue</title>
+        <description>&lt;p&gt;Over the past few years, my collaborators and I have been exploring
+the design of high-performance logic programming engines for a wide
+variety of tasks, including program analysis (points-to analysis,
+abstract interpretation), graph analytics (transitive closure,
+PageRank), and security (binary code similarity, disassembly, and
+decompilation). We (myself, my collaborators, and our students) have
+engineered a variety of systems aiming for both (a) state-of-the-art
+performance at the highest scale (shared-memory parallelism,
+distribution via MPI, SIMD on GPUs, and GPU cluster computing) and (b)
+semantic extensions (monotonic aggregation, algebraic data) to
+Datalog.&lt;/p&gt;
+
+&lt;p&gt;I will be chronicling our efforts (mostly the relevant background) in
+this series of posts, Modern Deduction. I will plan to put out a post
+once every month or two.&lt;/p&gt;
+
+&lt;p&gt;Posts:&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 05 Apr 2024 00:00:00 -0400</pubDate>
+        <link>/modern-deduction/0</link>
+        <guid isPermaLink="true">/modern-deduction/0</guid>
+        
+        
+      </item>
     
       <item>
         <title>Mid-Point Review Materials</title>
@@ -45,7 +745,7 @@ defer this to the end or even elide checking entirely.&lt;/p&gt;
 
 &lt;h3 id=&quot;the-language&quot;&gt;The Language&lt;/h3&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Specification of IfArith's syntax as a Racket predicate
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Specification of IfArith&apos;s syntax as a Racket predicate
 (define (expr? e)
   (match e
     [(? nonnegative-integer? n) #t]
@@ -57,10 +757,10 @@ defer this to the end or even elide checking entirely.&lt;/p&gt;
     [_ #f]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define e0 '(plus 2 1)) ;; 3
-(define e1 '(plus 1 (if0 0 1 2))) ;; 2
-(define e2 '(let x (plus 0 0) (plus x 1))) ;; 1 
-(define e3 '(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0))) ;; 1
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define e0 &apos;(plus 2 1)) ;; 3
+(define e1 &apos;(plus 1 (if0 0 1 2))) ;; 2
+(define e2 &apos;(let x (plus 0 0) (plus x 1))) ;; 1 
+(define e3 &apos;(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0))) ;; 1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;the-proofs&quot;&gt;The Proofs&lt;/h3&gt;
@@ -116,24 +816,24 @@ fixed-point combinator.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; naturals
 (define (nat? n)
-  (match n ['O #t] [`(S ,(? nat? n)) #t] [_ #f]))
+  (match n [&apos;O #t] [`(S ,(? nat? n)) #t] [_ #f]))
 
 (define/contract (num-&amp;gt;nat n)
   (-&amp;gt; nonnegative-integer? nat?)
   (match n
-    [0 'O]
+    [0 &apos;O]
     [n `(S ,(num-&amp;gt;nat (- n 1)))]))
 
 (define/contract (nat-&amp;gt;num n)
   (-&amp;gt; nat? nonnegative-integer?)
   (match n
-    ['O 0]
+    [&apos;O 0]
     [`(S ,x) (add1 (nat-&amp;gt;num x))]))
 
 (define/contract (nat-add s0 s1)
   (-&amp;gt; nat? nat? nat?)
   (match s0
-    ['O s1]
+    [&apos;O s1]
     [`(S ,s0+) `(S ,(nat-add s0+ s1))]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -162,7 +862,7 @@ structurally-recursive addition).&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; environments
 (define (environment? ρ)
   (match ρ
-    ['∅ #t]
+    [&apos;∅ #t]
     [`(↦ ,(? environment? ρ+) ,(? symbol? x) ,(? value? v)) #t]
     [_ #f]))
 
@@ -248,13 +948,13 @@ up with doing it in an interactive proof assistant.&lt;/p&gt;
        -----
        ((not ,e0) ,ρ ⇓ O))
      (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
-     (and (equal? v0+ v) (not (equal? v 'O)) (⇓ proof-e0 e0 ρ v))]
+     (and (equal? v0+ v) (not (equal? v &apos;O)) (⇓ proof-e0 e0 ρ v))]
     [`(⇓-not-1
        ,proof-e0
        -----
        ((not ,e0) ,ρ ⇓ (S O)))
      (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
-     (and (equal? v0+ v) (equal? v 'O) (⇓ proof-e0 e0 ρ v))]
+     (and (equal? v0+ v) (equal? v &apos;O) (⇓ proof-e0 e0 ρ v))]
     ;; If-True
     [`(⇓-if-true
        ,proof-guard-true
@@ -263,7 +963,7 @@ up with doing it in an interactive proof assistant.&lt;/p&gt;
        ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v))
      (match (consequent proof-guard-true)
        [`(,_ ,_ ⇓ O)
-        (and (⇓ proof-guard-true e0 ρ 'O)
+        (and (⇓ proof-guard-true e0 ρ &apos;O)
              (⇓ proof-e1-v-res e1 ρ v))])]
     ;; If-False
     [`(⇓-if-false
@@ -274,7 +974,7 @@ up with doing it in an interactive proof assistant.&lt;/p&gt;
      #:when (equal? v+ v)
      (match (consequent proof-guard-false)
        [`(,_ ,_ ⇓ ,n)
-        (and (not (equal? n 'O))
+        (and (not (equal? n &apos;O))
              (⇓ proof-guard-false e0 ρ n)
              (⇓ proof-e1-v-res e1 ρ v))])]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -374,13 +1074,13 @@ unintimidating and to-the-point.&lt;/p&gt;
     [`(not ,e)
      (match (eval e ρ)
        [`(0 . ,pf-e)
-        (cons '(S O)
+        (cons &apos;(S O)
               `(⇓-not-1
                 ,pf-e
                 -----
                 ((not ,e) ρ ⇓ (S O))))]
        [`(,v0 . ,pf-e)
-        (cons 'O
+        (cons &apos;O
               `(⇓-not-0
                 ,pf-e
                 -----
@@ -422,8 +1122,8 @@ Thankfully, we used S-expressions.&lt;/p&gt;
            name
            (string-join (map pf-&amp;gt;tex antecedents) &quot;\\,&quot;)
            (consequent pf))
-   '(&quot;⇓&quot; &quot;∅&quot; &quot;↦&quot;)
-   '(&quot;\\ensuremath{\\Downarrow}&quot; &quot;\\ensuremath{\\emptyset}&quot; 
+   &apos;(&quot;⇓&quot; &quot;∅&quot; &quot;↦&quot;)
+   &apos;(&quot;\\ensuremath{\\Downarrow}&quot; &quot;\\ensuremath{\\emptyset}&quot; 
      &quot;\\ensuremath{\\mapsto}&quot;)))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -507,24 +1207,24 @@ post.&lt;/p&gt;
 
 ;; naturals
 (define (nat? n)
-  (match n ['O #t] [`(S ,(? nat? n)) #t] [_ #f]))
+  (match n [&apos;O #t] [`(S ,(? nat? n)) #t] [_ #f]))
 
 (define/contract (num-&amp;gt;nat n)
   (-&amp;gt; nonnegative-integer? nat?)
   (match n
-    [0 'O]
+    [0 &apos;O]
     [n `(S ,(num-&amp;gt;nat (- n 1)))]))
 
 (define/contract (nat-&amp;gt;num n)
   (-&amp;gt; nat? nonnegative-integer?)
   (match n
-    ['O 0]
+    [&apos;O 0]
     [`(S ,x) (add1 (nat-&amp;gt;num x))]))
 
 (define/contract (nat-add s0 s1)
   (-&amp;gt; nat? nat? nat?)
   (match s0
-    ['O s1]
+    [&apos;O s1]
     [`(S ,s0+) `(S ,(nat-add s0+ s1))]))
 
 ;; values are nats
@@ -544,7 +1244,7 @@ post.&lt;/p&gt;
 ;; environments
 (define (environment? ρ)
   (match ρ
-    ['∅ #t]
+    [&apos;∅ #t]
     [`(↦ ,(? environment? ρ+) ,(? symbol? x) ,(? value? v)) #t]
     [_ #f]))
 
@@ -581,9 +1281,9 @@ post.&lt;/p&gt;
                        [`(,v . ,pf)
                         `(,v . (↦-miss ,pf ----- (↦ ,ρ1 ,x1 ,v) ))])]))
 
-; (lookup '(↦ (↦ ∅ x O) y (S O)) 'x)
+; (lookup &apos;(↦ (↦ ∅ x O) y (S O)) &apos;x)
 
-;; we will now follow the style '(name atecedent0 ... ----- consequent)
+;; we will now follow the style &apos;(name atecedent0 ... ----- consequent)
 (define (consequent judgement) (last judgement))
 
 ;; predicate -- inductive definition of evaluation relation
@@ -632,13 +1332,13 @@ post.&lt;/p&gt;
        -----
        ((not ,e0) ,ρ ⇓ O))
      (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
-     (and (equal? v0+ v) (not (equal? v 'O)) (⇓ proof-e0 e0 ρ v))]
+     (and (equal? v0+ v) (not (equal? v &apos;O)) (⇓ proof-e0 e0 ρ v))]
     [`(⇓-not-1
        ,proof-e0
        -----
        ((not ,e0) ,ρ ⇓ (S O)))
      (define v0+ (match (consequent proof-e0) [`(,_ ,_ ⇓ ,v) v]))
-     (and (equal? v0+ v) (equal? v 'O) (⇓ proof-e0 e0 ρ v))]
+     (and (equal? v0+ v) (equal? v &apos;O) (⇓ proof-e0 e0 ρ v))]
     ;; If-True
     [`(⇓-if-true
        ,proof-guard-true
@@ -647,7 +1347,7 @@ post.&lt;/p&gt;
        ((if0 ,e0 ,e1 ,e2) ,ρ ⇓ ,v))
      (match (consequent proof-guard-true)
        [`(,_ ,_ ⇓ O)
-        (and (⇓ proof-guard-true e0 ρ 'O)
+        (and (⇓ proof-guard-true e0 ρ &apos;O)
              (⇓ proof-e1-v-res e1 ρ v))])]
     ;; If-False
     [`(⇓-if-false
@@ -658,7 +1358,7 @@ post.&lt;/p&gt;
      #:when (equal? v+ v)
      (match (consequent proof-guard-false)
        [`(,_ ,_ ⇓ ,n)
-        (and (not (equal? n 'O))
+        (and (not (equal? n &apos;O))
              (⇓ proof-guard-false e0 ρ n)
              (⇓ proof-e1-v-res e1 ρ v))])]
     [_ #f]))
@@ -713,13 +1413,13 @@ post.&lt;/p&gt;
     [`(not ,e)
      (match (eval e ρ)
        [`(0 . ,pf-e)
-        (cons '(S O)
+        (cons &apos;(S O)
               `(⇓-not-1
                 ,pf-e
                 -----
                 ((not ,e) ρ ⇓ (S O))))]
        [`(,v0 . ,pf-e)
-        (cons 'O
+        (cons &apos;O
               `(⇓-not-0
                 ,pf-e
                 -----
@@ -755,17 +1455,17 @@ post.&lt;/p&gt;
            name
            (string-join (map pf-&amp;gt;tex antecedents) &quot;\\,&quot;)
            (consequent pf))
-   '(&quot;⇓&quot; &quot;∅&quot; &quot;↦&quot;)
-   '(&quot;\\ensuremath{\\Downarrow}&quot; &quot;\\ensuremath{\\emptyset}&quot; &quot;\\ensuremath{\\mapsto}&quot;)))
+   &apos;(&quot;⇓&quot; &quot;∅&quot; &quot;↦&quot;)
+   &apos;(&quot;\\ensuremath{\\Downarrow}&quot; &quot;\\ensuremath{\\emptyset}&quot; &quot;\\ensuremath{\\mapsto}&quot;)))
 
 (define (derive e)
-  (displayln (pf-&amp;gt;tex (cdr (eval e '∅)))))
+  (displayln (pf-&amp;gt;tex (cdr (eval e &apos;∅)))))
 
 ;; examples
 
-;(derive '(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0)))
-;(derive '(plus 1 (if0 0 1 2)))
-;(derive '(let x (plus 0 0) (plus x 1)))
+;(derive &apos;(let x (plus 0 (if0 (plus 0 0) 1 0)) (plus x 0)))
+;(derive &apos;(plus 1 (if0 0 1 2)))
+;(derive &apos;(let x (plus 0 0) (plus x 1)))
 
 (define (eval-simpl e ρ)
   (match e
@@ -799,7 +1499,7 @@ post.&lt;/p&gt;
       </item>
     
       <item>
-        <title>Why I hope you'll submit to Scheme Workshop</title>
+        <title>Why I hope you&apos;ll submit to Scheme Workshop</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://thomas.gilray.org/scheme-2019/&quot;&gt;&lt;strong&gt;Link to this year’s Scheme Workshop CFP&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;This year marks the twentieth anniversary of the workshop on &lt;a href=&quot;http://www.schemeworkshop.org/&quot;&gt;Scheme
@@ -1030,7 +1730,7 @@ didn’t realize was that when I changed it, Netflix also got it:&lt;/p&gt;
 &lt;p&gt;This is pretty jarring. Where was the “share this with Netflix” button
 that I pressed? Of course, the answer is that it’s right here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook's privacy configuration for Netflix&quot; style=&quot;width:350px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/netflix-privacy.png&quot; alt=&quot;A picture of Facebook&apos;s privacy configuration for Netflix&quot; style=&quot;width:350px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s buried right there under “Public profile (required).” But there’s
 also a lot of other stuff I gave it access to too, I guess I forgot
@@ -1053,7 +1753,7 @@ wonder what else does that!&lt;/p&gt;
 &lt;p&gt;Turns out it’s &lt;em&gt;hundreds&lt;/em&gt; of things! Facebook even has a tool for
 this, called their “Privacy Checkup”:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook's privacy checkup tool&quot; style=&quot;width:400px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/facebook-privacy-checkup.png&quot; alt=&quot;A picture of Facebook&apos;s privacy checkup tool&quot; style=&quot;width:400px&quot; class=&quot;post-image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is useful for helping you audit which apps have access to do
 things like post on your feed and things like that. But it doesn’t
@@ -1336,341 +2036,6 @@ I’ll just put the slides here.&lt;/p&gt;
         <category>git</category>
         
         <category>talks</category>
-        
-      </item>
-    
-      <item>
-        <title>My new cybersecurity course at Haverford (Spring 2017)</title>
-        <description>&lt;p&gt;You can also download this syllabus as a &lt;a href=&quot;/assets/cybersec-syllabus.pdf&quot;&gt;PDF&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;computer-security-attacks-and-defenses&quot;&gt;Computer Security: Attacks and Defenses&lt;/h2&gt;
-&lt;p&gt;(&lt;em&gt;CMSC 323&lt;/em&gt; at Haverford)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Prerequisites&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Experience in C programming:
-    &lt;ul&gt;
-      &lt;li&gt;E.g., CMSC245 at Haverford or CMSC246 at Bryn Mawr&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Experience with or willingness to learn learn new languages (Python, SQL, JavaScript, etc..)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Workload&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;3 lecture hours per week&lt;/li&gt;
-  &lt;li&gt;1 lab hour per week&lt;/li&gt;
-  &lt;li&gt;This will be a lab / project intensive class. Approximately 6-10
-hours per week &lt;em&gt;outside&lt;/em&gt; of class will be expected from
-students. I recommend against taking this course concurrent with
-other project-heavy courses.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Cap&lt;/strong&gt;: 25 (may be lifted to 35)&lt;/p&gt;
-
-&lt;h2 id=&quot;course-overview&quot;&gt;Course Overview&lt;/h2&gt;
-
-&lt;p&gt;This​ ​course​ ​will​ ​serve​ ​as​ ​a​ ​broad​ ​introduction​ ​to​ ​the​ ​field​ ​of​
-​computer​ ​security,​ ​from​ ​two concurrent​ ​perspectives:​ ​attacks​ ​on​
-​systems,​ ​and​ ​defenses​ ​against​ ​those​ ​attacks.​ ​The​ ​goal​ ​of this​ ​course​
-​will​ ​be​ ​to​ ​help​ ​build​ ​intuition​ ​so​ ​that–when​ ​designing​ ​your​ ​own​
-​systems–you​ ​can intelligently​ ​assess​ ​and​ ​mitigate​ ​security​ ​risks.&lt;/p&gt;
-
-&lt;p&gt;To​ ​understand​ ​how​ ​attackers​ ​think,​ ​we​ ​will​ ​learn​ ​about​ ​the​ ​attacks​
-​they​ ​employ.​ ​​ ​We​ ​will dissect​ ​a​ ​number​ ​of​ ​real-world​ ​attacks​ ​(such​ ​as​
-​Heartbleed​ ​or​ ​WannaCry)​ ​and​ ​reflect​ ​upon​ ​what could​ ​have​ ​been​ ​done​ ​to​
-​prevent​ ​them.​ ​But​ ​understanding​ ​a​ ​collection​ ​of​ ​attacks​ ​is​ ​not​ ​alone
-sufficient​ ​for​ ​helping​ ​us​ ​understand​ ​how​ ​to​ ​build​ ​secure​ ​systems.​ ​So​
-​alongside​ ​attacks,​ ​we​ ​will also​ ​learn​ ​the​ ​theoretical​ ​underpinnings​
-​of​ ​security,​ ​and​ ​use​ ​it​ ​to​ ​build​ ​defenses​ ​into​ ​our systems.&lt;/p&gt;
-
-&lt;p&gt;Labs​ ​will​ ​transition​ ​theory​ ​into​ ​practice.​ ​We​ ​will​ ​conclude​ ​with​ ​a​
-​group​ ​project​ ​exploring advanced​ ​topics​ ​relevant​ ​to​ ​the​ ​state​ ​of​ ​the​
-​art​ ​in​ ​computer​ ​security.​ ​The​ ​course​ ​will​ ​begin​ ​with a​ ​discussion​ ​on​
-​ethical​ ​application​ ​of​ ​techniques​ ​we​ ​learn.&lt;/p&gt;
-
-&lt;h2 id=&quot;topics&quot;&gt;Topics&lt;/h2&gt;
-
-&lt;p&gt;We​ ​will​ ​cover​ ​parts​ ​of​ ​the​ ​following​ ​topics,​ ​adjusted​ ​for​ ​time​ ​and​ ​pace​ ​of​ ​the​ ​course,​ ​along​ ​with
-student​ ​interest​ ​in​ ​each​ ​area.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Low-level​ ​memory​ ​attacks​ ​and​ ​defenses
-    &lt;ul&gt;
-      &lt;li&gt;Buffer​ ​overflows&lt;/li&gt;
-      &lt;li&gt;Stack​ ​canaries&lt;/li&gt;
-      &lt;li&gt;Access​ ​space​ ​randomization​ ​/​ ​derandomization&lt;/li&gt;
-      &lt;li&gt;Return​ ​to​ ​libc​ ​/​ ​return-oriented-programming&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Cryptography
-    &lt;ul&gt;
-      &lt;li&gt;Symmetric and asymmetric-key cryptography&lt;/li&gt;
-      &lt;li&gt;Certificates, CAs, and​ ​PKI&lt;/li&gt;
-      &lt;li&gt;SSL/TLS&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Web security
-    &lt;ul&gt;
-      &lt;li&gt;SQL​ ​injections&lt;/li&gt;
-      &lt;li&gt;Cross-site​ ​scripting&lt;/li&gt;
-      &lt;li&gt;Cross-site​ ​request​ ​forgery&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Social​ ​engineering​ ​and​ ​security​ ​ethics&lt;/li&gt;
-  &lt;li&gt;UI​ ​design​ ​for​ ​security
-    &lt;ul&gt;
-      &lt;li&gt;App​ ​permissions​ ​design&lt;/li&gt;
-      &lt;li&gt;Best​ ​practices​ ​for​ ​security​ ​UI&lt;/li&gt;
-      &lt;li&gt;Permission​ ​lifetime​ ​and​ ​revocation&lt;/li&gt;
-      &lt;li&gt;Case​ ​study​ ​in​ ​privacy​ ​controls:
-        &lt;ul&gt;
-          &lt;li&gt;Facebook​ ​privacy​ ​controls&lt;/li&gt;
-          &lt;li&gt;Android​ ​permissions&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Information​ ​flow​ ​control​ ​in​ ​web​ ​apps&lt;/li&gt;
-  &lt;li&gt;Reverse​ ​engineering&lt;/li&gt;
-  &lt;li&gt;Theoretical​ ​underpinnings​ ​of​ ​security
-    &lt;ul&gt;
-      &lt;li&gt;Full​ ​abstraction&lt;/li&gt;
-      &lt;li&gt;Information​ ​flow&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;projects-and-labs&quot;&gt;Projects and Labs&lt;/h2&gt;
-
-&lt;p&gt;Projects​ ​will​ ​be​ ​started​ ​in​ ​labs,​ ​and​ ​then​ ​continued​ ​individually.​
-​Some​ ​labs​ ​are​ ​structured​ ​so​ ​that they​ ​begin​ ​with​ ​a​ ​concrete​
-​assignment​ ​to​ ​work​ ​on​ ​as​ ​an​ ​individual​ ​in​ ​the​ ​first​ ​week,​ ​and​ ​then
-move​ ​on​ ​to​ ​a​ ​group​ ​assignment​ ​to​ ​complete​ ​a​ ​larger​ ​task.&lt;/p&gt;
-
-&lt;h4 id=&quot;project-1-memory-attacks-weeks-1-4-inclusive-uses-c-programming&quot;&gt;Project 1: Memory attacks (Weeks 1-4 inclusive) (Uses C programming)&lt;/h4&gt;
-
-&lt;p&gt;This​ ​project​ ​will​ ​cover​ ​low-level​ ​memory​ ​attacks​ ​using​ ​the​ ​C​
-​programming​ ​language.​ ​The students​ ​will​ ​begin​ ​by​ ​executing​ ​an​ ​attack​
-​from​ ​starter​ ​code​ ​provided.​ ​They​ ​will​ ​then​ ​implement their​ ​own​ ​buffer​
-​overflow​ ​attack,​ ​and​ ​demonstrate​ ​a​ ​way​ ​to​ ​prevent​ ​the​ ​attack​ ​by​
-​intelligent programming,​ ​and​ ​also​ ​facilities​ ​provided​ ​by​ ​the​
-​compiler.​ ​After​ ​completing​ ​this​ ​task,​ ​students will​ ​form​ ​groups​ ​to​
-​complete​ ​a​ ​more​ ​advanced​ ​attack​ ​studying​ ​ASLR​ ​or​ ​ROP.​ ​1.5​ ​weeks​ ​will​
-​be allocated​ ​for​ ​independent​ ​programming,​ ​and​ ​1.5​ ​weeks​ ​will​ ​be​
-​allocated​ ​for​ ​group​ ​work.&lt;/p&gt;
-
-&lt;h4 id=&quot;project-2-cryptography-weeks-4-7-incl-uses-python-programming&quot;&gt;Project 2: Cryptography (weeks 4-7 incl.) (Uses Python programming)&lt;/h4&gt;
-
-&lt;p&gt;This​ ​project​ ​will​ ​involve​ ​creating​ ​a​ ​public​ ​/​ ​private​ ​key​ ​pair​ ​and​
-​manually​ ​exchanging​ ​keys​ ​to collaborate​ ​secretly​ ​communicate​ ​with​
-​group​ ​members.​ ​The​ ​next​ ​week,​ ​students​ ​will​ ​either implement​ ​a​ ​secure​
-​chat​ ​using​ ​cryptographic​ ​primitives​ ​provided,​ ​or​ ​explore​ ​an​ ​attack​ ​on​
-​an insecure​ ​cryptographic​ ​hash.&lt;/p&gt;
-
-&lt;h4 id=&quot;project-3-web-security-weeks-7-9-incl-uses-python-programming&quot;&gt;Project 3: Web security (weeks 7-9 incl.) (Uses Python programming)&lt;/h4&gt;
-
-&lt;p&gt;Students​ ​will​ ​be​ ​given​ ​an​ ​insecure​ ​web​ ​app​ ​written​ ​in​ ​Python​ ​which​ ​is​
-​vulnerable​ ​to​ ​an​ ​SQL injection​ ​attack.​ ​They​ ​will​ ​then​ ​craft​ ​an​ ​input​
-​which​ ​causes​ ​the​ ​app​ ​to​ ​leak​ ​secret​ ​information​ ​(in this​ ​case,​
-​student​ ​grades​ ​from​ ​a​ ​synthetic​ ​gradebook​ ​consisting​ ​of​ ​fictitious​
-​students).​ ​They​ ​will then​ ​fix​ ​this​ ​attack​ ​in​ ​the​ ​app.​ ​Finally,​
-​students​ ​will​ ​attempt​ ​to​ ​break​ ​other​ ​students’​ ​fixes.&lt;/p&gt;
-
-&lt;h4 id=&quot;final-project-weeks-10-14&quot;&gt;Final project (weeks 10-14):&lt;/h4&gt;
-
-&lt;p&gt;This​ ​will​ ​be​ ​a​ ​final​ ​project,​ ​either​ ​in​ ​a​ ​group​ ​or​ ​alone.​ ​Students​ ​requesting​ ​to​ ​work​ ​alone​ ​need
-prior​ ​approval​ ​for​ ​a​ ​topic​ ​and​ ​expectations​ ​will​ ​be​ ​calibrated​ ​accordingly.​ ​Students​ ​will​ ​select
-one​ ​of​ ​the​ ​following​ ​projects,​ ​or​ ​propose​ ​their​ ​own​ ​project:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Information flow specification (uses Python/Jeeves)&lt;/p&gt;
-
-    &lt;p&gt;Implement​ ​privacy​ ​policies​ ​for​ ​a​ ​secure​ ​student​ ​grades​ ​database​
-​using​ ​Jeeves,​ ​an extension​ ​to​ ​the​ ​Python​ ​programming​ ​language.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Designing a privacy UI (uses Python / Javascript / etc..)&lt;/p&gt;
-
-    &lt;p&gt;Use​ ​best​ ​practices​ ​to​ ​propose​ ​and​ ​implement​ ​a​ ​new​ ​UI​ ​for​ ​some​ ​privacy-related
-mechanism,​ ​and​ ​perform​ ​a​ ​mock​ ​implementation.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Malware reverse engineering&lt;/p&gt;
-
-    &lt;p&gt;Use​ ​reverse​ ​engineering​ ​tools​ ​to​ ​understand​ ​and​ ​discuss​ ​how​ ​a​
-​particular​ ​piece​ ​of malware​ ​works.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Implement signature-based antivirus&lt;/p&gt;
-
-    &lt;p&gt;Students​ ​will​ ​read​ ​about​ ​and​ ​implement​ ​a​ ​variant​ ​of​ ​signature-based​
-​antivirus​ ​detection for​ ​a​ ​small​ ​sample​ ​of​ ​malware.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Students​ ​will​ ​check​ ​in​ ​with​ ​the​ ​professor​ ​regularly,​ ​and​
-collaboration​ ​will​ ​occur​ ​via​ ​Github.&lt;/p&gt;
-
-&lt;h2 id=&quot;grading&quot;&gt;Grading&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Labs and projects: 50%
-    &lt;ul&gt;
-      &lt;li&gt;Individual component: 30%&lt;/li&gt;
-      &lt;li&gt;Group component: 20%&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Two midterm exams: 30% (take home and open note)
-    &lt;ul&gt;
-      &lt;li&gt;Given 1/3rd and 2/3rd of the way through the course&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Final project: 20%&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Evaluation​ ​for​ ​group​ ​projects​ ​will​ ​be​ ​based​ ​on​ ​mutual​ ​student​
-feedback​ ​and​ ​oral​ ​exam​ ​with individual​ ​group​ ​members.&lt;/p&gt;
-
-&lt;h2 id=&quot;books&quot;&gt;Books&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Required&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Security Engineering, Second Editing&lt;/strong&gt;, ​by ​Ross ​Anderson
-    &lt;ul&gt;
-      &lt;li&gt;This​ ​book​ ​is​ ​freely​ ​available​ ​online​ ​from​ ​the​ ​author&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Online​ ​resources​ ​will​ ​be​ ​distributed​ ​throughout​ ​the​ ​course.​ ​These​
-​include​ ​blog​ ​articles (e.g.,​ ​by​ ​the​ ​Facebook​ ​privacy​ ​group),​ ​academic​
-​papers,​ ​and​ ​websites​ ​(e.g.,​ ​the​ ​Android security​ ​internals).​ ​These​
-​will​ ​all​ ​be​ ​freely​ ​available.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Optional&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;The Web Application Hacker’s Handbook&lt;/strong&gt;​,​ ​by​ ​Dafydd​ ​Stuttard​ ​&amp;amp;​ ​Marcus​ ​Pinto&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Applied Cryptography, Second Edition&lt;/strong&gt;, by​ ​Bruce​ ​Schneier&lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Sat, 23 Sep 2017 00:00:00 -0400</pubDate>
-        <link>/teaching/2017/09/23/my-cybersecurity-course/</link>
-        <guid isPermaLink="true">/teaching/2017/09/23/my-cybersecurity-course/</guid>
-        
-        
-        <category>teaching</category>
-        
-      </item>
-    
-      <item>
-        <title>Writing tip: say the text back to you</title>
-        <description>&lt;p&gt;Here’s the tip: have your computer read your writing back to
-you. Listen to how it sounds. Then, iterate until it conveys what
-you’d like to hear. On a mac, you can do this it like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;say -r words_per_minute &quot;My speech goes here&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I do this to either:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Read the text back to me quickly (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-r 240-270&lt;/code&gt;). This helps follow
-along with a document in front of me and check it for flow. It also
-catches miswordings, (some) grammar errors, and typos.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Close my eyes, sit back, and really try to absorb the text. I listen
-slowly, around 180-200 words per minute. This allows me to hear
-places where the text sounds awkward or redundant.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The book &lt;a href=&quot;https://www.amazon.com/BUGS-Writing-Revised-Guide-Debugging/dp/020137921X&quot;&gt;BUGS in
-Writing&lt;/a&gt;
-talks at length about developing an “ear” for good writing. While I
-found the book’s content useful, it’s decidedly hard to be able to
-objectively “hear” your own writing. I have a tough time divorcing the
-process of reading from pondering over the endless ways I could
-improve any given sentence.&lt;/p&gt;
-
-&lt;p&gt;I’ve found that listening to the text spoken back to you is a great
-way to perform rapid prototyping on documents. For example, I wrote a
-rough draft of this post, listened to it, and then restructured based
-on what I heard. I don’t think of myself as a naturally good
-writer. Forcing myself to slow down and concentrate naturally shifts
-my sentences towards being shorter and more concise.&lt;/p&gt;
-
-&lt;p&gt;Here’s an example from the syllabus for my upcoming security course,
-which I was editing today:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;To understand how attackers think, we will learn about the attacks
-they employ. But understanding a collection of attacks is not alone
-sufficient for helping us understand how to build secure systems. So
-alongside attacks, we will also cover the theory behind building
-defenses into our systems. We will dissect a number of real-world
-attacks (such as Heartbleed or WannaCry) and reflect upon what could
-have been done to prevent them. To complement these examples, will
-learn the theoretical underpinnings of security that apply across
-systems.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I spent some amount of time going over this text, but never really
-“heard” it all together. When I did, I immediately identified the
-problem: the paragraph was saying the same thing twice, breaking the
-natural flow.&lt;/p&gt;
-
-&lt;p&gt;I then came up with this:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;To understand how attackers think, we will learn about the attacks
-they employ. We will dissect a number of real-world attacks (such as
-Heartbleed or WannaCry) and reflect upon what could have been done
-to prevent them. But understanding a collection of attacks is not
-alone sufficient for helping us understand how to build secure
-systems. So alongside attacks, we will also learn the theoretical
-underpinnings of security, and use it to build defenses into our
-systems.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Which sounds a lot better to me!&lt;/p&gt;
-
-&lt;p&gt;By the way, I learned this trick from Philip Guo:&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Do other people do this too? I often use text-to-speech to have my computer/phone read my own writing back to me to sense how it sounds&lt;/p&gt;&amp;mdash; Philip Guo (@pgbovine) &lt;a href=&quot;https://twitter.com/pgbovine/status/910182577767514113&quot;&gt;September 19, 2017&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-</description>
-        <pubDate>Fri, 22 Sep 2017 00:00:00 -0400</pubDate>
-        <link>/writing/2017/09/22/reading-text-back/</link>
-        <guid isPermaLink="true">/writing/2017/09/22/reading-text-back/</guid>
-        
-        
-        <category>writing</category>
-        
-      </item>
-    
-      <item>
-        <title>How to Succeed in Grad School</title>
-        <description>&lt;p&gt;I gave this talk on August 24, 2017, to incoming grad students at the
-University of Maryland, College Park.  Full slides available
-&lt;a href=&quot;/assets/gradschoolsuccess.key&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
-
-&lt;iframe src=&quot;https://www.icloud.com/keynote/021F6CUaWtKuou6byPrV-aYvg?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
-</description>
-        <pubDate>Fri, 01 Sep 2017 00:00:00 -0400</pubDate>
-        <link>/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</link>
-        <guid isPermaLink="true">/talks/grad-school/2017/09/01/how-to-succeed-in-grad-school/</guid>
-        
-        
-        <category>talks</category>
-        
-        <category>grad-school</category>
         
       </item>
     

@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Publications</title>
-  <meta name="description" content="Kris Micinski's Website. Love the lambda.
-">
+  <title>Modern Deduction Post 0: Prologue</title>
+  <meta name="description" content="Over the past few years, my collaborators and I have been exploringthe design of high-performance logic programming engines for a widevariety of tasks, inclu...">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/publications/">
+  <link rel="canonical" href="/modern-deduction/0">
   <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
 </head>
 
@@ -59,8 +58,6 @@
         
           
         
-          
-        
       </div>
     </nav>
 
@@ -73,35 +70,49 @@
       <div class="wrapper">
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <script>
-    var bqs = document.getElementsByTagName("blockquote");
-for(var i = 0; i < bqs.length; i++) {
-    bqs[i].style.display = "none";
-    var ab = document.createElement('a');
-    ab.setAttribute('href', '#');
-    ab.setAttribute('onClick', 'toggleBq('+i+'); return false;');
-    ab.appendChild(document.createTextNode("[abstract]"));
-    bqs[i].parentNode.insertBefore(ab,bqs[i]);
-}
-function toggleBq(i) {
-    if (bqs[i].style.display == "none")
-	bqs[i].style.display = "block";
-    else
-	bqs[i].style.display = "none";
-}
-</script>
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Selected Publications</h1>
+    <h1 class="post-title" itemprop="name headline">Modern Deduction Post 0: Prologue</h1>
+    
+
+    <p class="post-meta"><time datetime="2024-04-05T00:00:00-04:00" itemprop="datePublished">Apr 5, 2024</time></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>A full list of publications may be found at my <a href="https://scholar.google.com/citations?user=HpJLJWUAAAAJ&amp;hl=en">Google Scholar Profile</a></p>
+    <p>Over the past few years, my collaborators and I have been exploring
+the design of high-performance logic programming engines for a wide
+variety of tasks, including program analysis (points-to analysis,
+abstract interpretation), graph analytics (transitive closure,
+PageRank), and security (binary code similarity, disassembly, and
+decompilation). We (myself, my collaborators, and our students) have
+engineered a variety of systems aiming for both (a) state-of-the-art
+performance at the highest scale (shared-memory parallelism,
+distribution via MPI, SIMD on GPUs, and GPU cluster computing) and (b)
+semantic extensions (monotonic aggregation, algebraic data) to
+Datalog.</p>
 
-<p>bibjekyll error: bibtex2html invocation failed</p>
+<p>I will be chronicling our efforts (mostly the relevant background) in
+this series of posts, Modern Deduction. I will plan to put out a post
+once every month or two.</p>
+
+<p>Posts:</p>
+
 
   </div>
 
 </article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
       </div>
     </div>

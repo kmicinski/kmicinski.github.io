@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Modern Deduction Post 1: Chain-Forward Computation</title>
+  <meta name="description" content="Our setting is logic programming, a field which attempts to designprogramming languages whose semantics have a close relationship toformal logic. The reason ...">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="/modern-deduction/1">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Kristopher Micinski</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/blog/">Blog</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/teaching/">Teaching</a>
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Modern Deduction Post 1: Chain-Forward Computation</h1>
+    
+
+    <p class="post-meta"><time datetime="2024-05-11T00:00:00-04:00" itemprop="datePublished">May 11, 2024</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Our setting is logic programming, a field which attempts to design
+programming languages whose semantics have a close relationship to
+formal logic. The reason we might want to do this is that it suits our
+application domain more precisely than an implementation in a
+traditional programming language. Thus, using a logic programming
+language allows us to write more obviously-correct code, and perhaps
+even code that can be extracted cleanly from a certified
+implementation. Alternatively, if we did it ourselves, we’d have to do
+what our compiler (interpreter, …) would do anyway, so there’s no
+sense in doing it manually. Unfortunately, when we see a powerful
+tool, we are tempted to use it for everything: if our application is
+not ultimately-suited to the operationalization strategy of the logic
+programming engine we’re using, we simply obfuscate the issue in a
+veneer of formalism and end up with leaky abstractions. This is, I
+speculate, why logic programming languages have never caught on
+broadly for general-purpose programming. In this blog, I will detail
+the various trade-offs and implementation paradigms for modern logic
+programming engines, starting from Datalog and with a focus on program
+analysis.</p>
+
+<p>The history of logic is rich, and I will not attempt to recount it
+all. Here I will focus on more restricted, application-specific
+languages, especially Datalog and its derivatives. The specific
+features of these languages, and the particulars of their
+implementation, often dovetail with a “right place, right time”
+effect. For example, <a href="https://suif.stanford.edu/papers/pldi04.pdf">Datalog backed by
+BDDs</a> was a significant
+step forward in terms of production program analyses. More modern
+implementations eschew BDDs for more explicit representations, but it
+remains the case that engineers and computer scientists are on the
+lookout for logic-programming-based approaches to hard problems,
+especially those which deal intrinsically in the enumeration of large
+state spaces.</p>
+
+<p>Perhaps one of logic programming’s most exciting motivations is
+program analysis. Program analysis systems automatically prove
+properties about, find bugs in, or simply help us understand our
+programs. These can come in a variety of forms from on-demand
+in-editor type-checking to whole-program (runs in microseconds),
+context-sensitive points-to analysis (days). Program analyses are
+notoriously hard to specify, and are especially hard to implement in a
+way that provides a close relationship to the formal
+specification. Additionally, program analyses often grapple with large
+state spaces in practice to solve interesting problems, and require
+some amount of thought regarding high-performance implementation.</p>
+
+<h4 id="chain-forward-computation-and-datalog">Chain-Forward Computation and Datalog</h4>
+
+<p>The central evaluation mechanism in Datalog, and its derivatives, is
+to saturate a set of rules (e.g., Horn clauses) to a fixed point, to
+obtain a knowledge database in some domain. We call the computation
+“chain forward” because the evaluation of such languages is guided by
+an ordering on knowledge, typically set inclusion (in the case of
+traditional Datalogs). In these settings, we define an “immediate
+consequence” operator, which tells us everything which must be known,
+as a consequence of what we currently know; crucially, this operator
+is typically monotonic: we do not lose knowledge over time, though we
+will discuss some interesting departures from this
+assumption. Applying this immediate consequence operator repeatedly
+yields a stream of knowledge databases over time. Assuming the
+immediate consequence operator is monotone, this stream of knowledge
+databases over time forms an ascending chain according to the ordering
+on knowledge.</p>
+
+<p>Datalog’s syntax consisting of “facts” and “rules.” Facts are “known
+statements” and always have the following form: <code class="language-plaintext highlighter-rouge">R(c0, ...)</code>, where
+<code class="language-plaintext highlighter-rouge">R</code> is a relation name (identifier) and the arguments are
+constants. For example <code class="language-plaintext highlighter-rouge">&gt;(3,2)</code> might be a fact, along with
+<code class="language-plaintext highlighter-rouge">reaches("n0","n1")</code>. But facts may not include variables, for
+example: <code class="language-plaintext highlighter-rouge">reaches("n0",x)</code> is disallowable as a fact, because <code class="language-plaintext highlighter-rouge">x</code> is
+not bounded in any way.</p>
+
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">define</span> <span class="nv">relation?</span> <span class="nv">symbol?</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define</span> <span class="nv">atom?</span> <span class="nv">symbol?</span><span class="p">)</span> <span class="c1">;; atomic lits are symbols</span>
+
+<span class="c1">;; variables must be explicitly tagged, not 'x, but '(var x)</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">var?</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">match</span> <span class="nv">x</span> <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">var</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">symbol?</span> <span class="nv">x</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span> <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">var-or-atom?</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="k">or</span> <span class="p">(</span><span class="nf">atom?</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">var?</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="c1">;; tuples are untagged</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">tuple?</span> <span class="nv">f</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">f</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">((</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="c1">;; facts add a relation name (otherwise how would we know it)</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fact?</span> <span class="nv">f</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">f</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">((</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">r</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="c1">;; notice that ∧ is implicit in the body</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">rule?</span> <span class="nv">r</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">r</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">((</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">head-rel</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">var-or-atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="nv">&lt;--</span> 
+       <span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">body-rels</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">var-or-atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span>
+     <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<p>Let’s look at simplest interesting example: transitive closure. The
+Datalog program (technically in Soufflé here) to implement transitive
+closure <a href="">example (<code class="language-plaintext highlighter-rouge">tc.dl</code>)</a> is here (I elide some declarations):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.output path
+.decl edge(x:number,y:number)
+.decl path(x:number,y:number)
+edge(1,2). edge(2,3). edge(3,5). edge(5,4). edge(4,1). edge(4,8).
+path(x, y) :- edge(x, y).
+path(x, y) :- path(x, z), edge(z, y).
+</code></pre></div></div>
+
+<p>Running this program in Soufflé (<code class="language-plaintext highlighter-rouge">souffle tc.dl</code>) yields an output
+database, the transitively-closed graph, in the file <code class="language-plaintext highlighter-rouge">path.csv</code>.</p>
+
+<h4 id="datalog-cannot-search-disjunction-saturated-conjunctions-only">Datalog cannot search (disjunction), saturated conjunctions only</h4>
+
+<p>Disjunctions in the head of a rule is disallowed: this is not
+semantically within reach of Datalog. The following is invalid:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Q(x,...) ∨ R(x,...) ← P(...) ∧ R(...)
+</code></pre></div></div>
+
+<p>Once we have more than one positive literal in a clause, we need a SAT
+solver. SAT solvers combine search (“guess new things”) and deduction
+(“derive consequences”); Datalog solvers only employ deduction. Both
+SAT and Datalog engines share some overlapping ideas; for example,
+both use indexing, to accelerate joins (Datalog) and for efficient
+unit propagation (SAT). But (&gt;2)-SAT is strictly harder than Datalog:
+2-SAT can be written as Horn clauses (<code class="language-plaintext highlighter-rouge">Q ← R</code> is <code class="language-plaintext highlighter-rouge">¬R ∨ Q</code>), but 3-SAT
+and beyond are out of reach. By contrast, <code class="language-plaintext highlighter-rouge">∧</code> in the head of a rule
+presents no serious semantic issue: <code class="language-plaintext highlighter-rouge">Q(x,...) ∧ R(x,...) ← ...</code> can
+easily be desugared into two rules: <code class="language-plaintext highlighter-rouge">Q(x,...) ← ...</code> and <code class="language-plaintext highlighter-rouge">R(x,...) ←
+...</code>.</p>
+
+<p>SAT solvers have an importance difference from Datalog solvers: they
+forget information. This is important because, while you can use
+Datalog to do SAT solving just fine, you will pay a massive
+performance due to the concomitant over-materialization induced by
+enumerating all possibilities: you would be <em>literally materializing
+O(2ⁿ)</em>. Of course, there are languages that embrace such
+cartoonishly-huge state spaces by design (answer-set programming, for
+example), and their designs are subsequently guided around these
+issues; indeed, grounding on-the-fly is an active research topic
+within ASP.</p>
+
+<p>As an example, think about how you could write 5-clique:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clique3(A, B, C) :-
+    edge(A, B), edge(A, C), edge(B, C),
+    A != B, A != C, B != C.
+clique4(A, B, C, D) :-
+    clique3(A, B, C),
+    edge(A, D), edge(B, D), edge(C, D),
+    A != D, B != D, C != D.
+clique5(A, B, C, D, E) :-
+    clique4(A, B, C, D),
+    edge(A, E), edge(B, E), edge(C, E), edge(D, E),
+    A != E, B != E, C != E, D != E.
+</code></pre></div></div>
+
+<h4 id="semi-naïve-evaluation">Semi-Naïve Evaluation</h4>
+
+<p>One issue with the repeated application of the rules is that if we use
+an explicit set-based representation of tuples, each iteration we’ll
+“rediscover” all knowledge from every previous iteration—this
+translates to additional data load, without commensurate knowledge
+throughput. In Datalog, the solution is to employ a compilation into
+an incrementalized IR, ala semi-naïve evaluation. For example, the
+recursive rule in transitive closure becomes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>path(x,z) ← path(x,y) ∧ edge(y,z)
+          | 
+   becomes| No Δ versions for edge as it is static
+          |
+Δpath(x,z) ← (Δpath(x,y) ∧ edge(y,z)) - path
+i.e., 
+Δpath(x,z) ∪= (Δpath(x,y) ⋈ edge(y,z)) - path
+</code></pre></div></div>
+
+<p>The rule expands into a single rule, because the relation <code class="language-plaintext highlighter-rouge">edge</code> never
+changes–thus, tracking a delta version would be
+irrelevant. Additionally, we assume that at the end of each iteration,
+<code class="language-plaintext highlighter-rouge">Δpath</code> is merged into <code class="language-plaintext highlighter-rouge">path</code>. In the more general case such as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>g(y,x) ∧ p(x,z) ← p(x,y) ∧ g(y,z)
+</code></pre></div></div>
+
+<p>We would need to split the rule into several versions: one to join
+<code class="language-plaintext highlighter-rouge">Δp</code> with <code class="language-plaintext highlighter-rouge">g</code>, one to join <code class="language-plaintext highlighter-rouge">p</code> with <code class="language-plaintext highlighter-rouge">Δg</code>, and one to join <code class="language-plaintext highlighter-rouge">Δp</code> with
+<code class="language-plaintext highlighter-rouge">Δg</code>. Think about what would happen if we have only <code class="language-plaintext highlighter-rouge">Δp ⋈ Δg</code>: if we
+have facts <code class="language-plaintext highlighter-rouge">(x,y)</code> in <code class="language-plaintext highlighter-rouge">Δp</code> and <code class="language-plaintext highlighter-rouge">(y,z)</code> in <code class="language-plaintext highlighter-rouge">Δg</code>, everything works
+fine. But what happens if <code class="language-plaintext highlighter-rouge">(x,y)</code> skips an iteration? It would be hard
+to ensure that doesn’t happen (though some work certainly explores
+this to a degree), and so we diversify our rules to enable us to catch
+things in <code class="language-plaintext highlighter-rouge">Δp</code> and <code class="language-plaintext highlighter-rouge">Δg</code>.</p>
+
+<p>Previously, I mentioned the resulting rule would look something like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Δpath(x,z) ∪= (Δpath(x,y) ⋈ edge(y,z)) - path
+</code></pre></div></div>
+
+<p>In fact, all rules within a fixedpoint (more specifically, an SCC of
+rules) will have the structure:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ΔR(x...) ∪= (ΔR(x,...) ⋈ Q(y,...)) - R
+</code></pre></div></div>
+
+<p>There is a crucial tacit point to be explained here: deduplication,
+i.e., <code class="language-plaintext highlighter-rouge">- R</code> is dirt cheap when implemented thoughtfully, and it is
+possible to parallelize nicely. There is no explicit scan of <code class="language-plaintext highlighter-rouge">R</code> in
+implementing subtraction, rather every rule generates a set of
+possibly-new tuples, which are deduplicated in some efficient manner
+to add to <code class="language-plaintext highlighter-rouge">ΔR</code> at the end of each iteration, before emptying <code class="language-plaintext highlighter-rouge">ΔR</code> in
+preparation for the next iteration.</p>
+
+<p>I will not code up semi-naïve evaluation here, but will likely discuss
+a general approach to forward differentation and incrementalization in
+subsequent posts.</p>
+
+<h4 id="relational-algebra">Relational Algebra</h4>
+
+<p>The explicit focus on bound variables has made the above presentation
+informal, as substitution was never defined. Indeed, substitution is
+“where computation happens” here in much the same way as in the
+λ-calculus. However, handling binders is a bit tedious, and it turns
+out there is a better, more systematic way. In the same way that
+category theory will avoid mentioning concrete points for products A ×
+B, relational algebra will avoid mentioning explicitly-named points
+for manipulating relations.</p>
+
+<p>The lack of explicit binders allows us to write an obviously-correct
+(albeit slow) interpreter for a conjunctive query that produces sets
+of tuples as its output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; q: query?
+;; db: hashmap from relation name ↦ ℘(Tuple)
+;; returns a set of tuples
+(define (interpret-query q db)
+  (match q
+    [`(literal-tuple ,es ...) (set es)]
+    [`(scan ,R) (hash-ref db R)]
+    [`(select from ,q+ where column ,n equals ,k)
+     (list-&gt;set (filter (lambda (x) (equal? (list-ref x n) k))
+                        (set-&gt;list (interpret-query q+ db))))]
+    [`(,q0 ∪ ,q1) (set-union (interpret-query q0 db)
+                             (interpret-query q1 db))]
+    [`(,q0 ∩ ,q1) (set-intersect (interpret-query q0 db)
+                                 (interpret-query q1 db))]
+    [`(reorder ,q ,order ...)
+     (let ([ts (set-&gt;list (interpret-query q db))])
+       (set-&gt;list
+        (map (λ (t) (map (λ (i) (list-ref t i)) order))
+             ts)))]
+    [`(project ,q to first ,n)
+     (list-&gt;set (map (λ (t) (take t n)) (set-&gt;list (interpret-query q db))))]
+    [`(,q0 ⋈ ,q1 on first ,N)
+     (list-&gt;set
+      (foldl
+       (λ (t0 tups)
+         (foldl (λ (t1 tups)
+                  (if (equal? (take t0 N) (take t1 N))
+                      (set-add tups (append (take t0 N) (drop t0 N) (drop t1 N)))
+                      tups))
+</code></pre></div></div>
+
+<p>The implementation is mostly standard: notice that ⋈ degenerates to
+the cartesian product in the case that N=0 (since <code class="language-plaintext highlighter-rouge">(take t 0)</code> returns
+the empty list for all <code class="language-plaintext highlighter-rouge">t</code>). We include only binary joins, k-ary joins
+are typically decomposed into chains or trees of binary joins: <code class="language-plaintext highlighter-rouge">R ⋈ Q
+⋈ S</code> can be construed as either <code class="language-plaintext highlighter-rouge">(R ⋈ Q) ⋈ S</code> or <code class="language-plaintext highlighter-rouge">R ⋈ (Q ⋈ S)</code> (3 or
+more joins would allow us to consider trees, too). Unfortunately, the
+wrong choice could force the enumeration to explode: if a subordinate
+join produces lots of junk which is later filtered out by the outer
+join, we may end up doing more work than an alternative join
+plan. Join planning–-the process of optimally deciding on a join
+decomposition–is a challenging aspect of the implementation; for some
+programs, <em>any</em> particular static join plan is be inefficient, as
+relation sizes dynamically evolve, the optimal join plan may shift as
+well. While traditional databases put a lot of effort into query
+planning, Datalog has taken a slightly different approach, with only
+scant recent work exploring dynamic plans.</p>
+
+<p>With this implementation, we can write query to find us all of the
+one-hop transitive edges: the query we want is <code class="language-plaintext highlighter-rouge">edge(x,y), path(y,z)</code>,
+which operationalizes to a join between edge and path; since we want
+to line up the <code class="language-plaintext highlighter-rouge">y</code>s we reorder <code class="language-plaintext highlighter-rouge">edge</code>, then reorder the join result
+(to gather <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">z</code>), then project the first two elements.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(interpret-query
+ '(project (reorder ((reorder (scan edge) 1 0) ⋈ (scan path) on first 1) 1 2 0)
+           to first 2)
+ (hash 'edge (set '(a b) '(b c) '(c d) '(b e))
+       'path (set '(a b) '(b c) '(c d) '(b e))))
+;; yields (set '(a e) '(b d) '(a c))
+</code></pre></div></div>
+
+<p>Assuming we’re willing to write programs in terms of relational
+algebra, we can iteratively generate new tuples. An <code class="language-plaintext highlighter-rouge">RA-rule?</code> extends
+a specific relation (recall we’re taking a point-free style) with the
+result of a query. We can interpret rules by evaluating the query and
+unioning the result set into the necessary relation. A program is a
+set of rules, which we can evaluate by iteratively (to a fixed point)
+applying all rules until we see no changes in the database.</p>
+
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">RA-rule?</span> <span class="nv">r</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">r</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">R</span><span class="p">)</span> <span class="err">∪</span><span class="nv">=</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">interpret-rule</span> <span class="nv">r</span> <span class="nv">db</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match-define</span> <span class="o">`</span><span class="p">(</span><span class="nf">,R</span> <span class="err">∪</span><span class="nv">=</span> <span class="o">,</span><span class="nv">q</span><span class="p">)</span> <span class="nv">r</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">hash-set</span> <span class="nv">db</span> <span class="nv">R</span> <span class="p">(</span><span class="nf">set-union</span> <span class="p">(</span><span class="nf">hash-ref</span> <span class="nv">db</span> <span class="nv">R</span> <span class="p">(</span><span class="nf">set</span><span class="p">))</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q</span> <span class="nv">db</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">interpret-program</span> <span class="nv">rules</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">next-iteration</span> <span class="nv">db</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">foldl</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">r</span> <span class="nv">db</span><span class="p">)</span> <span class="p">(</span><span class="nf">interpret-rule</span> <span class="nv">r</span> <span class="nv">db</span><span class="p">))</span> <span class="nv">db</span> <span class="nv">rules</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">do-some-more</span> <span class="nv">db</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">equal?</span> <span class="nv">db</span> <span class="p">(</span><span class="nf">next-iteration</span> <span class="nv">db</span><span class="p">))</span>
+        <span class="nv">db</span>
+        <span class="p">(</span><span class="nf">do-some-more</span> <span class="p">(</span><span class="nf">next-iteration</span> <span class="nv">db</span><span class="p">))))</span>
+  <span class="p">(</span><span class="nf">do-some-more</span> <span class="p">(</span><span class="nf">hash</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>Now we can write small programs:</p>
+
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nf">interpret-program</span>
+ <span class="o">'</span><span class="p">((</span><span class="nf">edge</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">literal-tuple</span> <span class="nv">a</span> <span class="nv">b</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">edge</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">literal-tuple</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">edge</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">literal-tuple</span> <span class="nv">c</span> <span class="nv">d</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">path</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">edge</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">path</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">project</span> <span class="p">(</span><span class="nf">reorder</span> <span class="p">((</span><span class="nf">reorder</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">edge</span><span class="p">)</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span> <span class="err">⋈</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">path</span><span class="p">)</span> <span class="nv">on</span> <span class="nv">first</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">0</span><span class="p">)</span>
+                     <span class="nv">to</span> <span class="nv">first</span> <span class="mi">2</span><span class="p">))))</span>
+</code></pre></div></div>
+
+<p>Next time, we’ll plan to talk a bit about how to systematically
+compile our high-level rules into the RA plans, and discuss the
+various trade-offs in doing so.</p>
+
+<h4 id="the-full-code">The full code</h4>
+
+<p>Is here in <a href="https://gist.github.com/kmicinski/e31ef6f2526c21cb0ec968f0e260e4a0">this gist</a></p>
+
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">;; Relational algebra</span>
+<span class="o">#</span><span class="nv">lang</span> <span class="nv">racket</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="nv">relation?</span> <span class="nv">symbol?</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define</span> <span class="nv">atom?</span> <span class="nv">symbol?</span><span class="p">)</span> <span class="c1">;; atomic lits are symbols</span>
+
+<span class="c1">;; variables must be explicitly tagged, not 'x, but '(var x)</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">var?</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">match</span> <span class="nv">x</span> <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">var</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">symbol?</span> <span class="nv">x</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span> <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">var-or-atom?</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="k">or</span> <span class="p">(</span><span class="nf">atom?</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">var?</span> <span class="nv">x</span><span class="p">)))</span>
+
+<span class="c1">;; tuples are untagged</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">tuple?</span> <span class="nv">f</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">f</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">((</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="c1">;; facts add a relation name (otherwise how would we know it)</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fact?</span> <span class="nv">f</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">f</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">((</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">r</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="c1">;; notice that ∧ is implicit in the body</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">rule?</span> <span class="nv">r</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">r</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">((</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">head-rel</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">var-or-atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="nv">&lt;--</span> 
+       <span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">body-rels</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">var-or-atom?</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span>
+     <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="c1">;; should all be true</span>
+<span class="p">(</span><span class="nf">rule?</span> <span class="o">'</span><span class="p">((</span><span class="nf">p</span><span class="p">)</span> <span class="nv">&lt;--</span><span class="p">))</span>
+<span class="p">(</span><span class="nf">rule?</span> <span class="o">'</span><span class="p">((</span><span class="nf">r</span><span class="p">)</span> <span class="nv">&lt;--</span> <span class="p">(</span><span class="nf">q</span><span class="p">)))</span>
+<span class="p">(</span><span class="nf">rule?</span> <span class="o">'</span><span class="p">((</span><span class="nf">path</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="nv">&lt;--</span> <span class="p">(</span><span class="nf">edge</span> <span class="nv">x</span> <span class="nv">x</span><span class="p">)))</span>
+<span class="p">(</span><span class="nf">rule?</span> <span class="o">'</span><span class="p">((</span><span class="nf">path</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="nv">&lt;--</span> <span class="p">(</span><span class="nf">edge</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="p">(</span><span class="nf">path</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">)))</span>
+
+<span class="c1">;; RA queries</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">RA-query?</span> <span class="nv">q</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">q</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">literal-tuple</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">atom?</span> <span class="nv">es</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="c1">;; scan a relation</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">scan</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">R</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">select</span> <span class="nv">from</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span><span class="p">)</span>
+              <span class="nv">where</span> <span class="nv">column</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">nonnegative-integer?</span><span class="p">)</span>
+              <span class="nv">equals</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">atom?</span><span class="p">))</span>
+     <span class="no">#t</span><span class="p">]</span>
+    <span class="c1">;; natural join on the first N columns, values must be equal</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q0</span><span class="p">)</span> <span class="err">⋈</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q1</span><span class="p">)</span> <span class="nv">on</span> <span class="nv">first</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">nonnegative-integer?</span> <span class="nv">N</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q0</span><span class="p">)</span> <span class="err">∪</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q0</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q0</span><span class="p">)</span> <span class="err">∩</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q0</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="c1">;; reorder tuples</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">reorder</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">nonnegative-integer?</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="c1">;; project the first n elements of tuples</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">project</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q</span><span class="p">)</span> <span class="nv">to</span> <span class="nv">first</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">nonnegative-integer?</span> <span class="nv">n</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="c1">;; need closed-world assumption</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nb">-</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="c1">;; q: query?</span>
+<span class="c1">;; db: hashmap from relation name ↦ ℘(Tuple)</span>
+<span class="c1">;; returns a set of tuples</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q</span> <span class="nv">db</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">q</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">literal-tuple</span> <span class="o">,</span><span class="nv">es</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="nf">set</span> <span class="nv">es</span><span class="p">)]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">scan</span> <span class="o">,</span><span class="nv">R</span><span class="p">)</span> <span class="p">(</span><span class="nf">hash-ref</span> <span class="nv">db</span> <span class="nv">R</span><span class="p">)]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">select</span> <span class="nv">from</span> <span class="o">,</span><span class="nv">q+</span> <span class="nv">where</span> <span class="nv">column</span> <span class="o">,</span><span class="nv">n</span> <span class="nv">equals</span> <span class="o">,</span><span class="nv">k</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">list-&gt;set</span> <span class="p">(</span><span class="nf">filter</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">equal?</span> <span class="p">(</span><span class="nb">list-ref</span> <span class="nv">x</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">k</span><span class="p">))</span>
+                        <span class="p">(</span><span class="nf">set-&gt;list</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q+</span> <span class="nv">db</span><span class="p">))))]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,q0</span> <span class="err">∪</span> <span class="o">,</span><span class="nv">q1</span><span class="p">)</span> <span class="p">(</span><span class="nf">set-union</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q0</span> <span class="nv">db</span><span class="p">)</span>
+                             <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q1</span> <span class="nv">db</span><span class="p">))]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,q0</span> <span class="err">∩</span> <span class="o">,</span><span class="nv">q1</span><span class="p">)</span> <span class="p">(</span><span class="nf">set-intersect</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q0</span> <span class="nv">db</span><span class="p">)</span>
+                                 <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q1</span> <span class="nv">db</span><span class="p">))]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">reorder</span> <span class="o">,</span><span class="nv">q</span> <span class="o">,</span><span class="nv">order</span> <span class="o">...</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">let</span> <span class="p">([</span><span class="nf">ts</span> <span class="p">(</span><span class="nf">set-&gt;list</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q</span> <span class="nv">db</span><span class="p">))])</span>
+       <span class="p">(</span><span class="nf">set-&gt;list</span>
+        <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">t</span><span class="p">)</span> <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">i</span><span class="p">)</span> <span class="p">(</span><span class="nb">list-ref</span> <span class="nv">t</span> <span class="nv">i</span><span class="p">))</span> <span class="nv">order</span><span class="p">))</span>
+             <span class="nv">ts</span><span class="p">)))]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">project</span> <span class="o">,</span><span class="nv">q</span> <span class="nv">to</span> <span class="nv">first</span> <span class="o">,</span><span class="nv">n</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">list-&gt;set</span> <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">take</span> <span class="nv">t</span> <span class="nv">n</span><span class="p">))</span> <span class="p">(</span><span class="nf">set-&gt;list</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q</span> <span class="nv">db</span><span class="p">))))]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,q0</span> <span class="err">⋈</span> <span class="o">,</span><span class="nv">q1</span> <span class="nv">on</span> <span class="nv">first</span> <span class="o">,</span><span class="nv">N</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">list-&gt;set</span>
+      <span class="p">(</span><span class="nf">foldl</span>
+       <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">t0</span> <span class="nv">tups</span><span class="p">)</span>
+         <span class="p">(</span><span class="nf">foldl</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">t1</span> <span class="nv">tups</span><span class="p">)</span>
+                  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">equal?</span> <span class="p">(</span><span class="nf">take</span> <span class="nv">t0</span> <span class="nv">N</span><span class="p">)</span> <span class="p">(</span><span class="nf">take</span> <span class="nv">t1</span> <span class="nv">N</span><span class="p">))</span>
+                      <span class="p">(</span><span class="nf">set-add</span> <span class="nv">tups</span> <span class="p">(</span><span class="nb">append</span> <span class="p">(</span><span class="nf">take</span> <span class="nv">t0</span> <span class="nv">N</span><span class="p">)</span> <span class="p">(</span><span class="nf">drop</span> <span class="nv">t0</span> <span class="nv">N</span><span class="p">)</span> <span class="p">(</span><span class="nf">drop</span> <span class="nv">t1</span> <span class="nv">N</span><span class="p">)))</span>
+                      <span class="nv">tups</span><span class="p">))</span>
+                <span class="nv">tups</span>
+                <span class="p">(</span><span class="nf">set-&gt;list</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q1</span> <span class="nv">db</span><span class="p">))))</span>
+       <span class="p">(</span><span class="nf">set</span><span class="p">)</span>
+       <span class="p">(</span><span class="nf">set-&gt;list</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q0</span> <span class="nv">db</span><span class="p">))))]))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">RA-rule?</span> <span class="nv">r</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">r</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">relation?</span> <span class="nv">R</span><span class="p">)</span> <span class="err">∪</span><span class="nv">=</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">RA-query?</span> <span class="nv">q</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">interpret-rule</span> <span class="nv">r</span> <span class="nv">db</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match-define</span> <span class="o">`</span><span class="p">(</span><span class="nf">,R</span> <span class="err">∪</span><span class="nv">=</span> <span class="o">,</span><span class="nv">q</span><span class="p">)</span> <span class="nv">r</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">hash-set</span> <span class="nv">db</span> <span class="nv">R</span> <span class="p">(</span><span class="nf">set-union</span> <span class="p">(</span><span class="nf">hash-ref</span> <span class="nv">db</span> <span class="nv">R</span> <span class="p">(</span><span class="nf">set</span><span class="p">))</span> <span class="p">(</span><span class="nf">interpret-query</span> <span class="nv">q</span> <span class="nv">db</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">interpret-program</span> <span class="nv">rules</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">next-iteration</span> <span class="nv">db</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">foldl</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">r</span> <span class="nv">db</span><span class="p">)</span> <span class="p">(</span><span class="nf">interpret-rule</span> <span class="nv">r</span> <span class="nv">db</span><span class="p">))</span> <span class="nv">db</span> <span class="nv">rules</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">do-some-more</span> <span class="nv">db</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">equal?</span> <span class="nv">db</span> <span class="p">(</span><span class="nf">next-iteration</span> <span class="nv">db</span><span class="p">))</span>
+        <span class="nv">db</span>
+        <span class="p">(</span><span class="nf">do-some-more</span> <span class="p">(</span><span class="nf">next-iteration</span> <span class="nv">db</span><span class="p">))))</span>
+  <span class="p">(</span><span class="nf">do-some-more</span> <span class="p">(</span><span class="nf">hash</span><span class="p">)))</span>
+
+<span class="c1">;; relations: hash from relation names to their associated arities</span>
+<span class="c1">;; herbrand-base is a list of atoms </span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">herbrand-universe</span> <span class="nv">relations</span> <span class="nv">herbrand-base</span><span class="p">)</span>
+  <span class="c1">;; generate a cartesian product of arity n with atoms from herbrand-base</span>
+  <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">h</span> <span class="nv">n</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="o">'</span><span class="p">(())</span>
+        <span class="p">(</span><span class="nb">apply</span> <span class="nv">append</span> <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">lst</span><span class="p">))</span> <span class="nv">herbrand-base</span><span class="p">))</span> <span class="p">(</span><span class="nf">h</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))))))</span>
+  <span class="p">(</span><span class="nf">foldl</span>
+   <span class="p">(</span><span class="err">λ</span> <span class="p">(</span><span class="nf">R</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nf">hash-set</span> <span class="nv">acc</span> <span class="nv">R</span> <span class="p">(</span><span class="nf">h</span> <span class="p">(</span><span class="nf">hash-ref</span> <span class="nv">relations</span> <span class="nv">R</span><span class="p">))))</span>
+   <span class="p">(</span><span class="nf">hash</span><span class="p">)</span>
+   <span class="p">(</span><span class="nf">hash-keys</span> <span class="nv">relations</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nf">interpret-query</span>
+ <span class="o">'</span><span class="p">(</span><span class="nf">project</span> <span class="p">(</span><span class="nf">reorder</span> <span class="p">((</span><span class="nf">reorder</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">edge</span><span class="p">)</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span> <span class="err">⋈</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">path</span><span class="p">)</span> <span class="nv">on</span> <span class="nv">first</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">0</span><span class="p">)</span>
+           <span class="nv">to</span> <span class="nv">first</span> <span class="mi">2</span><span class="p">)</span>
+ <span class="p">(</span><span class="nf">hash</span> <span class="ss">'edge</span> <span class="p">(</span><span class="nf">set</span> <span class="o">'</span><span class="p">(</span><span class="nf">a</span> <span class="nv">b</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="nf">b</span> <span class="nv">c</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="nf">c</span> <span class="nv">d</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="nf">b</span> <span class="nv">e</span><span class="p">))</span>
+       <span class="ss">'path</span> <span class="p">(</span><span class="nf">set</span> <span class="o">'</span><span class="p">(</span><span class="nf">a</span> <span class="nv">b</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="nf">b</span> <span class="nv">c</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="nf">c</span> <span class="nv">d</span><span class="p">)</span> <span class="o">'</span><span class="p">(</span><span class="nf">b</span> <span class="nv">e</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="nf">interpret-program</span>
+ <span class="o">'</span><span class="p">((</span><span class="nf">edge</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">literal-tuple</span> <span class="nv">a</span> <span class="nv">b</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">edge</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">literal-tuple</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">edge</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">literal-tuple</span> <span class="nv">c</span> <span class="nv">d</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">path</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">edge</span><span class="p">))</span>
+   <span class="p">(</span><span class="nf">path</span> <span class="err">∪</span><span class="nv">=</span> <span class="p">(</span><span class="nf">project</span> <span class="p">(</span><span class="nf">reorder</span> <span class="p">((</span><span class="nf">reorder</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">edge</span><span class="p">)</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span> <span class="err">⋈</span> <span class="p">(</span><span class="nf">scan</span> <span class="nv">path</span><span class="p">)</span> <span class="nv">on</span> <span class="nv">first</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">0</span><span class="p">)</span>
+                     <span class="nv">to</span> <span class="nv">first</span> <span class="mi">2</span><span class="p">))))</span>
+</code></pre></div></div>
+
+
+  </div>
+
+</article>
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'krismicinski';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">Kristopher Micinski</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>Kristopher Micinski</li>
+          <li><a href="mailto:kkmicins@syr.edu">kkmicins@syr.edu</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kmicinski"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">kmicinski</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/krismicinski"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#fff" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">krismicinski</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Kris Micinski's Website. Love the lambda.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+
+
+  </body>
+
+</html>
