@@ -10,8 +10,8 @@
   <meta name="description" content="When I began programming, I read a copy of Richard Steven’s “Programming in the UNIX Environment.” Ultimately, my early experimentations with C were a failur...">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png">
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/dependent-types,/functional-programming,/theorem-proving/2022/08/14/self-certifying-interpreters/">
-  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/dependent-types,/functional-programming,/theorem-proving/2022/08/14/self-certifying-interpreters/">
+  <link rel="alternate" type="application/rss+xml" title="Kristopher Micinski" href="http://localhost:4000/feed.xml">
 </head>
 
 
@@ -148,17 +148,17 @@ precisely the reason we’re doing it this way.</p>
 
 <p>Of course it would be possible (especially in such a simple semantics
 as this) to define <code class="language-plaintext highlighter-rouge">e, ρ ⇓ v</code> using substitution to implement
-variables; I explicitly materialize environments to (a) anticipate
-closures (later) and (b) present a representational challenge upon
-which I would like to expand a bit. Of course, using Racket as our
-metalanguage, we could simply use hashes for environments. But
+variables; I explicitly materialize environments is a choice I make to
+(a) anticipate closures and (b) present a representational challenge
+upon which I would like to expand a bit. Of course, using Racket as
+our metalanguage, we could simply use hashes for environments. But
 remember—we are trying to appease the pedants among us, thus
 representation must be as symbolic as possible. Similarly, I represent
-the naturals symbolically. I do allow myself a serious concession: I
-internalize <code class="language-plaintext highlighter-rouge">plus</code>, as I elide <code class="language-plaintext highlighter-rouge">fix</code> in the source language. If this
-disappoints you, I would say there’s no fundamental barrier; we could
-easily-enough (via environments) implement application and then a
-fixed-point combinator.</p>
+the naturals symbolically. I also internalize a function to add
+numbers, which I use in the natural-deduction rule for addition. I
+admit that eliding <code class="language-plaintext highlighter-rouge">fix</code> in the source language feels a bit silly, but
+I would point out that once normalization of <code class="language-plaintext highlighter-rouge">plus</code> happens, it’s all
+structural comparison.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; naturals
 (define (nat? n)
@@ -198,12 +198,9 @@ exercise here, I have followed a bit of a trick to keep rely minimally
 on Racket as a metatheory: because many objects internal to the
 semantics (e.g., numbers, environments, and proofs) are represented
 purely symbolically (as S-expressions), we primarily rely upon Racket
-for S-expression equality and dispatch (matching). Aside from <code class="language-plaintext highlighter-rouge">plus</code>
-our semantics uses a very small subset of Racket: I believe
-essentially either (equivalently) existential fixed-point logic (of a
-Herbrand base comprising S-expressions) or constrained horn clauses
-(whose background logic includes S-expression equality and
-structurally-recursive addition).</p>
+for S-expression equality and dispatch (matching). Aside from <code class="language-plaintext highlighter-rouge">plus</code>,
+our semantics, while implemented in Racket, is essentially existential
+fixed-point logic (whose Herbrand base comprises S-expressions).</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; environments
 (define (environment? ρ)
@@ -232,10 +229,8 @@ structurally-recursive addition).</p>
 <p>The implementation of <code class="language-plaintext highlighter-rouge">(⇓ pf e ρ v)</code> follows its natural deduction
 counterpart (which I have not written down, but try to stylize via my
 spacing). Our procedure checks the proof, recursively calling itself
-to check subproofs—mirroring the top-down process you may follow on
-a whiteboard to check the proof yourself, though Reynolds points out
-that the order of sub-checks is inherited from the metalanguage (i.e.,
-Racket’s control flow).</p>
+to check subproofs—mirroring the top-down process you may follow on a
+whiteboard to check the proof yourself.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; proofs of evaluation
 (define/contract (⇓ pf e ρ v)
