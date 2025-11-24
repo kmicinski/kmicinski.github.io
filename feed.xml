@@ -6,34 +6,39 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Nov 2025 22:12:34 -0500</pubDate>
-    <lastBuildDate>Sun, 23 Nov 2025 22:12:34 -0500</lastBuildDate>
+    <pubDate>Sun, 23 Nov 2025 22:22:46 -0500</pubDate>
+    <lastBuildDate>Sun, 23 Nov 2025 22:22:46 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
         <title>Build a Compiler in Five Projects</title>
-        <description>&lt;p&gt;Are you interested in building a compiler? Learning how functional
+        <description>&lt;p&gt;Class website here: &lt;a href=&quot;https://kmicinski.com/cis531-f25&quot;&gt;https://kmicinski.com/cis531-f25&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Are you interested in building a compiler? Learning how functional
 languages are implemented? Gaining a bit of practical experience with
 x86-64 assembly language? If so, I invite you to try your hand at the
-projects in my class, [CIS531]. CIS531 is a masters-level class on
-compiler design which assumes that (a) you know how to program, (b)
-you’ve had some exposure to C (know about stack allocation, malloc,
-etc.), and (c) have seen some assembly code. My class projects are in
-the Racket programming language, but if you don’t know Racket, it is
-quite easy to learn: I have a [set of YouTube video lectures that
-teaches Racket quickly]!. If you’ve never heard of Racket before, or
-you’re skeptical of functional programming, indulge me for a bit:
-there’s no hardcore FP theory or math in this course, and Racket is
-genuinely the best language to use for this specific setup.&lt;/p&gt;
+projects in my class,
+&lt;a href=&quot;https://kmicinski.com/cis531-f25&quot;&gt;CIS531&lt;/a&gt;. CIS531 is a masters-level
+class on compiler design which assumes that (a) you know how to
+program, (b) you’ve had some exposure to C (know about stack
+allocation, malloc, etc.), and (c) have seen some assembly code. My
+class projects are in the Racket programming language, but if you
+don’t know Racket, it is quite easy to learn: I have a [set of YouTube
+video lectures that teaches Racket quickly]!. If you’ve never heard of
+Racket before, or you’re skeptical of functional programming, indulge
+me for a bit: there’s no hardcore FP theory or math in this course,
+and Racket is genuinely the best language to use for this specific
+setup.&lt;/p&gt;
 
 &lt;p&gt;My class follows Prof. Jeremy Siek’s excellent book, “Essentials of
 Compilation.” While I highly recommend buying the book and supporting
-Prof. Siek, I will also note that there are &lt;a href=&quot;&quot;&gt;free online preliminary
-editions&lt;/a&gt; floating around; in my class, I followed the free version
-and suggested that students buy the book if doing so fit their
+Prof. Siek, I will also note that there are &lt;a href=&quot;https://brinckerhoff.org/clements/2194-csc431/essentials-of-compilation.pdf&quot;&gt;free online preliminary
+editions&lt;/a&gt;
+floating around; in my class, I followed the free version an
+suggested that students buy the book if doing so fit their
 goals. However, along with the book, I also have a set of class slides
-along with sporadic course videos, both available on the [class
-website].&lt;/p&gt;
+along with sporadic course videos, both available on the &lt;a href=&quot;https://kmicinski.com/cis531-f25&quot;&gt;class
+website&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This class builds up to a compiler with the following features:&lt;/p&gt;
 &lt;ul&gt;
@@ -429,7 +434,10 @@ class free, at least as free as I could given practical
 constraints. This class work on compilation is partially supported by
 our &lt;a href=&quot;https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2316159&amp;amp;HistoricalAwards=false&quot;&gt;NSF PPoSS
 large&lt;/a&gt;,
-which has already produced [many] [cool] [major] [results]. In
+which has already produced &lt;a href=&quot;https://arxiv.org/pdf/2411.14330&quot;&gt;many&lt;/a&gt;
+&lt;a href=&quot;https://dl.acm.org/doi/pdf/10.1145/3721145.3730431&quot;&gt;cool&lt;/a&gt;
+&lt;a href=&quot;https://dl.acm.org/doi/pdf/10.1145/3669940.3707274&quot;&gt;major&lt;/a&gt;
+&lt;a href=&quot;https://ojs.aaai.org/index.php/AAAI/article/download/33665/35820&quot;&gt;results&lt;/a&gt;. In
 subsequent explorations, I am hoping that I can use this class
 compiler as a baseline for highly-scalable engines that reason about
 programs. Given the simple, self-contained nature–and the presence of
@@ -462,9 +470,9 @@ up with. Best wishes,&lt;/p&gt;
 &lt;p&gt;Kristopher Micinski
 – Syracuse, November, 2025&lt;/p&gt;
 </description>
-        <pubDate>Fri, 01 Aug 2025 00:00:00 -0400</pubDate>
-        <link>/functional-programming/2025/08/01/build-a-language/</link>
-        <guid isPermaLink="true">/functional-programming/2025/08/01/build-a-language/</guid>
+        <pubDate>Sun, 23 Nov 2025 00:00:00 -0500</pubDate>
+        <link>/functional-programming/2025/11/23/build-a-language/</link>
+        <guid isPermaLink="true">/functional-programming/2025/11/23/build-a-language/</guid>
         
         
         <category>functional-programming</category>
