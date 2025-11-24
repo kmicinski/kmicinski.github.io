@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Nov 2025 22:32:41 -0500</pubDate>
-    <lastBuildDate>Sun, 23 Nov 2025 22:32:41 -0500</lastBuildDate>
+    <pubDate>Sun, 23 Nov 2025 23:02:05 -0500</pubDate>
+    <lastBuildDate>Sun, 23 Nov 2025 23:02:05 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -23,8 +23,8 @@ class on compiler design which assumes that (a) you know how to
 program, (b) you’ve had some exposure to C (know about stack
 allocation, malloc, etc.), and (c) have seen some assembly code. My
 class projects are in the Racket programming language, but if you
-don’t know Racket, it is quite easy to learn: I have a [set of YouTube
-video lectures that teaches Racket quickly]!. If you’ve never heard of
+don’t know Racket, it is quite easy to learn: I have a &lt;a href=&quot;https://www.youtube.com/watch?v=2jrwXpUZW7k&amp;amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&quot;&gt;set of YouTube
+video lectures that teaches Racket quickly&lt;/a&gt;!. If you’ve never heard of
 Racket before, or you’re skeptical of functional programming, indulge
 me for a bit: there’s no hardcore FP theory or math in this course,
 and Racket is genuinely the best language to use for this specific
