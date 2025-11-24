@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Nov 2025 23:02:05 -0500</pubDate>
-    <lastBuildDate>Sun, 23 Nov 2025 23:02:05 -0500</lastBuildDate>
+    <pubDate>Mon, 24 Nov 2025 01:46:46 -0500</pubDate>
+    <lastBuildDate>Mon, 24 Nov 2025 01:46:46 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -24,17 +24,18 @@ program, (b) you’ve had some exposure to C (know about stack
 allocation, malloc, etc.), and (c) have seen some assembly code. My
 class projects are in the Racket programming language, but if you
 don’t know Racket, it is quite easy to learn: I have a &lt;a href=&quot;https://www.youtube.com/watch?v=2jrwXpUZW7k&amp;amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&quot;&gt;set of YouTube
-video lectures that teaches Racket quickly&lt;/a&gt;!. If you’ve never heard of
-Racket before, or you’re skeptical of functional programming, indulge
-me for a bit: there’s no hardcore FP theory or math in this course,
-and Racket is genuinely the best language to use for this specific
-setup.&lt;/p&gt;
+video lectures that teaches Racket
+quickly&lt;/a&gt;!
+If you’ve never heard of Racket before, or you’re skeptical of
+functional programming, indulge me for a bit: there’s no hardcore FP
+theory or math in this course, and Racket is genuinely the best
+language to use for this specific setup.&lt;/p&gt;
 
 &lt;p&gt;My class follows Prof. Jeremy Siek’s excellent book, “Essentials of
 Compilation.” While I highly recommend buying the book and supporting
 Prof. Siek, I will also note that there are &lt;a href=&quot;https://brinckerhoff.org/clements/2194-csc431/essentials-of-compilation.pdf&quot;&gt;free online preliminary
 editions&lt;/a&gt;
-floating around; in my class, I followed the free version an
+floating around; in my class, I followed the free version and
 suggested that students buy the book if doing so fit their
 goals. However, along with the book, I also have a set of class slides
 along with sporadic course videos, both available on the &lt;a href=&quot;https://kmicinski.com/cis531-f25&quot;&gt;class
