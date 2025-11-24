@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Nov 2025 22:22:46 -0500</pubDate>
-    <lastBuildDate>Sun, 23 Nov 2025 22:22:46 -0500</lastBuildDate>
+    <pubDate>Sun, 23 Nov 2025 22:30:56 -0500</pubDate>
+    <lastBuildDate>Sun, 23 Nov 2025 22:30:56 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -317,8 +317,7 @@ variable references and let binding. It grows to all of &lt;code class=&quot;lan
     ;; Project 5
     [`(,(? R5-exp? e-f) ,(? R5-exp? a-args) ...) #t]
     [`(lambda (,(? symbol? xs) ...) ,(? R5-exp? e-body)) #t]
-    #;[_ #f]
-    ))
+	[_ #f]))
 
 (define (R5-defn? defn)
   (match defn

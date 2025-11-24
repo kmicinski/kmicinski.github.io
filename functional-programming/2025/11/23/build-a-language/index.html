@@ -383,8 +383,7 @@ variable references and let binding. It grows to all of <code class="language-pl
     ;; Project 5
     [`(,(? R5-exp? e-f) ,(? R5-exp? a-args) ...) #t]
     [`(lambda (,(? symbol? xs) ...) ,(? R5-exp? e-body)) #t]
-    #;[_ #f]
-    ))
+	[_ #f]))
 
 (define (R5-defn? defn)
   (match defn
