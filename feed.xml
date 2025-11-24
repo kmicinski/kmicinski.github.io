@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 24 Nov 2025 01:46:46 -0500</pubDate>
-    <lastBuildDate>Mon, 24 Nov 2025 01:46:46 -0500</lastBuildDate>
+    <pubDate>Mon, 24 Nov 2025 01:48:28 -0500</pubDate>
+    <lastBuildDate>Mon, 24 Nov 2025 01:48:28 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -24,7 +24,7 @@ program, (b) you’ve had some exposure to C (know about stack
 allocation, malloc, etc.), and (c) have seen some assembly code. My
 class projects are in the Racket programming language, but if you
 don’t know Racket, it is quite easy to learn: I have a &lt;a href=&quot;https://www.youtube.com/watch?v=2jrwXpUZW7k&amp;amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&quot;&gt;set of YouTube
-video lectures that teaches Racket
+video lectures that teach Racket
 quickly&lt;/a&gt;!
 If you’ve never heard of Racket before, or you’re skeptical of
 functional programming, indulge me for a bit: there’s no hardcore FP
