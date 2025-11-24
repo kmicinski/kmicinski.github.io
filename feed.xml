@@ -6,9 +6,470 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 29 Oct 2025 18:43:53 -0400</pubDate>
-    <lastBuildDate>Wed, 29 Oct 2025 18:43:53 -0400</lastBuildDate>
+    <pubDate>Sun, 23 Nov 2025 22:10:50 -0500</pubDate>
+    <lastBuildDate>Sun, 23 Nov 2025 22:10:50 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>Build a Compiler in Five Projects</title>
+        <description>&lt;p&gt;Are you interested in building a compiler? Learning how functional
+languages are implemented? Gaining a bit of practical experience with
+x86-64 assembly language? If so, I invite you to try your hand at the
+projects in my class, [CIS531]. CIS531 is a masters-level class on
+compiler design which assumes that (a) you know how to program, (b)
+you’ve had some exposure to C (know about stack allocation, malloc,
+etc.), and (c) have seen some assembly code. My class projects are in
+the Racket programming language, but if you don’t know Racket, it is
+quite easy to learn: I have a [set of YouTube video lectures that
+teaches Racket quickly]!. If you’ve never heard of Racket before, or
+you’re skeptical of functional programming, indulge me for a bit:
+there’s no hardcore FP theory or math in this course, and Racket is
+genuinely the best language to use for this specific setup.&lt;/p&gt;
+
+&lt;p&gt;My class follows Prof. Jeremy Siek’s excellent book, “Essentials of
+Compilation.” While I highly recommend buying the book and supporting
+Prof. Siek, I will also note that there are &lt;a href=&quot;&quot;&gt;free online preliminary
+editions&lt;/a&gt; floating around; in my class, I followed the free version
+and suggested that students buy the book if doing so fit their
+goals. However, along with the book, I also have a set of class slides
+along with sporadic course videos, both available on the [class
+website].&lt;/p&gt;
+
+&lt;p&gt;This class builds up to a compiler with the following features:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Variables and assignment via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Integer arithmetic via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;+&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Reading inputs / printing output&lt;/li&gt;
+  &lt;li&gt;Booleans, conjunctions/disjunctions (and/or)&lt;/li&gt;
+  &lt;li&gt;Branching via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if&lt;/code&gt;, integer comparisons (&amp;lt;, etc.)&lt;/li&gt;
+  &lt;li&gt;Heap-allocated vectors&lt;/li&gt;
+  &lt;li&gt;Assignment / mutation (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;set!&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;While loops&lt;/li&gt;
+  &lt;li&gt;Fixed-arity functions and function application&lt;/li&gt;
+  &lt;li&gt;Lambdas (closures at runtime)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The unique combination of features lets us tour an interesting
+cross-section of programming languages, exploring both imperative
+programming with loops and mutation but also functional programming
+with lists and recursion.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-projects&quot;&gt;The Projects&lt;/h2&gt;
+
+&lt;p&gt;To be specific, I challenge you to complete five projects, each
+including a comprehensive test suite that will seriously stress the
+correctness of your implementation. p1 is a warmup project (you should
+skip if you already know Racket), but p2-5 build a compiler for a set
+of increasingly-complex languages to x86-64. The languages nest inside
+of each other, with p2 giving us straight-line arithmetic, p3 giving
+us decision trees, p4 giving us loops and mutation, and p5 giving us
+functions, recursion, and lambdas.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/projects/1&quot;&gt;p1 – Stack interpreter&lt;/a&gt;. This is
+a warmup project, if you know Racket and have some PL background,
+feel free to skip.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/projects/2&quot;&gt;p2 – Straight-line arithmetic / variables → x86-64 assembly language&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/projects/3&quot;&gt;p3 – Booleans and branching (if, and, or) → x86-64 assembly language&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/projects/4&quot;&gt;p4 – Vectors, heap allocation, set!, and loops → x86-64 assembly language&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/projects/5&quot;&gt;p5 – Functions, lambdas, and closure conversion → x86-64 assembly language&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The projects are designed with one key principle in mind: get us to
+the &lt;em&gt;most expressive/fun language possible, as fast as possible&lt;/em&gt;. In
+doing this, we sacrifice a lot that might be typically covered:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Our languages aren’t type/memory safe, we assume the programmer is
+correct&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;No register allocation (possible to add, not too hard)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;No garbage collection of any kind: we &lt;em&gt;just use malloc&lt;/em&gt;. We could
+trivially support the Boehm GC (I have done that in the past), but
+it was another static library to link in and I really wanted to make
+this self contained.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We support a &lt;em&gt;very&lt;/em&gt; limited set of builtins (but it is trivial to
+add more)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So even after project 5, getting to a “real” compiler would take a bit
+of effort. The most important (in my opinion) are (a) memory safety
+(the language needs to be safe, period) via dynamic type tagging and
+(b) slightly more builtins, and (c) register allocation. That would
+get us to a respectable compiler. After that, we could add more
+language features, or optimize the ones we have, e.g., by using
+abstract interpretation.&lt;/p&gt;
+
+&lt;h3 id=&quot;an-example-program&quot;&gt;An Example Program&lt;/h3&gt;
+
+&lt;p&gt;Our language will include functions, loops, branching, assignment, and
+even heap-allocated vectors. As an example of the power, here’s a
+Sudoku solver written in the language&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(program
+ ;; =========================
+ ;; List primitives
+ ;; Empty list is (void)
+ ;; =========================
+ (define (is_nil x) (eq? x (void)))
+
+ ;; cons cell as 2-element vector: [0] = head, [1] = tail
+ (define (cons h t)
+   (let ([c (make-vector 2)])
+     (let ([_ (vector-set! c 0 h)])
+       (let ([_ (vector-set! c 1 t)])
+         c))))
+
+ (define (head c) (vector-ref c 0))
+ (define (tail c) (vector-ref c 1))
+
+ ;; =========================
+ ;; Cell representation
+ ;; cell = (row col val) as nested cons
+ ;; =========================
+ (define (make_cell r c v)
+   (cons r (cons c (cons v (void)))))
+
+ (define (cell_row cell)
+   (head cell))
+
+ (define (cell_col cell)
+   (head (tail cell)))
+
+ (define (cell_val cell)
+   (head (tail (tail cell))))
+
+ ;; =========================
+ ;; Block indexing (0,1,2) for rows/cols
+ ;; =========================
+ (define (block_index3 x)
+   (if (&amp;lt; x 3)
+       0
+       (if (&amp;lt; x 6)
+           1
+           2)))
+
+ (define (same_block? r1 c1 r2 c2)
+   (if (eq? (block_index3 r1) (block_index3 r2))
+       (eq? (block_index3 c1) (block_index3 c2))
+       #f))
+
+ ;; =========================
+ ;; Lookup current value at (row, col) in board
+ ;; board is a list of cells
+ ;; Return 0 if not assigned
+ ;; =========================
+ (define (lookup board row col)
+   (if (is_nil board)
+       0
+       (let ([cell (head board)])
+         (let ([r (cell_row cell)])
+           (let ([c (cell_col cell)])
+             (if (and (eq? r row) (eq? c col))
+                 (cell_val cell)
+                 (lookup (tail board) row col)))))))
+
+ ;; =========================
+ ;; Conflict check:
+ ;; #t if some cell in board has:
+ ;;   - same value, and
+ ;;   - same row OR same col OR same 3x3 block
+ ;; =========================
+ (define (conflicts? board row col val)
+   (if (is_nil board)
+       #f
+       (let ([cell (head board)])
+         (let ([r (cell_row cell)])
+           (let ([c (cell_col cell)])
+             (let ([v (cell_val cell)])
+               (if (and (eq? v val)
+                        (or (eq? r row)
+                            (or (eq? c col)
+                                (same_block? r c row col))))
+                   #t
+                   (conflicts? (tail board) row col val))))))))
+
+ ;; =========================
+ ;; Recursive backtracking solver over (row, col)
+ ;; board: list of assignments
+ ;; rows, cols = 0..8
+ ;; =========================
+ (define (solve_cell row col board)
+   (if (eq? row 9)
+       ;; All rows done: solved
+       board
+       (if (eq? col 9)
+           ;; End of row: go to next row
+           (solve_cell (+ row 1) 0 board)
+           ;; Otherwise, try this cell
+           (let ([existing (lookup board row col)])
+             (if (eq? existing 0)
+                 ;; Empty cell: try values 1..9
+                 (let ([candidate 1])
+                   (let ([solution (void)])
+                     (begin
+                       (while (and (&amp;lt; candidate 10)
+                                   (eq? solution (void)))
+                              (begin
+				(if (conflicts? board row col candidate)
+                                    ;; conflict, skip
+                                    (set! solution solution)
+                                    ;; no conflict, extend board and recurse
+                                    (let ([s (solve_cell row
+                                                         (+ col 1)
+                                                         (cons (make_cell row col candidate)
+                                                               board))])
+                                      (if (eq? s (void))
+                                          (set! solution solution)
+                                          (set! solution s))))
+				(set! candidate (+ candidate 1))))
+                       solution)))
+                 ;; Pre-filled cell: just move on
+                 (solve_cell row (+ col 1) board))))))
+
+ ;; =========================
+ ;; Read initial board from input:
+ ;; 81 integers, row-major, 0 = empty, 1..9 = given
+ ;; Returns list of cells
+ ;; =========================
+ (define (read_board)
+   (let ([board (void)])
+     (let ([i 0])
+       (begin
+         (while (&amp;lt; i 9)
+		(begin
+                  (let ([j 0])
+                    (while (&amp;lt; j 9)
+			   (begin
+			     (let ([v (read)])
+                               (if (eq? v 0)
+				   (set! board board)
+				   (set! board (cons (make_cell i j v) board))))
+			     (set! j (+ j 1)))))
+                  (set! i (+ i 1))))
+         board))))
+
+ ;; =========================
+ ;; Entry: read board, solve from (0,0), return solution
+ ;; Solution is a list of (row col val) cells
+ ;; =========================
+ (let* ([board (read_board)]
+        [solution (solve_cell 0 0 board)])
+   (lookup solution 8 8)))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;the-full-language&quot;&gt;The Full Language&lt;/h3&gt;
+
+&lt;p&gt;The final language you’ll implement will be this one. In comments,
+I’ve also highlighted the sublanguages: for example, project 2
+includes only numbers, input (read), binary plus, unary minus,
+variable references and let binding. It grows to all of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R5&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define (R5-exp? e)
+  (match e
+    ;; Project 2
+    [(? fixnum?) #t]
+    [&apos;(read) #t]
+    [`(+ ,(? R5-exp? e0) ,(? R5-exp? e1)) #t]
+    [`(- ,(? R5-exp? e)) #t]
+    [(? symbol?) #t]
+    [`(let ([,(? symbol? x) ,(? R5-exp? e)]) ,(? R5-exp? eb)) #t]
+	;; Project 3
+    [#t #t]
+    [#f #t]
+    [&apos;(void) #t]
+    [`(- ,(? R5-exp? e0) ,(? R5-exp? e1)) #t]
+    [`(and ,(? R5-exp? e0) ,(? R5-exp? e1)) #t]
+    [`(or  ,(? R5-exp? e0) ,(? R5-exp? e1)) #t]
+    [`(not ,(? R5-exp? e1)) #t]
+    [`(,(? cmp? c) ,(? R5-exp? e0) ,(? R5-exp? e1)) #t]
+    [`(if ,(? R5-exp? e-g) ,(? R5-exp? e-t) ,(? R5-exp? e-f)) #t]
+    ;; Project 4
+    [`(let* ([,(? symbol? xs) ,(? R5-exp? es)] ...) ,(? R5-exp? eb)) #t]
+    [`(begin ,(? R5-exp?) ... ,(? R5-exp? ret)) #t]
+    [`(while ,(? R5-exp? e-g) ,(? R5-exp? es) ...) #t]
+    [`(make-vector ,(? R5-exp? len)) #t]
+    [`(vector-ref ,(? R5-exp? v) ,(? fixnum? i)) #t]
+    [`(vector-set! ,(? R5-exp? v) ,(? fixnum? i) ,(? R5-exp? e-v)) #t]
+    [`(set! ,(? symbol? x) ,(? R5-exp? e)) #t]
+    ;; Project 5
+    [`(,(? R5-exp? e-f) ,(? R5-exp? a-args) ...) #t]
+    [`(lambda (,(? symbol? xs) ...) ,(? R5-exp? e-body)) #t]
+    #;[_ #f]
+    ))
+
+(define (R5-defn? defn)
+  (match defn
+    ;; Project 5 adds multiple function definitions
+    [`(define (,(? symbol? f) ,(? symbol? formals) ...)  ,(? R5-exp? e-b)) #t]
+    [_ #f]))
+
+(define (R5? p)
+  (match p
+    [`(program ,(? R5-defn? defns) ... ,(? R5-exp?)) #t]
+    [_ #f]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;the-compilers-structure&quot;&gt;The Compiler’s Structure&lt;/h3&gt;
+
+&lt;p&gt;To get you booted up fast as possible, every single project is
+designed the same way:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;compile.rkt&lt;/code&gt; – Your pass implementations. You will edit functions provided here.
+-&amp;gt; This is the &lt;em&gt;only&lt;/em&gt; file you will edit! The rest are read-only&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt; – IR definitions and predicates like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-program?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c1-program?&lt;/code&gt;, etc. (see also typed/shrunk variants)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpreters.rkt&lt;/code&gt; – Reference interpreters for several IRs (used by tests and for your own debugging).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system.rkt&lt;/code&gt; – System/ABI configuration, pass names, runtime filenames, output paths, etc.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; – Driver that runs all passes, can build a binary, and can launch a debug server.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test.rkt&lt;/code&gt; – Test harness. Runs isolation tests or end-to-end native tests depending on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m&lt;/code&gt; mode.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runtime.c&lt;/code&gt; – Minimal runtime (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read_int64&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print_int64&lt;/code&gt;, etc.).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs/&lt;/code&gt; – Example programs (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.scm&lt;/code&gt;).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;input-files/&lt;/code&gt; – Input streams for programs (lines of integers).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&lt;/code&gt; – Instructor goldens (IR snapshots, interpreter outputs, and stdout baselines).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You write your code in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;compile.rkt&lt;/code&gt;, which consists of a set of
+&lt;em&gt;passes&lt;/em&gt;. Each pass transforms an input language into an output
+language, and these intermediate languages (IRs) are codified via
+predicates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt;. To define the meaning of each IR, we give an
+interpreter for each in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpreters.rkt&lt;/code&gt;. For the compiler to be
+correct, it needs to be the case that–for all input streams–the
+compiler produces the same output stream across all intermediate
+IRs. There is some system-specific stuff in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system.rkt&lt;/code&gt;, which takes
+care of things like Linux vs. Mac ABI issues, specifying register
+names, etc. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; file acts as a main compiler entrypoint,
+and it carefully runs each pass of the compiler, checking predicates
+before/after each pass and interpreting each IR, checking to ensure
+consistency. This is a &lt;em&gt;huge&lt;/em&gt; win for debugging, in my opinion: you
+&lt;em&gt;always&lt;/em&gt; want to localize errors to the proximate pass which causes
+misinterpretation, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; seriously aids debugging in my
+experience. There is also more comprehensive test infrastructure in
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test.rkt&lt;/code&gt;; this test script is invoked by the Python-based test
+scripts in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test/&lt;/code&gt;. These tests check the behavior of the compiler on
+the programs in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs/&lt;/code&gt; directory, using the files from
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;input-files&lt;/code&gt; as inputs and comparing to the outputs in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-is-this-course-unique-and-cool&quot;&gt;Why Is This Course Unique and Cool?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;You build a &lt;strong&gt;real compiler&lt;/strong&gt;, all the way to actual x86-64
+assembly.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Each IR has a corresponding interpreter, which is easy to find/read
+and written in a familiar style, giving semantic clarity and
+testable correctness.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The project is &lt;strong&gt;language scalable&lt;/strong&gt;, meaning that you can use it as
+a base for building your own language. Of course, this is thanks to
+Dr. Siek’s great “incremental” design.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;It is &lt;strong&gt;fully testable across multiple passes&lt;/strong&gt;, which helps
+anticipate the thing we all fear most about writing a compiler:
+seeing a problem that is the ramification of far-away code from
+higher up in the compilation pipeline.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;It is written in a &lt;strong&gt;simple, pure recursive style&lt;/strong&gt;. Just plain old
+pattern matching and recursion here, no need for any complex
+abstractions.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;how-do-i-get-started&quot;&gt;How Do I Get Started?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Familiarize yourself with the course webpage: https://kmicinski.com/cis531-f25&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;If you don’t know Racket, start with project 1: https://kmicinski.com/cis531-f25/projects/1&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Otherwise, start with project 2: https://kmicinski.com/cis531-f25/projects/2&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When you finish each project, move on to the next!&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When you’re done, start building your &lt;strong&gt;own&lt;/strong&gt; language. Consider
+adding type (checking/inference), classes, more builtins, pattern
+matching, continuations, exceptions, algebraic effects. The options
+are myriad, but once you’ve finished projects 2-5, you’ve built a
+whole compiler for a surprisingly expressive language.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;thank-you-to-the-national-science-foundation-and-others&quot;&gt;Thank you to the National Science Foundation and Others&lt;/h3&gt;
+
+&lt;p&gt;If you like this work and live in the United States, please feel
+commensurately less bad about paying your taxes. I made the whole
+class free, at least as free as I could given practical
+constraints. This class work on compilation is partially supported by
+our &lt;a href=&quot;https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2316159&amp;amp;HistoricalAwards=false&quot;&gt;NSF PPoSS
+large&lt;/a&gt;,
+which has already produced [many] [cool] [major] [results]. In
+subsequent explorations, I am hoping that I can use this class
+compiler as a baseline for highly-scalable engines that reason about
+programs. Given the simple, self-contained nature–and the presence of
+per-pass interpreters and consistency testing–I see this as an
+awesome potential baseline for cool extensions.&lt;/p&gt;
+
+&lt;p&gt;My course is of course heavily inspired by Prof. Siek’s book and
+course, along with inspiration from Thomas Gilray at Washington
+State. Eight years ago, Tom and I took a spontaneous trip to see the
+eclipse halfway across the country (skipping out on the ICSE ‘17
+deadline basically); we discussed compiler design over a steamed
+seafood buffet in Myrtle Beach after napping in a cheap motel, having
+been awake for over 24 hours and feeling the eclipse had made it worth
+it. We sketched out his whole compiler on that roadtrip, and ever
+since that night eating steamed crabs, I wanted to build my own course
+compiler. Now that I have, I am not sure it compares to waking up for
+just four hours of twilight, only to consume copious amounts of butter
+and shellfish as the brisk ocean air wisps over your face, the
+closures and continuations softly washing rhythmically through the
+conversation as you walk along the beach back to your $50 motel room.&lt;/p&gt;
+
+&lt;p&gt;In closing, thanks for checking this out, this compiler was a ton of
+fun to build. Even as someone who has some amount of expertise in
+compiler design, building it and getting it 100% right (I hope!) was
+such a rewarding experience. My real sincere hope is that it offers
+students (and you!) a fun journey. If you end up doing anything this,
+please get in touch: kkmicins@syr.edu. I’d love to see what you come
+up with. Best wishes,&lt;/p&gt;
+
+&lt;p&gt;Kristopher Micinski
+– Syracuse, November, 2025&lt;/p&gt;
+</description>
+        <pubDate>Fri, 01 Aug 2025 00:00:00 -0400</pubDate>
+        <link>/functional-programming/2025/08/01/build-a-language/</link>
+        <guid isPermaLink="true">/functional-programming/2025/08/01/build-a-language/</guid>
+        
+        
+        <category>functional-programming</category>
+        
+      </item>
     
       <item>
         <title>Why Tail-Recursive Functions are Loops</title>
@@ -2012,25 +2473,6 @@ same way I’m feeling right now:&lt;/p&gt;
         <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
         <link>/application</link>
         <guid isPermaLink="true">/application</guid>
-        
-        
-        <category>git</category>
-        
-        <category>talks</category>
-        
-      </item>
-    
-      <item>
-        <title>All About Git</title>
-        <description>&lt;p&gt;I’m giving a college-wide talk for FIG (Fig is Good) tonight. FIG is a
-student computing group. I’m hoping to record the talk, but for now
-I’ll just put the slides here.&lt;/p&gt;
-
-&lt;iframe src=&quot;https://www.icloud.com/keynote/0dhlSy84VggwTIhJdxjvGiTOQ?embed=true&quot; width=&quot;640&quot; height=&quot;500&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;1&quot; referrer=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
-</description>
-        <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>/git/talks/2017/11/09/git-tutorial/</link>
-        <guid isPermaLink="true">/git/talks/2017/11/09/git-tutorial/</guid>
         
         
         <category>git</category>
