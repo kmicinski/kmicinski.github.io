@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jan 2026 21:50:01 -0500</pubDate>
-    <lastBuildDate>Tue, 06 Jan 2026 21:50:01 -0500</lastBuildDate>
+    <pubDate>Tue, 06 Jan 2026 21:50:59 -0500</pubDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:50:59 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -245,8 +245,8 @@ intellectual energy necessary to grok the true essence of things.&lt;/p&gt;
 &lt;p&gt;– Kristopher Micinski, Syracuse&lt;/p&gt;
 </description>
         <pubDate>Tue, 06 Jan 2026 00:00:00 -0500</pubDate>
-        <link>/ai-llms-why-study-cs-v2</link>
-        <guid isPermaLink="true">/ai-llms-why-study-cs-v2</guid>
+        <link>/claude-code-and-why-study-cs</link>
+        <guid isPermaLink="true">/claude-code-and-why-study-cs</guid>
         
         
         <category>ai</category>
