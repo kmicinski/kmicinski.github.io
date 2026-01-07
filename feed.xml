@@ -6,9 +6,260 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 02 Dec 2025 15:36:28 -0500</pubDate>
-    <lastBuildDate>Tue, 02 Dec 2025 15:36:28 -0500</lastBuildDate>
+    <pubDate>Tue, 06 Jan 2026 21:11:52 -0500</pubDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:11:52 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>Why Study CS? Thoughts on LLM-assisted software engineering</title>
+        <description>&lt;p&gt;Dear students of Computer Science,&lt;/p&gt;
+
+&lt;p&gt;Almost everything everyone is telling you about LLMs is probably
+wrong. Some tell you it’s glorified autocomplete, others say it will
+cure cancer or prove the loftiest new theorems. Nine months ago (March
+‘25), Anthropic’s CEO claimed that AI assistants would be writing 90%
+of our code within three to six months. We have recently seen that he
+was only a little too ambitious: the winter break has seen an
+explosion of programmers uncovering the power of Claude Code, surely a
+cause for talk around the Kombucha dispenser at OpenAI’s offices.&lt;/p&gt;
+
+&lt;p&gt;Claude Code reveals a seriously depressing reality that many
+programmers are now living: the vast bulk of the thing they call
+productivity has now revealed to be nothing more than Claude in a loop
+with command-line tools. The 2023-era copy-and-pasting into the
+textbox, manually crafting a prompt, and carefully stitching the
+result into our codebase feels downright primitive by comparison. Now,
+we can boot up Claude Code and iteratively build up ideas, tests,
+implementations, and (possibly) a complete, working app. The TUI-based
+interfaces solve one of the main problems inherent to the web-based
+chatbots: how to meaningfully &lt;em&gt;iterate&lt;/em&gt;, and incrementally build
+larger software artifacts alongside the LLM. I think many of us were
+telling ourselves that the real ingenuity was in the judiciousness we
+exercised when carefully copying the LLM’s output and integrating it
+back into our domain: Claude Code shows that doing that for
+arbitrarily-complex domains is often just dirt simple, as long as the
+tools can communicate via text.&lt;/p&gt;
+
+&lt;p&gt;This halcyon turn of events has left many students wondering: should I
+still study computer science? As someone who sells computer science
+for a living, I am obligated to sell the position of “yes,” but we all
+know that there are plenty of good reasons to argue “no” as well. For
+the sake of this essay, I will assume you lean towards yes, but
+perhaps with some skepticism. Even if you agree, it’s an important
+question, because it reveals an uncomfortable systemic issue: many
+students operate at a level that Claude Code can easily beat, and in
+the new world order, it will be increasingly hard to get a job. Just
+so we’re crystal clear, there’s still some code Claude can’t write,
+even though it can certainly write a &lt;em&gt;lot&lt;/em&gt; of very useful code. But
+“there will always be code that Claude can’t write” is not a very
+convincing argument when the amount of code Claude does write will be
+massively higher by comparison.&lt;/p&gt;
+
+&lt;p&gt;CS undergraduates face a real issue: beating Claude Code isn’t very
+easy, even (and especially) on challenging leetcode problems. This may
+push some students to conclude that the AI is good enough at reasoning
+such as to absolve them from developing a deep understanding of the
+technical details. I argue that this is the wrong perspective to take,
+and that instead you should switch your efforts away from mindless and
+repetitive generation, and towards problems which stretch your
+intellectual capacity by making you feel stuck. To the degree the LLM
+can help get you unstuck in a way which genuinely builds your mental
+model (so that &lt;em&gt;you’re&lt;/em&gt; in the driver’s seat, not a maybe-true
+understanding you got from the AI): great, do it.&lt;/p&gt;
+
+&lt;p&gt;Holders of $QQQ will loathe this comparison, but in some ways, I see
+LLM-assisted software engineering as the 2020’s Object Orientation: it
+offers a vast swath of opportunity to give lesser-trained programmers
+the ability to write huge amounts of good-enough code, thus enabling
+us to hire a vast army of folks who never had to deal with the pains
+of memory management, pointers, etc. Unfortunately, however, this time
+it’s different; we all know the hiring boom of easy-money days is
+over. Seeing Claude Code, many of us take a more pessimistic stance:
+those that can’t add value on top of Claude will be out of a job. Who
+are these folks that will rise to the top? I argue that it is the
+people who have expended serious intellectual energy to exercise their
+capacity for understanding deep ideas.&lt;/p&gt;
+
+&lt;p&gt;I personally believe the purpose of a university class is to stress
+your intellectual capacity through repeated exposure to
+increasingly-complex technical ideas which build coherent vision. In
+doing this, we teach students skills that can be broadly binned into
+generation (synthesis) and verification (checking). In many contexts
+(e.g., debugging), we build our mental models via iterating between
+synthesizing candidate ideas, then carefully checking our work, and
+reflecting upon what to do next.&lt;/p&gt;
+
+&lt;p&gt;As a student, I saw learning as a way of “compiling” things into my
+mental representation: I would spend days at the library (I do not do
+this anymore, my productivity has unfortunately declined) carefully
+rewriting books in my own words, which taught me the difference
+between what it meant to deeply grok something, and to possess an
+LLM-level understanding of it. One thing I remember from those times,
+however, is how mentally exhausted I felt at the end of the day. The
+reason I was exhausted is because I was playing the verifier. I
+learned a hard truth: after reading a sentence of a book, things often
+make perfect sense, but when you try to explain it to someone else,
+you realize you have no clue what is going on. When we do it to
+ourselves we just feel stupid, but if it happens in an environment
+that encourages rapid failure, we can grow: effective instructors
+incentivize rapid failure (e.g., by allowing students to rapidly test
+their solutions against an Autograder).&lt;/p&gt;
+
+&lt;p&gt;However, in the case of an LLM, failures often manifest in ways which
+can be confusing and subtle: students may find themselves frustrated
+to realize that the LLM led them into a hallucination. Feeling
+confused about what to believe can be a very jarring
+experience–leading many of us to feelings of repulsion when we read
+some of our old code—but the LLM can further amplify this anxiety;
+because it is &lt;em&gt;so&lt;/em&gt; shockingly capable of solving a problem, we feel
+utterly paranoid about hearing the music stop, “what will I do if I
+actually have to figure this part of the code out for myself?”&lt;/p&gt;
+
+&lt;p&gt;Working in terms of abstractions is one of the most important and
+challenging lessons that budding software engineers learn. AI coding
+tools sell us on a vision that they can help us decompose that
+abstraction, but we should be weary and remember to build our own
+mental models. When I was learning to program, I remember feeling
+often: “I can write 100-500 line programs, how do I write a 1M-line
+program?” The answer is that we have to develop abstract reasoning:
+almost no developer would literally read the entirety of a large
+software system (such as the whole Linux kernel). One crucial skill
+software engineering students learn is how to employ abstraction when
+they conceptualize a software system: being able to read &lt;em&gt;just enough&lt;/em&gt;
+of the whole system to understand its architecture, and then employing
+iterative deepening to learn about subsystems (e.g., the memory
+manager, networking, etc.)  in an on-demand fashion. Right now, many
+students are telling themselves a comfortable lie: that iteratively
+prompting the LLM is understanding. Confirmation bias is a big
+concern: the tools are often so good, they give us the impression that
+there is essentially no point in checking their correctness most of
+the time. This sounds great, until we get stuck, and then realize we
+actually didn’t understand things nearly as well as necessary to
+tackle the task at hand.&lt;/p&gt;
+
+&lt;p&gt;This is not a new problem, in fact it is the problem that has plagued
+CS undergraduates since the beginning of time. Being stuck is
+obviously deeply uncomfortable, because the real world has deadlines,
+value-measuring systems, all of which depend on our work being
+complete and correct in a timely fashion. No student wants to be
+stuck, so they work to exit the stuck state as quickly as possible,
+often latching on to an incorrect hypothesis (“oh wait, this line must
+be broken…”) to get back to harmony; this is &lt;em&gt;bad&lt;/em&gt;. As you become a
+senior software developer, you learn that being stuck is in fact the
+&lt;em&gt;default&lt;/em&gt; state when you are working on challenging problems. The
+mental energy comprising your engagement with courses should &lt;em&gt;not&lt;/em&gt; be
+primarily bottlenecked by generation, instead, it should meaningfully
+harmonize generation and verification in a way that allows you to
+build an ever-expanding mental model.&lt;/p&gt;
+
+&lt;p&gt;I recall years ago I chatted with a teaching professor about a
+worrying trend in CS. This was around 2016, and they mentioned that
+students were increasingly ignoring the “nuts and bolts” of
+applications to focus only on the flashy bits that were easy to get
+not-wrong. The specific concern was hackathons: do they encourage
+students to do something hard and deep that exercises real engineering
+skill? Or do they incentivize students to focus on startup-pitch-style
+motivation with impressive-looking web interfaces backed by fake data?
+The trend of students avoiding the genuinely-hard parts of the problem
+to focus on the flashy parts has been occurring since long before the
+days of AI coding assistants.&lt;/p&gt;
+
+&lt;p&gt;I have chatted with some other professors, and one told me they
+switched their assessment style to “code comprehension” rather than
+code synthesis. I think this is an excellent way to see the problem,
+because it stresses that–when generation is cheap–explanation,
+reconstructing a reason for generated content, becomes the dominating
+factor in terms of assessing understanding. You might ask: in a world
+where generators are perfect, what role play the verifiers? This is an
+apt question.&lt;/p&gt;
+
+&lt;p&gt;The first answer is that English is genuinely fuzzy, and in almost
+every case, the ways in which humans describe specifications result in
+contradictory, unrealizable, or intractable results. In a world run by
+humans, software engineers expend serious effort interfacing with
+other humans to refine fuzzy conceptual architectures into correct
+production software. While it seems reasonable to expect that Claude
+Code could refine an English specification, there is always an
+intrinsic value to working with another human. The issue with
+automation is that this may no longer be worth the price: there &lt;em&gt;is&lt;/em&gt;
+still a market for freelance web developers, for example, but it’s
+been severely diminished by sites like SquareSpace and WordPress.&lt;/p&gt;
+
+&lt;p&gt;LLMs take English-based automated code synthesis to the next level,
+giving us a general-purpose tool to refine hazy specs into
+mostly-working software. I predict different impacts across
+sectors. Startups will be the most impacted: it has never been easier
+to iterate to “something that looks like a passable minimum-viable
+product.” If the goal is to demonstrate a cool market gap that is
+tantamount to a JavaScript app, you can now do that &lt;em&gt;very&lt;/em&gt; quickly
+with AI coding assistants. Enterprise apps, on the other hand, will
+persist: organizational bloat, vendor lock-in, and sales play a huge
+role in the momentum of those settings.&lt;/p&gt;
+
+&lt;p&gt;The truly useful applications of AI will involve deeply leveraging AI
+in a way that allows it to be built into the kinds of symbolic
+workflows humans love in things like Keynote and Premiere Pro. For
+example, Adobe Photoshop’s “generative fill” produces cool raster
+images right now, but it doesn’t do so in a manner that gives you a
+layered, element-by-element breakdown: this is the thing all of us
+obviously actually want, because it lets us refine the results of the
+AI, and interact with it, just like Claude Code did for our repos.&lt;/p&gt;
+
+&lt;p&gt;Thus, to aspiring computer scientists, I urge you to seriously
+consider how AI will impact your career. But I also urge you to
+seriously resist the temptation to resort to mindlessly iterating with
+the AI, toiling in unchecked-guesses because you never bothered to go
+check the notes or read the book. Of course such students existed
+before LLMs as well: upon facing broken code, we &lt;em&gt;all&lt;/em&gt; have the
+temptation to prove it is just a minor typo, we edit the code
+superficially: sometimes it works, but sometimes it leads us to a
+significantly more subtle error.&lt;/p&gt;
+
+&lt;p&gt;The key is being able to check our understanding so that we can
+incrementally build a mental model which represents genuine
+understanding. Real complexity &lt;em&gt;does exist&lt;/em&gt;, and how we deal with
+genuine complexity is via abstraction: these abstractions necessitate
+invariants, heuristics, trade-offs, etc. Ideally, you can rapidly
+leverage the power of modern LLMs to help you reason about these
+trade-offs: the issue is that you have to be mindful of the fact that
+the information represents an untrusted guess. One of the biggest
+problems students have in debugging is getting past a block in their
+mental model: the code is broken (they have a testcase demonstrating a
+bug), so they are de-facto wrong (some hypothesis is incorrect), and
+they struggle to truly &lt;em&gt;believe&lt;/em&gt; this. But true growth occurs when
+they challenge their most basic confusions (“oh, this function isn’t
+even reached!”), enabling them to build a harmonious mental model. As
+a concrete skill, I suggest developing your instincts for when your
+understanding of a topic feels discordant.&lt;/p&gt;
+
+&lt;p&gt;There is a vast amount of potential in leveraging AI to expand our
+intellectual capacity, by pushing us to rapidly confront our
+misunderstandings and push past them. However, we often overestimate
+the impact of change on the fundamental nature of things. At least in
+your case, a CS student, your goal is to rise above regurgitation,
+mimicry, or rearranging: we all know the parable of the junior
+engineer who spent all their time trying to rearrange bits and pieces
+of StackOverflow answers. The goal is thus, as it has always been, to
+take from our time what we may use to most-optimally execute our
+vision. In your time as a student, your objective is to learn the key
+principles of computer science (or whatever field you choose) in a way
+which maximally stresses your intellectual capacity while offering you
+the ability to grow from repeated failure. Throughout your career, I
+urge you to develop a taste for a specific set of topics in your
+courses (or computing as a whole) for which you possess enough genuine
+intellectual curiosity as to be willing to expend the genuine
+intellectual energy necessary to grok the true essence of things.&lt;/p&gt;
+
+&lt;p&gt;– Kristopher Micinski, Syracuse&lt;/p&gt;
+</description>
+        <pubDate>Tue, 06 Jan 2026 00:00:00 -0500</pubDate>
+        <link>/ai-llms-why-study-cs-v2</link>
+        <guid isPermaLink="true">/ai-llms-why-study-cs-v2</guid>
+        
+        
+        <category>ai</category>
+        
+      </item>
     
       <item>
         <title>Build a Compiler in Five Projects</title>
@@ -2458,34 +2709,6 @@ made a video showing how these vulnerabilities work.&lt;/p&gt;
         <category>memory-safety</category>
         
         <category>use-after-free</category>
-        
-      </item>
-    
-      <item>
-        <title>Job materials for 2017</title>
-        <description>&lt;p&gt;I’m applying to colleges and universities again in 2017. I’m very
-happy at Haverford, but I’m on the lookout for a tenure-track spot at
-a place that has students and colleagues that will excite me in the
-same way I’m feeling right now:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;/assets/research.pdf&quot;&gt;My research statement (4 12-point pages)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;/assets/teaching.pdf&quot;&gt;My teaching statement (2 12-point pages)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-</description>
-        <pubDate>Thu, 09 Nov 2017 00:00:00 -0500</pubDate>
-        <link>/application</link>
-        <guid isPermaLink="true">/application</guid>
-        
-        
-        <category>git</category>
-        
-        <category>talks</category>
         
       </item>
     
