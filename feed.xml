@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jan 2026 22:32:33 -0500</pubDate>
-    <lastBuildDate>Tue, 06 Jan 2026 22:32:33 -0500</lastBuildDate>
+    <pubDate>Wed, 07 Jan 2026 09:34:43 -0500</pubDate>
+    <lastBuildDate>Wed, 07 Jan 2026 09:34:43 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -234,8 +234,8 @@ intellectual curiosity necessary to grok the true essence of things.&lt;/p&gt;
 &lt;p&gt;P.s., a few caveats to this post: (a) like everyone else, I am being
 reductive, there are plenty of domains where Claude Code completely
 fails right now–paren matching in Racket is only one example. (b) I’m
-specifically discussing Claude Code to the recent explosion, but the
-ideas were pioneered in other tools, and (c) there will surely be
+specifically discussing Claude Code due to the recent explosion, but
+the ideas were pioneered in other tools, and (c) there will surely be
 plenty of reasonable folks who believe that AI is of &lt;em&gt;no&lt;/em&gt; (or very
 limited) use to them, it is impossible for me to prove that all of
 these people are wrong since utility depends on workload; I personally
