@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jan 2026 21:45:51 -0500</pubDate>
-    <lastBuildDate>Tue, 06 Jan 2026 21:45:51 -0500</lastBuildDate>
+    <pubDate>Tue, 06 Jan 2026 21:50:01 -0500</pubDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:50:01 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -31,7 +31,7 @@ dispenser at OpenAI’s offices.&lt;/p&gt;
 
 &lt;p&gt;Claude Code reveals a sobering reality for many software engineering
 professionals: the vast bulk of the thing we call productivity has now
-revealed to be nothing more than Claude in a loop with command-line
+revealed itself to be nothing more than Claude in a loop with command-line
 tools. The 2023-era copy-and-pasting into the textbox, manually
 crafting a prompt, and carefully stitching the result into our
 codebase feels downright manual by comparison. Now, we can boot up
@@ -42,7 +42,7 @@ meaningfully &lt;em&gt;iterate&lt;/em&gt;, and incrementally build larger softwa
 artifacts alongside the LLM. I think many of us were telling ourselves
 that the real ingenuity was in the judiciousness we exercised when
 carefully copying the LLM’s output and integrating it back into our
-domain: Claude Code shows that doing that for arbitrarily-complex
+domain: Claude Code shows that doing that for arbitrarily complex
 domains is often just dirt simple, as long as the tools can
 communicate via text.&lt;/p&gt;
 
@@ -73,8 +73,8 @@ can help get you unstuck in a way which genuinely builds your mental
 model (so that &lt;em&gt;you’re&lt;/em&gt; in the driver’s seat, not a maybe-true
 understanding you got from the AI): great, do it.&lt;/p&gt;
 
-&lt;p&gt;In some ways, I see LLM-assisted software engineering as the 2020’s
-Object Orientation: it offers a vast swath of opportunity to give
+&lt;p&gt;In some ways, I see LLM-assisted software engineering as the Object
+Orientation of the ’20s: it offers a vast swath of opportunity to give
 lesser-trained programmers the ability to write huge amounts of
 good-enough code, thus enabling us to hire a vast army of folks who
 never had to deal with the pains of memory management, pointers,
@@ -109,7 +109,7 @@ you realize you have no clue what is going on. When we do it to
 ourselves we just feel stupid, but if it happens in an environment
 that encourages rapid failure, we can grow: effective instructors
 incentivize rapid failure (e.g., by allowing students to rapidly test
-their solutions against an Autograder).&lt;/p&gt;
+their solutions against an autograder).&lt;/p&gt;
 
 &lt;p&gt;However, in the case of an LLM, failures often manifest in ways which
 can be confusing and subtle: students may find themselves frustrated
