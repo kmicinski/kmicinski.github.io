@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jan 2026 21:23:42 -0500</pubDate>
-    <lastBuildDate>Tue, 06 Jan 2026 21:23:42 -0500</lastBuildDate>
+    <pubDate>Tue, 06 Jan 2026 21:24:28 -0500</pubDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:24:28 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -124,7 +124,7 @@ actually have to figure this part of the code out for myself?”&lt;/p&gt;
 &lt;p&gt;Working in terms of abstractions is one of the most important and
 challenging lessons that budding software engineers learn. AI coding
 tools sell us on a vision that they can help us decompose that
-abstraction, but we should be weary and remember to build our own
+abstraction, but we should be wary and remember to build our own
 mental models. When I was learning to program, I remember feeling
 often: “I can write 100-500 line programs, how do I write a 1M-line
 program?” The answer is that we have to develop abstract reasoning:
