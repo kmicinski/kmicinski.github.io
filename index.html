@@ -286,31 +286,34 @@ undergraduate research</a>.</p>
 
     <script>
       $(document).ready(function() {
-      var areadescs = [$("#secdesc"),$("#pldesc"),$("#hcidesc")];
-      var areas = $("#areadesc");
-      $("areastr").css("min-height",
-                 (Math.min.apply(null, areadescs.map(function(f) { return f.height(); }))));
-      var activearea = areas;
-      var activecircle = null;
-      [$("#circle1"),$("#circle2"),$("#circle3")]
-        .forEach(function(f,i) {
-            f.mouseenter(function() {
-              activearea.css({"display": "none"});
-              activearea = areadescs[i];
-              activearea.css({"display": "table-cell"});
-              if (activecircle != null) {
-                activecircle.css({"fill-opacity": .4});
-              }
-              activecircle = f;
-              activecircle.css({"fill-opacity": .7});
-          });
+      // Only enable Venn diagram interactions on desktop
+      if ($(window).width() > 600) {
+        var areadescs = [$("#secdesc"),$("#pldesc"),$("#hcidesc")];
+        var areas = $("#areadesc");
+        $("areastr").css("min-height",
+                   (Math.min.apply(null, areadescs.map(function(f) { return f.height(); }))));
+        var activearea = areas;
+        var activecircle = null;
+        [$("#circle1"),$("#circle2"),$("#circle3")]
+          .forEach(function(f,i) {
+              f.mouseenter(function() {
+                activearea.css({"display": "none"});
+                activearea = areadescs[i];
+                activearea.css({"display": "table-cell"});
+                if (activecircle != null) {
+                  activecircle.css({"fill-opacity": .4});
+                }
+                activecircle = f;
+                activecircle.css({"fill-opacity": .7});
+            });
 /*          f.mouseleave(function() {
             areadescs[i].css({"display": "none"});
             areas.css({"display": "table-cell"});
             f.css({"fill-opacity": .4});
           });*/
-        });
-      
+          });
+      }
+
       var i = 0;
       var profpic = $("#profpic");
       var pics = ["krisold.jpg","krisdrawing.jpg","krisbw.jpg"].map(function(x) {
