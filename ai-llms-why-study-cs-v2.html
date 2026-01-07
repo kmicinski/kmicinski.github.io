@@ -82,11 +82,11 @@
 
 <p>Almost everything everyone is telling you about LLMs is probably
 wrong. Some tell you it’s glorified autocomplete, others say it will
-cure cancer or prove the loftiest theorems; as with many popular
-reductive takes, these claims are surely based in a grain of truth: I
-encourage you to try a modern AI coding assistant for yourself, and
-develop your own opinion, but in this post I will give you my
-thoughts.</p>
+cure cancer or prove the loftiest theorems. As with many mass-market
+takes, these claims contain a grain of truth–but they miss the
+point. I encourage you to try a modern AI coding assistant for
+yourself and form your own opinion; here, I’ll offer mine, as someone
+who wants to give you an optimistic but unvarnished perspective.</p>
 
 <p>Nine months ago (March ‘25), Anthropic’s CEO claimed that AI
 assistants would be writing 90% of our code within three to six
@@ -95,22 +95,22 @@ the winter break has seen an explosion of programmers uncovering the
 power of Claude Code, surely a cause for talk around the Kombucha
 dispenser at OpenAI’s offices.</p>
 
-<p>Claude Code reveals a seriously depressing reality that many
-programmers are now living: the vast bulk of the thing they call
-productivity has now revealed to be nothing more than Claude in a loop
-with command-line tools. The 2023-era copy-and-pasting into the
-textbox, manually crafting a prompt, and carefully stitching the
-result into our codebase feels downright primitive by comparison. Now,
-we can boot up Claude Code and iteratively build up ideas, tests,
-implementations, and (possibly) a complete, working app. The TUI-based
-interfaces solve one of the main problems inherent to the web-based
-chatbots: how to meaningfully <em>iterate</em>, and incrementally build
-larger software artifacts alongside the LLM. I think many of us were
-telling ourselves that the real ingenuity was in the judiciousness we
-exercised when carefully copying the LLM’s output and integrating it
-back into our domain: Claude Code shows that doing that for
-arbitrarily-complex domains is often just dirt simple, as long as the
-tools can communicate via text.</p>
+<p>Claude Code reveals a sobering reality for many software engineering
+professionals: the vast bulk of the thing we call productivity has now
+revealed to be nothing more than Claude in a loop with command-line
+tools. The 2023-era copy-and-pasting into the textbox, manually
+crafting a prompt, and carefully stitching the result into our
+codebase feels downright manual by comparison. Now, we can boot up
+Claude Code and iteratively build up ideas, tests, implementations,
+and (possibly) a complete, working app. The TUI-based interfaces solve
+one of the main problems inherent to the web-based chatbots: how to
+meaningfully <em>iterate</em>, and incrementally build larger software
+artifacts alongside the LLM. I think many of us were telling ourselves
+that the real ingenuity was in the judiciousness we exercised when
+carefully copying the LLM’s output and integrating it back into our
+domain: Claude Code shows that doing that for arbitrarily-complex
+domains is often just dirt simple, as long as the tools can
+communicate via text.</p>
 
 <p>This halcyon turn of events has left many students wondering: should I
 still study computer science? As someone who sells computer science
@@ -182,7 +182,7 @@ can be confusing and subtle: students may find themselves frustrated
 to realize that the LLM led them into a hallucination. Feeling
 confused about what to believe can be a very jarring
 experience–leading many of us to feelings of repulsion when we read
-some of our old code—but the LLM can further amplify this anxiety;
+some of our old code–but the LLM can further amplify this anxiety;
 because it is <em>so</em> shockingly capable of solving a problem, we feel
 utterly paranoid about hearing the music stop, “what will I do if I
 actually have to figure this part of the code out for myself?”</p>
@@ -191,23 +191,26 @@ actually have to figure this part of the code out for myself?”</p>
 challenging lessons that budding software engineers learn. AI coding
 tools sell us on a vision that they can help us decompose that
 abstraction, but we should be wary and remember to build our own
-mental models. When I was learning to program, I remember feeling
-often: “I can write 100-500 line programs, how do I write a 1M-line
-program?” The answer is that we have to develop abstract reasoning:
-almost no developer would literally read the entirety of a large
-software system (such as the whole Linux kernel). One crucial skill
-software engineering students learn is how to employ abstraction when
-they conceptualize a software system: being able to read <em>just enough</em>
-of the whole system to understand its architecture, and then employing
-iterative deepening to learn about subsystems (e.g., the memory
-manager, networking, etc.)  in an on-demand fashion. Right now, many
-students are telling themselves a comfortable lie: that iteratively
-prompting the LLM is understanding. Confirmation bias is a big
-concern: the tools are often so good, they give us the impression that
-there is essentially no point in checking their correctness most of
-the time. This sounds great, until we get stuck, and then realize we
-actually didn’t understand things nearly as well as necessary to
-tackle the task at hand.</p>
+mental models. They are often very good at decomposing structure, but
+much weaker at constructing the semantics that make those structures
+meaningful: thus, I recommend you focus on semantics throughout your
+study. When I was learning to program, I remember feeling often: “I
+can write 100-500 line programs, how do I write a 1M-line program?”
+The answer is that we have to develop abstract reasoning: almost no
+developer would literally read every single line of a large software
+system. One crucial skill software engineering students learn is how
+to employ abstraction when they understand a software system: being
+able to read <em>just enough</em> of the whole system to understand its
+architecture, and then employing iterative deepening to learn about
+subsystems (e.g., the memory manager, networking, etc.) in an
+on-demand fashion. Right now, many students are telling themselves a
+comfortable lie: that iteratively prompting the LLM is a substitute
+for the true iterative understanding we do to build our mental
+model. Confirmation bias is a big concern: the tools are often so
+good, they give us the impression that there is essentially no point
+in checking their correctness most of the time. This sounds great,
+until we get stuck, and then realize we actually didn’t understand
+things nearly as well as necessary to tackle the task at hand.</p>
 
 <p>This is not a new problem, in fact it is the problem that has plagued
 CS undergraduates since the beginning of time. Being stuck is
