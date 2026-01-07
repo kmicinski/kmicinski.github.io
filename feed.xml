@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 06 Jan 2026 21:24:28 -0500</pubDate>
-    <lastBuildDate>Tue, 06 Jan 2026 21:24:28 -0500</lastBuildDate>
+    <pubDate>Tue, 06 Jan 2026 21:26:51 -0500</pubDate>
+    <lastBuildDate>Tue, 06 Jan 2026 21:26:51 -0500</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -73,18 +73,18 @@ can help get you unstuck in a way which genuinely builds your mental
 model (so that &lt;em&gt;you’re&lt;/em&gt; in the driver’s seat, not a maybe-true
 understanding you got from the AI): great, do it.&lt;/p&gt;
 
-&lt;p&gt;Holders of $QQQ will loathe this comparison, but in some ways, I see
-LLM-assisted software engineering as the 2020’s Object Orientation: it
-offers a vast swath of opportunity to give lesser-trained programmers
-the ability to write huge amounts of good-enough code, thus enabling
-us to hire a vast army of folks who never had to deal with the pains
-of memory management, pointers, etc. Unfortunately, however, this time
-it’s different; we all know the hiring boom of easy-money days is
-over. Seeing Claude Code, many of us take a more pessimistic stance:
-those that can’t add value on top of Claude will be out of a job. Who
-are these folks that will rise to the top? I argue that it is the
-people who have expended serious intellectual energy to exercise their
-capacity for understanding deep ideas.&lt;/p&gt;
+&lt;p&gt;In some ways, I see LLM-assisted software engineering as the 2020’s
+Object Orientation: it offers a vast swath of opportunity to give
+lesser-trained programmers the ability to write huge amounts of
+good-enough code, thus enabling us to hire a vast army of folks who
+never had to deal with the pains of memory management, pointers,
+etc. Unfortunately, however, this time it’s different; we all know the
+hiring boom of easy-money days is over. Seeing Claude Code, many of us
+take a more pessimistic stance: those that can’t add value on top of
+Claude will be out of a job. Who are these folks that will rise to the
+top? I argue that it is the people who have expended serious
+intellectual energy to exercise their capacity for understanding deep
+ideas.&lt;/p&gt;
 
 &lt;p&gt;I personally believe the purpose of a university class is to stress
 your intellectual capacity through repeated exposure to
@@ -176,8 +176,8 @@ code synthesis. I think this is an excellent way to see the problem,
 because it stresses that–when generation is cheap–explanation,
 reconstructing a reason for generated content, becomes the dominating
 factor in terms of assessing understanding. You might ask: in a world
-where generators are perfect, what role play the verifiers? This is an
-apt question.&lt;/p&gt;
+where generators are perfect, what is the role of the verifiers? This
+is an apt question.&lt;/p&gt;
 
 &lt;p&gt;The first answer is that English is genuinely fuzzy, and in almost
 every case, the ways in which humans describe specifications result in
@@ -214,7 +214,7 @@ AI, and interact with it, just like Claude Code did for our repos.&lt;/p&gt;
 &lt;p&gt;Thus, to aspiring computer scientists, I urge you to seriously
 consider how AI will impact your career. But I also urge you to
 seriously resist the temptation to resort to mindlessly iterating with
-the AI, toiling in unchecked-guesses because you never bothered to go
+the AI, toiling in unchecked guesses because you never bothered to go
 check the notes or read the book. Of course such students existed
 before LLMs as well: upon facing broken code, we &lt;em&gt;all&lt;/em&gt; have the
 temptation to prove it is just a minor typo, we edit the code
