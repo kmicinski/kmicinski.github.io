@@ -195,7 +195,6 @@ pre > code {
 .site-header {
   border-top: 5px solid #6F777D;
   min-height: 56px;
-  width: 100%;
   position: relative;
 }
 
@@ -636,15 +635,6 @@ pre > code {
   top: -50px;
   position: relative;
 }
-@media screen and (max-width: 600px) {
-  .krispic {
-    float: none;
-    margin: 20px auto;
-    display: block;
-    top: 0;
-    position: static;
-  }
-}
 
 .krispic img {
   padding: 5px 5px 5px;
@@ -673,14 +663,6 @@ blockquote {
   float: right;
   width: 300px;
   padding-left: 20px;
-}
-@media screen and (max-width: 600px) {
-  .smallright {
-    float: none;
-    width: 100%;
-    padding-left: 0;
-    margin-bottom: 20px;
-  }
 }
 
 article img {
@@ -711,13 +693,6 @@ ul p {
   text-indent: 0px;
 }
 
-.masthead {
-  max-width: 800px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-
 .jumbopic {
   height: 100px;
 }
@@ -728,22 +703,6 @@ ul p {
 
 .introtext ul li {
   display: inline;
-}
-
-@media screen and (max-width: 600px) {
-  .introtext {
-    text-align: center;
-  }
-  .introtext h2 {
-    font-size: 1.5em;
-  }
-  .introtext h3 {
-    font-size: 1.2em;
-  }
-  .introtext ul li {
-    display: block;
-    margin-bottom: 8px;
-  }
 }
 
 .areadesc {
@@ -776,17 +735,9 @@ ul p {
 #topcontainer {
   max-width: 800px;
   width: 800px;
-  left: 0;
+  left: 50%;
   position: absolute;
   top: 0px;
-}
-@media screen and (max-width: 600px) {
-  #topcontainer {
-    position: relative;
-    width: 100%;
-    left: 0;
-    padding: 0 15px;
-  }
 }
 
 #topcontent {
@@ -795,64 +746,23 @@ ul p {
   text-align: left;
   top: 320px;
   color: #fff;
-  left: 0;
-}
-@media screen and (max-width: 600px) {
-  #topcontent {
-    position: relative;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
+  left: -50%;
 }
 
 #mainpagecontent {
   margin-top: 20px;
   padding: 10px;
 }
-@media screen and (max-width: 600px) {
-  #mainpagecontent {
-    margin-top: 10px;
-    padding: 10px 0;
-  }
-}
 
 #mainpgvenn {
   margin-top: 50px;
   margin-bottom: 40px;
-}
-@media screen and (max-width: 600px) {
-  #mainpgvenn tr, #mainpgvenn td {
-    display: block;
-    width: 100% !important;
-  }
-  #mainpgvenn svg {
-    display: none;
-  }
-  #mainpgvenn #areadesc {
-    display: none !important;
-  }
-  #mainpgvenn .areadescleft {
-    display: block !important;
-    margin-bottom: 20px;
-    padding: 15px;
-    border-left: 4px solid #D44500;
-  }
-  #mainpgvenn .areadescleft h3 {
-    margin-top: 0;
-  }
 }
 
 #mainwrapper {
   margin-right: auto;
   margin-left: auto;
   max-width: 800px;
-  padding: 0 30px;
-}
-@media screen and (max-width: 600px) {
-  #mainwrapper {
-    padding: 0 15px;
-  }
 }
 
 #mainwrapper h2 {
@@ -860,22 +770,11 @@ ul p {
   margin-bottom: 0.4em;
   color: black;
 }
-@media screen and (max-width: 600px) {
-  #mainwrapper h2 {
-    font-size: 1.5em;
-    margin-top: 0.8em;
-  }
-}
 
 #mainwrapper h3 {
   margin-top: 0.7em;
   margin-bottom: 0.4em;
   color: black;
-}
-@media screen and (max-width: 600px) {
-  #mainwrapper h3 {
-    font-size: 1.2em;
-  }
 }
 
 #topblurb {
@@ -899,15 +798,10 @@ ul p {
   text-align: center;
   background-color: black;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 45%, rgb(0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 80%, rgb(0, 0, 0) 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 80%, rgb(0, 0, 0) 100%), url("/assets/syracusepic.png");
-  background-size: cover;
+  background-size: 999px 400px;
   height: 400px;
   background-repeat: no-repeat;
   background-position: center;
-}
-@media screen and (max-width: 600px) {
-  .bs-docs-header {
-    height: 250px;
-  }
 }
 
 #researchareas {
