@@ -195,6 +195,7 @@ pre > code {
 .site-header {
   border-top: 5px solid #6F777D;
   min-height: 56px;
+  width: 100%;
   position: relative;
 }
 
@@ -710,6 +711,13 @@ ul p {
   text-indent: 0px;
 }
 
+.masthead {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
 .jumbopic {
   height: 100px;
 }
@@ -768,7 +776,7 @@ ul p {
 #topcontainer {
   max-width: 800px;
   width: 800px;
-  left: 50%;
+  left: 0;
   position: absolute;
   top: 0px;
 }
@@ -787,7 +795,7 @@ ul p {
   text-align: left;
   top: 320px;
   color: #fff;
-  left: -50%;
+  left: 0;
 }
 @media screen and (max-width: 600px) {
   #topcontent {
