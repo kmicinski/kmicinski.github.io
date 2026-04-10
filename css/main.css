@@ -195,6 +195,9 @@ pre > code {
 .site-header {
   border-top: 5px solid #6F777D;
   min-height: 56px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   position: relative;
 }
 
