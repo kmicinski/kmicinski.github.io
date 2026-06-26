@@ -48,8 +48,7 @@ body {
  */
 h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
-ul, ol, dl, figure,
-.highlight {
+ul, ol, dl, figure {
   margin-bottom: 15px;
 }
 
@@ -155,20 +154,16 @@ pre > code {
   margin-right: auto;
   margin-left: auto;
 }
+.wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 @media screen and (max-width: 800px) {
   .wrapper {
     max-width: -webkit-calc(800px - (30px));
     max-width: calc(800px - (30px));
   }
-}
-
-/**
- * Clearfix
- */
-.footer-col-wrapper:after, .wrapper:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 /**
@@ -293,6 +288,11 @@ pre > code {
   font-size: 15px;
   color: #6F777D;
   margin-left: -15px;
+}
+.footer-col-wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .footer-col {
@@ -426,6 +426,7 @@ pre > code {
  */
 .highlight {
   background: #fff;
+  margin-bottom: 15px;
 }
 .highlighter-rouge .highlight {
   background: #eef;
