@@ -827,6 +827,27 @@ ul p {
   display: block;
 }
 
+.post-figure {
+  margin: 30px auto 36px;
+  text-align: center;
+}
+.post-figure img {
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 3px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+}
+.post-figure figcaption {
+  margin-top: 12px;
+  font-size: 17.5px;
+  font-style: italic;
+  color: #6F777D;
+  line-height: 1.4;
+}
+
 .post {
   font: 20px/1.5 ShermanSans, "Trebuchet MS", Tahoma, sans-serif;
   padding: 20px;
