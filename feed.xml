@@ -6,8 +6,8 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 26 Jun 2026 03:09:22 -0400</pubDate>
-    <lastBuildDate>Fri, 26 Jun 2026 03:09:22 -0400</lastBuildDate>
+    <pubDate>Fri, 26 Jun 2026 03:28:27 -0400</pubDate>
+    <lastBuildDate>Fri, 26 Jun 2026 03:28:27 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -2121,7 +2121,7 @@ Thankfully, we used S-expressions.&lt;/p&gt;
   (define antecedents (reverse (list-tail (reverse (list-tail (cdr pf) 0)) 2)))
   (foldr
    (lambda (k v acc) (string-replace acc k v))
-   (format &quot; \n \\frac{ ~a }{ \\texttt{ ~a } }}&quot;
+   (format &quot;{{\\tiny \\textsc{ ~a }} \n \\frac{ ~a }{ \\texttt{ ~a } }}&quot;
            name
            (string-join (map pf-&amp;gt;tex antecedents) &quot;\\,&quot;)
            (consequent pf))
@@ -2454,7 +2454,7 @@ post.&lt;/p&gt;
   (define antecedents (reverse (list-tail (reverse (list-tail (cdr pf) 0)) 2)))
   (foldr
    (lambda (k v acc) (string-replace acc k v))
-   (format &quot; \n \\frac{ ~a }{ \\texttt{ ~a } }}&quot;
+   (format &quot;{{\\tiny \\textsc{ ~a }} \n \\frac{ ~a }{ \\texttt{ ~a } }}&quot;
            name
            (string-join (map pf-&amp;gt;tex antecedents) &quot;\\,&quot;)
            (consequent pf))
