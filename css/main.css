@@ -99,7 +99,7 @@ a {
   text-decoration: none;
 }
 a:visited {
-  color: rgb(135.5, 44.1014150943, 0);
+  color: rgb(53.137254902%, 17.294672586%, 0%);
 }
 a:hover {
   color: #111;
@@ -111,7 +111,7 @@ a:hover {
  */
 blockquote {
   color: #6F777D;
-  border-left: 4px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
+  border-left: 4px solid rgb(85.4602858092%, 86.3908275174%, 87.0887337986%);
   padding-left: 15px;
   font-size: 18px;
   letter-spacing: -1px;
@@ -127,7 +127,7 @@ blockquote > :last-child {
 pre,
 code {
   font-size: 15px;
-  border: 1px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
+  border: 1px solid rgb(85.4602858092%, 86.3908275174%, 87.0887337986%);
   border-radius: 3px;
   background-color: #eef;
 }
@@ -225,7 +225,7 @@ pre > code {
     top: 9px;
     right: 15px;
     background-color: #fdfdfd;
-    border: 1px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
+    border: 1px solid rgb(85.4602858092%, 86.3908275174%, 87.0887337986%);
     border-radius: 5px;
     text-align: right;
   }
@@ -269,7 +269,7 @@ pre > code {
  * Site footer
  */
 .site-footer {
-  border-top: 1px solid rgb(217.9237288136, 220.2966101695, 222.0762711864);
+  border-top: 1px solid rgb(85.4602858092%, 86.3908275174%, 87.0887337986%);
   padding: 30px 0;
 }
 

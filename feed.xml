@@ -4,10 +4,10 @@
     <title>Kristopher Micinski</title>
     <description>Kris Micinski&apos;s Website. Love the lambda.
 </description>
-    <link>/</link>
-    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 26 Jun 2026 11:10:38 -0400</pubDate>
-    <lastBuildDate>Fri, 26 Jun 2026 11:10:38 -0400</lastBuildDate>
+    <link>https://kmicinski.com/</link>
+    <atom:link href="https://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 13 Sep 2026 18:24:52 -0400</pubDate>
+    <lastBuildDate>Sun, 13 Sep 2026 18:24:52 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -250,11 +250,11 @@ two things: (a) I performed spellchecking, and (b) checks for
 copyediting / consistency / etc.&lt;/p&gt;
 </description>
         <pubDate>Fri, 26 Jun 2026 00:00:00 -0400</pubDate>
-        <link>/thing-we-all-want</link>
-        <guid isPermaLink="true">/thing-we-all-want</guid>
+        <link>https://kmicinski.com/thing-we-all-want</link>
+        <guid isPermaLink="true">https://kmicinski.com/thing-we-all-want</guid>
         
         
-        <category>ai,</category>
+        <category>ai</category>
         
         <category>programming</category>
         
@@ -295,8 +295,8 @@ the USA and the world generally, long live NSF!&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 09 Apr 2026 00:00:00 -0400</pubDate>
-        <link>/rejected-career-proposal</link>
-        <guid isPermaLink="true">/rejected-career-proposal</guid>
+        <link>https://kmicinski.com/rejected-career-proposal</link>
+        <guid isPermaLink="true">https://kmicinski.com/rejected-career-proposal</guid>
         
         
         <category>academia</category>
@@ -536,8 +536,8 @@ found AI to be surprisingly helpful in my hobbyist woodworking,
 however.&lt;/p&gt;
 </description>
         <pubDate>Tue, 06 Jan 2026 00:00:00 -0500</pubDate>
-        <link>/claude-code-and-why-study-cs</link>
-        <guid isPermaLink="true">/claude-code-and-why-study-cs</guid>
+        <link>https://kmicinski.com/claude-code-and-why-study-cs</link>
+        <guid isPermaLink="true">https://kmicinski.com/claude-code-and-why-study-cs</guid>
         
         
         <category>ai</category>
@@ -1005,8 +1005,8 @@ up with. Best wishes,&lt;/p&gt;
 – Syracuse, November, 2025&lt;/p&gt;
 </description>
         <pubDate>Sun, 23 Nov 2025 00:00:00 -0500</pubDate>
-        <link>/functional-programming/2025/11/23/build-a-language/</link>
-        <guid isPermaLink="true">/functional-programming/2025/11/23/build-a-language/</guid>
+        <link>https://kmicinski.com/functional-programming/2025/11/23/build-a-language/</link>
+        <guid isPermaLink="true">https://kmicinski.com/functional-programming/2025/11/23/build-a-language/</guid>
         
         
         <category>functional-programming</category>
@@ -1186,8 +1186,8 @@ continue next week.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 01 Aug 2025 00:00:00 -0400</pubDate>
-        <link>/functional-programming/2025/08/01/loops/</link>
-        <guid isPermaLink="true">/functional-programming/2025/08/01/loops/</guid>
+        <link>https://kmicinski.com/functional-programming/2025/08/01/loops/</link>
+        <guid isPermaLink="true">https://kmicinski.com/functional-programming/2025/08/01/loops/</guid>
         
         
         <category>functional-programming</category>
@@ -1679,8 +1679,8 @@ various trade-offs in doing so.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 11 May 2024 00:00:00 -0400</pubDate>
-        <link>/modern-deduction/1</link>
-        <guid isPermaLink="true">/modern-deduction/1</guid>
+        <link>https://kmicinski.com/modern-deduction/1</link>
+        <guid isPermaLink="true">https://kmicinski.com/modern-deduction/1</guid>
         
         
       </item>
@@ -1707,8 +1707,8 @@ once every month or two.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 05 Apr 2024 00:00:00 -0400</pubDate>
-        <link>/modern-deduction/0</link>
-        <guid isPermaLink="true">/modern-deduction/0</guid>
+        <link>https://kmicinski.com/modern-deduction/0</link>
+        <guid isPermaLink="true">https://kmicinski.com/modern-deduction/0</guid>
         
         
       </item>
@@ -1727,8 +1727,8 @@ promotion at Syracuse University.&lt;/p&gt;
 review packet, including CV, papers, and my personal statement.&lt;/p&gt;
 </description>
         <pubDate>Fri, 16 Dec 2022 00:00:00 -0500</pubDate>
-        <link>/year-3-review</link>
-        <guid isPermaLink="true">/year-3-review</guid>
+        <link>https://kmicinski.com/year-3-review</link>
+        <guid isPermaLink="true">https://kmicinski.com/year-3-review</guid>
         
         
       </item>
@@ -2489,13 +2489,13 @@ post.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 14 Aug 2022 00:00:00 -0400</pubDate>
-        <link>/certifying-interpreters</link>
-        <guid isPermaLink="true">/certifying-interpreters</guid>
+        <link>https://kmicinski.com/certifying-interpreters</link>
+        <guid isPermaLink="true">https://kmicinski.com/certifying-interpreters</guid>
         
         
-        <category>dependent-types,</category>
+        <category>dependent-types</category>
         
-        <category>functional-programming,</category>
+        <category>functional-programming</category>
         
         <category>theorem-proving</category>
         
@@ -2711,8 +2711,8 @@ Scheme and Functional
 Programming&lt;/a&gt;!&lt;/p&gt;
 </description>
         <pubDate>Wed, 10 Apr 2019 00:00:00 -0400</pubDate>
-        <link>/research/functional-programming/scheme/2019/04/10/scheme-workshop/</link>
-        <guid isPermaLink="true">/research/functional-programming/scheme/2019/04/10/scheme-workshop/</guid>
+        <link>https://kmicinski.com/research/functional-programming/scheme/2019/04/10/scheme-workshop/</link>
+        <guid isPermaLink="true">https://kmicinski.com/research/functional-programming/scheme/2019/04/10/scheme-workshop/</guid>
         
         
         <category>research</category>
