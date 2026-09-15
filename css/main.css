@@ -733,8 +733,7 @@ ul p {
 }
 
 #topcontainer {
-  max-width: 800px;
-  width: 800px;
+  width: 0;
   left: 50%;
   position: absolute;
   top: 0px;
@@ -746,7 +745,7 @@ ul p {
   text-align: left;
   top: 320px;
   color: #fff;
-  left: -50%;
+  left: -400px;
 }
 
 #mainpagecontent {
@@ -877,5 +876,104 @@ ul p {
 /*     width    : 100%; */
 /*     height   : 4em; */
 /* } */
+/*
+ * Phone layout (<= 600px). Everything above is untouched at desktop
+ * widths; this block only relaxes the fixed 800px homepage geometry so
+ * the page fits a narrow screen without horizontal scrolling.
+ */
+@media screen and (max-width: 600px) {
+  .masthead {
+    position: relative;
+  }
+  #topcontainer {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    left: 0;
+  }
+  #topcontent {
+    width: 100%;
+    left: 0;
+    top: auto;
+    bottom: 12px;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .introtext h2 {
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+  .introtext h3 {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .introtext h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .introtext ul {
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+  .introtext ul li {
+    display: block;
+    line-height: 1.6;
+  }
+  .krispic,
+  .krispic img {
+    width: 120px;
+    height: 120px;
+  }
+  .krispic {
+    float: none;
+    top: 0;
+    margin: 0 0 10px 0;
+  }
+  .bs-docs-header {
+    background-size: cover;
+    height: 400px;
+  }
+  #mainpgvenn,
+  #mainpgvenn tbody,
+  #mainpgvenn tr,
+  #mainpgvenn td {
+    display: block;
+    width: 100% !important;
+    padding-left: 0;
+    box-sizing: border-box;
+  }
+  #mainpgvenn {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  #mainpgvenn svg {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    margin: 0 auto;
+  }
+  #areadesc {
+    display: none !important;
+  }
+  .areadescleft {
+    display: block !important;
+    padding: 0 0 10px 0;
+  }
+  .footer-col-wrapper {
+    margin-left: 0;
+  }
+  .footer-col {
+    width: 100%;
+    padding-left: 0;
+  }
+  article p,
+  #mainwrapper p {
+    text-align: left;
+  }
+  #mainpagecontent {
+    padding: 10px 16px;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
