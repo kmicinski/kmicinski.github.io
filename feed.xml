@@ -6,9 +6,104 @@
 </description>
     <link>https://kmicinski.com/</link>
     <atom:link href="https://kmicinski.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 15 Sep 2026 15:47:01 -0400</pubDate>
-    <lastBuildDate>Tue, 15 Sep 2026 15:47:01 -0400</lastBuildDate>
+    <pubDate>Thu, 17 Sep 2026 14:44:24 -0400</pubDate>
+    <lastBuildDate>Thu, 17 Sep 2026 14:44:24 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
+    
+      <item>
+        <title>Thoughts on Learning with AI</title>
+        <description>&lt;p&gt;Artificial intelligence serves many roles. One clear category is memory and recall. In a world where we can rapidly search for and recall information, the pressure to do all of that recall ourselves is lower. The mental energy we expend to perform day-to-day tasks is drastically lower when we have rapid knowledge retrieval.&lt;/p&gt;
+
+&lt;p&gt;But modern generative AI is capable of more than that. It is also capable of generative reasoning. That is genuinely novel. It is a big difference between Google and modern generative AI, at least in the frontier models.&lt;/p&gt;
+
+&lt;p&gt;So how should we think about the university experience when we have access to these systems?&lt;/p&gt;
+
+&lt;h2 id=&quot;what-a-university-course-is-for&quot;&gt;What a university course is for&lt;/h2&gt;
+
+&lt;p&gt;One of the things we are trying to optimize in a university is the opportunity to confront tricky problems and build our understanding. That was always the foundation of the university model, and I think the fundamentals are good.&lt;/p&gt;
+
+&lt;p&gt;Ideally, the purpose of a university class is not to teach any particular set of topics, although it should use topics relevant to the day. The main emphasis should be on giving you a set of challenging problems, all on a related front, so that you can build an understanding of the key principles of a domain.&lt;/p&gt;
+
+&lt;p&gt;A course is a coherent set of those problems: opportunities to face failure and misunderstanding, and then push yourself to build your own understanding. As students, our goal is to grow past regurgitating information and carrying out rote processes. We often learn through repetitive work, but the goal is to build a foundational understanding of the principles of a topic.&lt;/p&gt;
+
+&lt;p&gt;I do not think any of that changes with modern generative AI. The fundamental value proposition of taking a university course does not change.&lt;/p&gt;
+
+&lt;p&gt;I also do not foresee a world in which there is much value in having the vast bulk of humans abstracted out of understanding. There is a lot of potential in going through the process of experiencing your own understanding and developing a genuine perspective that is informed and built by you in a coherent way.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-fear-that-ai-will-replace-our-reasoning&quot;&gt;The fear that AI will replace our reasoning&lt;/h2&gt;
+
+&lt;p&gt;Part of the zeitgeist around AI is a concern that it will truly replace our reasoning: that AI will become so much better at organizing our thoughts than we are that we give in to the temptation to have no thoughts or agency ourselves.&lt;/p&gt;
+
+&lt;p&gt;There is a prescient concern that people are pushing generative AI in a direction that alienates us from our own thoughts by endorsing AI tools as part of our thinking. I see this as a continuation of the debate over social media, short-form video, and other kinds of human-produced slop turned into an algorithmic system for marketing.&lt;/p&gt;
+
+&lt;p&gt;But if you believe that your goal as a human is to develop understanding through repeated experiences of growth, then I think you should fully embrace modern generative AI tools, just as you would in the workforce. Crucially, though, you might intentionally withhold the tool—or dumb it down—to help yourself confront problems and learn.&lt;/p&gt;
+
+&lt;p&gt;There are many ways to use an LLM. The question is not whether you should surrender to the idea that it can always think for you. There is a unique human experience in having to think through a coherent set of topics.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-happens-to-software-work&quot;&gt;What happens to software work&lt;/h2&gt;
+
+&lt;p&gt;AI coding tools are simply reality. We should expect considerably fewer jobs whose value is the raw task of programming.&lt;/p&gt;
+
+&lt;p&gt;There will be fewer opportunities in coding applications where the correctness or specific design of the code has little relevance. Those jobs were already on their way out because of website builders and similar tools. A lot of app development and related work will quickly become unprofitable.&lt;/p&gt;
+
+&lt;p&gt;At the same time, there is a huge amount of pent-up demand for software. We can take some solace in Jevons’s paradox: as software becomes cheaper to produce, we may find many more uses for it.&lt;/p&gt;
+
+&lt;p&gt;Large organizations will still need software engineers because they run complex software that is essentially a large business machine. The software is inexorably tied to the rest of the business, and the business fundamentally interfaces with humans. There need to be humans who understand those processes and can communicate and negotiate them. The demand for software will continue to require that work.&lt;/p&gt;
+
+&lt;h2 id=&quot;you-still-need-a-baseline-of-understanding&quot;&gt;You still need a baseline of understanding&lt;/h2&gt;
+
+&lt;p&gt;How should you organize your classes and learn when you will have frontier-grade AI at work?&lt;/p&gt;
+
+&lt;p&gt;First, recognize that even with frontier-grade AI, there is value in a baseline of understanding. You need some working memory of basic topics and some skill set that you can actually use.&lt;/p&gt;
+
+&lt;p&gt;If you are using AI, you need to articulate what you want.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Your taste is the ultimate moat.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You will not get what you want from the AI unless you can articulate your tastes. Being able to articulate your understanding is therefore extremely important.&lt;/p&gt;
+
+&lt;p&gt;One of the major skills undergraduates should learn in software engineering is debugging. Debugging is not about learning how to solve any specific bug. It is the process of building hypotheses. That is a skill you need to practice.&lt;/p&gt;
+
+&lt;p&gt;The same is true elsewhere. If you want to understand continuous mathematics, you need a basic understanding of calculus. If you want to do machine learning, you need a basic understanding of linear algebra. Without foundations, it is very difficult to take the results of an AI and collaborate with it.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-mental-model-problem&quot;&gt;The mental-model problem&lt;/h2&gt;
+
+&lt;p&gt;There are two extremes. You can write something yourself and understand it because you built it from scratch. Or you can have the AI write all of it.&lt;/p&gt;
+
+&lt;p&gt;When the AI writes it first, it is not necessarily written in your mental model. If you start making changes, those changes are often pervasive. The tone, concepts, dimensions, or core structure of the narrative may be fundamentally different from what you intended.&lt;/p&gt;
+
+&lt;p&gt;This produces a frustrating tension. We can continuously prompt the AI, but it is difficult to iteratively evolve knowledge with it when the artifact did not grow from our own mental model.&lt;/p&gt;
+
+&lt;p&gt;You always want to feel that you, as the human, are the builder. Maybe much of the implementation—even the whole implementation—was generated by AI. But you want to see the thing as something you wrote and own.&lt;/p&gt;
+
+&lt;p&gt;Does that mean you have to read all the code? Probably not. But you should not be producing so much project-specific code that you cannot read it.&lt;/p&gt;
+
+&lt;h2 id=&quot;ai-as-a-library-on-demand&quot;&gt;AI as a library on demand&lt;/h2&gt;
+
+&lt;p&gt;When we program, we routinely use libraries. When writing Python, we do not build hundreds of thousands of lines from scratch. We tie together libraries such as TensorFlow, PyTorch, or NumPy. Our code can be shockingly small, illustrate the core concept, and abstract over the library’s interface.&lt;/p&gt;
+
+&lt;p&gt;The amount of relevant code that counts as your contribution should be something you intellectually own. It is fine to delegate an arbitrary amount to well-known libraries.&lt;/p&gt;
+
+&lt;p&gt;Generative AI complicates this because it can build any library on demand, with any interface you want. Every part of a problem can be broken down and generated by AI—including the whole thing. The question becomes: how do you identify the intellectual core, the thing you are building, and isolate everything else?&lt;/p&gt;
+
+&lt;p&gt;The skill we need is the ability to perform abstraction and think in terms of abstractions. Software engineers already needed this skill. A high-level language uses hundreds of thousands of lines of abstraction through the compiler and operating system. People working on million-line codebases have always faced the same issue.&lt;/p&gt;
+
+&lt;p&gt;You could never read all the code for Microsoft Windows. Instead, you deal with it through abstractions. You read the core parts of the operating system. You read documentation and books. On demand, you build your understanding by reading discussions, examining the code yourself, looking things up on Stack Overflow, or now asking generative AI.&lt;/p&gt;
+
+&lt;p&gt;AI will always be able to act as an abstraction and hide arbitrary amounts of detail. Your job is to identify, focus on, and investigate the problem; develop durable interfaces; build systematic behavior; and build a system.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 17 Sep 2026 00:00:00 -0400</pubDate>
+        <link>https://kmicinski.com/ai-and-college</link>
+        <guid isPermaLink="true">https://kmicinski.com/ai-and-college</guid>
+        
+        
+        <category>ai</category>
+        
+        <category>academia</category>
+        
+      </item>
     
       <item>
         <title>The Thing We All Obviously Want</title>
@@ -2498,228 +2593,6 @@ post.&lt;/p&gt;
         <category>functional-programming</category>
         
         <category>theorem-proving</category>
-        
-      </item>
-    
-      <item>
-        <title>Why I hope you&apos;ll submit to Scheme Workshop</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://thomas.gilray.org/scheme-2019/&quot;&gt;&lt;strong&gt;Link to this year’s Scheme Workshop CFP&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This year marks the twentieth anniversary of the workshop on &lt;a href=&quot;http://www.schemeworkshop.org/&quot;&gt;Scheme
-and Functional Programming&lt;/a&gt;. The
-Scheme Workshop represents a diverse community of hackers, academics,
-and enthusiasts. The workshop offers a forum to share insights,
-experience, and technical developments of and within the Scheme family
-of programming languages. Rather than focus on a specific
-implementation or community, workshop attendees are united by an
-appreciation for succinct expression of novel ideas realized via
-programming. The submission deadline is &lt;strong&gt;May 24th, 2019&lt;/strong&gt;, I hope
-you’ll help us celebrate by submitting a paper!&lt;/p&gt;
-
-&lt;h4 id=&quot;what-is-scheme-workshop&quot;&gt;What is Scheme Workshop?&lt;/h4&gt;
-
-&lt;p&gt;The Scheme Workshop website describes it as a…&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Yearly meeting of programming language practitioners who share an
-  aesthetic sense embodied by the Algorithmic Language Scheme:
-  universality through minimalism, and flexibility through rigorous
-  design.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Here’s my personal take. I love Scheme Workshop because it brings
-together a group of people with a truly unique perspective on
-programming. We represent a diverse background, but a shared vision:
-to distill insights about programming to their most economic
-presentation. We appreciate thoughtful, comprehensible solutions to
-challenging problems. We challenge ourselves to step outside of our
-boundaries and build fundamentally new paradigms for expressing
-ideas. Our mission is to build a community where we foster diversity,
-education, and support each other in pursuit of these ideals.&lt;/p&gt;
-
-&lt;p&gt;Scheme Workshop is unique in that it is:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Open to everyone who cares about Scheme-ish ideas&lt;/strong&gt;. Instead of
-   focusing on promoting the most cutting edge results, Scheme
-   Workshop centers around thoughtful discussions relating to unique
-   ideas that embody the ethos of Scheme. You don’t have to be an
-   academic to attend; in fact, we have a rich history of
-   participation from hobbyists and industrial attendees.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Non-archival and open access&lt;/strong&gt;. We aim to support and foster unique
-  ideas. Naturally, some of these ideas may grow into work
-  eventually submitted to research conferences. Scheme Workshop
-  provides a platform for researchers to get perspective from the
-  Scheme community on their work at all stages of development. While
-  we publish a technical report of submitted papers, submission to
-  Scheme Workshop does not preclude subsequent submission to
-  archival research conferences. In fact, we see Scheme Workshop as
-  an ideal proving ground for groundbreaking research ideas. We hope
-  that the discussions generated by the presentation of those ideas
-  at Scheme Workshop will productively inform the authors’
-  scholarship.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Supportive of off-the-wall ideas&lt;/strong&gt;. There are some ideas that
-  are really interesting, kind of zany, and just inspire us in a
-  deep way we can’t quite put our finger on. These ideas aren’t
-  necessarily the kind that would fit well at a programming-oriented
-  conference, but they might not be a good fit for research
-  conferences either. Scheme Workshop is a perfect venue for these
-  kinds of ideas. You’ll find like-minded people who enjoy
-  challenging their perspectives on what programming even means.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;A great place for your first paper&lt;/strong&gt;. We place an emphasis on
-  giving thoughtful, high-quality, and friendly reviews. We also
-  have a strong appreciation for “half-baked” ideas. When I was a
-  beginning PhD student, submitting to so-called top conferences
-  often felt overwhelming. Scheme Workshop wants to help budding
-  researchers develop their writing and presentation. Similarly, we
-  realize that great ideas can come from people in industry, the
-  open-source community, or the broader hobbyist community. We work
-  hard to ensure that their ideas are taken seriously and give them
-  the feedback they deserve.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;what-about-racket-haskell-clojure-sml-c-etc&quot;&gt;What about Racket, Haskell, Clojure, SML, C++, etc…?&lt;/h4&gt;
-
-&lt;p&gt;The language isn’t what’s important, it’s the idea. We want the
-workshop to be filled with exciting talks that broaden our horizons
-and challenge us to think about programming in a way we wouldn’t have
-before. I could easily imagine relevant papers dealing with template
-metaprogramming in C++, hygiene in OCaml, or domain-specific languages
-in Clojure.&lt;/p&gt;
-
-&lt;p&gt;If you think your idea &lt;em&gt;might&lt;/em&gt; be relevant to the workshop, please
-don’t hesitate to contact Tom and myself. We’ll gladly give you
-an honest assessment of whether your idea would be a good fit. If not,
-we’ll do our best to direct you towards an appropriate venue for your
-ideas.&lt;/p&gt;
-
-&lt;h4 id=&quot;who-should-submit&quot;&gt;Who should submit?&lt;/h4&gt;
-
-&lt;p&gt;Traditionally, submissions to Scheme Workshop come from those within
-or adjacent to academia. However, this is &lt;strong&gt;not&lt;/strong&gt; a requirement. We
-welcome submissions from everyone who thinks they have something
-thoughtful to say to the Scheme community. This year, I want to
-specifically encourage submissions from:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Undergraduate or graduate students who are looking for practice
-writing papers on their own. It can be a challenge to develop your
-own sense of research style. Scheme Workshop is a great place to get
-feedback on your work in a low-stakes environment. Rather than judge
-the quality of your work against a high technical bar, we want to
-help build your ideas and presentation so that you can be proud of
-the way you’re articulating them.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;People within the tech industry who have never written an academic
-paper before. Scheme Workshop leans a bit more academic than
-conferences such as RacketCon and StrangeLoop. However, this doesn’t
-mean we don’t value ideas from industry. If you’re in industry and
-would like to write a paper but aren’t sure how, please reach out to
-me: I’m happy to Skype with you and speak frankly about how the
-process works.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Seasoned Scheme wizards. Scheme Workshop has a long history of
-insightful talks from key contributors to the Scheme community. These
-community members shape our vision, and guide newcomers (such as
-myself!) by helping us understand the key principles that embody the
-Scheme community.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;some-random-scheme-workshop-papers-i-liked&quot;&gt;Some random Scheme Workshop papers I liked&lt;/h4&gt;
-
-&lt;p&gt;There’s truly been some amazing work at Scheme Workshop over the
-years.  I can’t hope to summarize it all here. Instead, I picked a
-random collection of papers to help you get an idea of the workshop’s
-direction.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://schemeworkshop.org/2006/15-barzilay.pdf&quot;&gt;A Self-Hosting Evaluator using
-HOAS&lt;/a&gt;, by Eli
-Barzilay. This paper discusses how–when you’re implementing a
-Scheme interpreter in Scheme–you can avoid implementing
-substitution by reflecting lambdas from the source language into the
-metalangauge (which still gives you means of abstracting, e.g.,
-control structure). This is a neat idea that is the perfect size for
-Scheme Workshop.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://scheme2006.cs.uchicago.edu/03-mccarthy.pdf&quot;&gt;Interaction-Safe State for the
-Web&lt;/a&gt; by Jay
-McCarthy and Shriram Krishnamurthi. This paper discusses new
-linguistic mechanisms for building abstractions for how we
-understand navigation within web applications. I think this idea
-nicely combines the practice of building web applications correctly
-with the linguistic abstraction mechanisms afforded by Scheme.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://users.cs.northwestern.edu/~robby/pubs/papers/scheme2007-wf.pdf&quot;&gt;Well-typed programs can’t be
-blamed&lt;/a&gt;
-by Philip Wadler and Robby Findler. This paper from 2007 appears to
-be an earlier version of the highly influential 2009 ESOP paper of the
-same name.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;http://www.ccs.neu.edu/home/dherman/research/papers/scheme08-stack-marks.pdf&quot;&gt;Implementing Continuations Marks in
-JavaScript&lt;/a&gt;
-by John Clements, Ayswarya Sundaram, and David Herman. This paper
-discusses how continuation marks can be implemented in JavaScript. I
-see this as an exciting paper exploring a novel idea in a new space,
-and the authors mention some foundational challenges in scaling up
-to languages that allow tail calls with conventional “return”-style
-semantics.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;a href=&quot;https://users.soe.ucsc.edu/~lkuper/papers/lambdae.pdf&quot;&gt;A pattern matcher for miniKanren–or–How to get into trouble with
-CPS macros&lt;/a&gt;
-by Andy Keep, Michael Adams, Lindsey Kuper, Will Byrd, and Dan
-Friedman. This paper reveals an interesting ramification of writing
-macros in a CPS-based style alongside conditional macro
-expansion. They build a pattern matcher for the miniKanren
-programming language, demonstrating the issue along the way. I like
-that this paper reveals a foundational problem in macro engineering.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;help-us-build-a-community&quot;&gt;Help us build a community!&lt;/h4&gt;
-
-&lt;p&gt;The goal of Scheme Workshop is to build a community that celebrates
-the fun in presenting beautifully minimal ideas. We often masquerade
-these ideas as programs. But we’re all bound together by the passion
-we share for articulating our ideas in an elegant way. Programming
-languages give us the ability to rapidly interact with our ideas,
-breaking and rebuilding our realization of those ideas at a pace never
-before seen by humanity. Scheme celebrates this opportunity by
-allowing us unprecedented flexibility in the way we articulate and
-execute these ideas.&lt;/p&gt;
-
-&lt;p&gt;I hope that you share my excitement. If you do, I sincerely hope
-you’ll consider submitting a paper to &lt;a href=&quot;https://thomas.gilray.org/scheme-2019/&quot;&gt;the twentieth workshop on
-Scheme and Functional
-Programming&lt;/a&gt;!&lt;/p&gt;
-</description>
-        <pubDate>Wed, 10 Apr 2019 00:00:00 -0400</pubDate>
-        <link>https://kmicinski.com/research/functional-programming/scheme/2019/04/10/scheme-workshop/</link>
-        <guid isPermaLink="true">https://kmicinski.com/research/functional-programming/scheme/2019/04/10/scheme-workshop/</guid>
-        
-        
-        <category>research</category>
-        
-        <category>functional-programming</category>
-        
-        <category>scheme</category>
         
       </item>
     
